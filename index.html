@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feasiblity-Study_ComplianceHub</title>
+<title>Feasibility-ComplianceHub</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -23,20 +23,58 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   --r:8px;--rl:12px;
 }
 .app{display:flex;min-height:100vh}
-.sidebar{width:220px;background:var(--bg-primary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10}
-.logo{padding:20px 18px;border-bottom:1px solid var(--border)}
+
+/* ===== SIDEBAR ===== */
+.sidebar{width:280px;background:var(--bg-primary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10;overflow-y:auto}
+.logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
 .logo-t{font-size:15px;font-weight:500;color:var(--text-primary)}
 .logo-s{font-size:11px;color:var(--text-tertiary);margin-top:2px}
-nav{padding:10px 0;flex:1}
-.ni{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;font-size:13px;color:var(--text-secondary);border-left:2px solid transparent;user-select:none}
+nav{padding:8px 0}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:var(--text-secondary);border-left:2px solid transparent;user-select:none}
 .ni:hover{background:var(--bg-secondary);color:var(--text-primary)}
 .ni.active{background:var(--bg-secondary);color:var(--text-primary);border-left-color:var(--blue);font-weight:500}
 .ni svg{width:16px;height:16px;flex-shrink:0}
 .nbadge{margin-left:auto;background:#E24B4A;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
-.sf{padding:14px 18px;border-top:1px solid var(--border)}
+.sf{padding:12px 16px;border-top:1px solid var(--border)}
 .sf .nm{font-size:13px;font-weight:500}
 .sf .em{font-size:11px;color:var(--text-tertiary)}
-.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* ===== SIDEBAR CALENDAR ===== */
+.sidebar-cal{border-top:1px solid var(--border);padding:12px 14px 14px;flex-shrink:0}
+.sidebar-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sidebar-cal-month{font-size:12px;font-weight:600;color:var(--text-primary)}
+.sidebar-cal-nav{display:flex;gap:2px}
+.sidebar-cal-nav button{width:22px;height:22px;border-radius:5px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:11px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;padding:0}
+.sidebar-cal-nav button:hover{background:var(--bg-secondary)}
+.scal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
+.scal-dow{text-align:center;font-size:9px;font-weight:600;color:var(--text-tertiary);padding:3px 0;text-transform:uppercase}
+.scal-day{text-align:center;font-size:11px;color:var(--text-secondary);padding:3px 1px;border-radius:4px;cursor:pointer;position:relative;line-height:1.5;user-select:none}
+.scal-day:hover{background:var(--bg-secondary);color:var(--text-primary)}
+.scal-day.other-m{color:var(--text-tertiary)}
+.scal-day.today-s{background:var(--blue);color:#fff;border-radius:50%;font-weight:600}
+.scal-day.has-event::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#EF9F27;margin:0 auto}
+.scal-day.has-event-red::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#E24B4A;margin:0 auto}
+.scal-day.today-s.has-event::after,.scal-day.today-s.has-event-red::after{background:#fff}
+.scal-day.selected-s{outline:2px solid var(--blue);outline-offset:-1px;border-radius:4px}
+.scal-day.today-s.selected-s{outline:2px solid #fff;outline-offset:-1px}
+
+/* Selected date panel inside sidebar */
+.sidebar-day-panel{margin-top:10px;border-top:1px solid var(--border);padding-top:10px;display:none}
+.sidebar-day-panel.open{display:block}
+.sidebar-day-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.sidebar-event-item{display:flex;align-items:flex-start;gap:6px;margin-bottom:5px}
+.se-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.se-label{font-size:11px;color:var(--text-primary);line-height:1.4;flex:1}
+.se-remove{font-size:10px;color:var(--text-tertiary);cursor:pointer;padding:1px 4px;border-radius:3px;flex-shrink:0}
+.se-remove:hover{color:var(--red);background:var(--red-light)}
+.sidebar-add-event{display:flex;gap:5px;margin-top:8px}
+.sidebar-add-event input{flex:1;padding:5px 8px;border:1px solid var(--border-strong);border-radius:5px;font-size:11px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);min-width:0}
+.sidebar-add-event input:focus{border-color:var(--blue)}
+.sidebar-add-event select{padding:5px 6px;border:1px solid var(--border-strong);border-radius:5px;font-size:11px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
+.sidebar-add-event button{padding:5px 8px;border-radius:5px;border:1px solid var(--blue);background:var(--blue);color:#fff;font-size:11px;cursor:pointer;white-space:nowrap}
+
+/* ===== MAIN ===== */
+.main{margin-left:280px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:var(--bg-primary);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
 .ptitle{font-size:16px;font-weight:500}
 .btn{padding:7px 16px;border-radius:var(--r);font-size:13px;cursor:pointer;border:1px solid var(--border-strong);background:var(--bg-primary);color:var(--text-primary);font-family:inherit}
@@ -103,59 +141,48 @@ nav{padding:10px 0;flex:1}
 .dp-r{background:var(--red-light);color:var(--red)}
 .dp-a{background:var(--amber-light);color:var(--amber)}
 .dp-g{background:var(--green-light);color:var(--green)}
-.cal-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.cal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
-.cal-month{font-size:14px;font-weight:500;color:var(--text-primary)}
-.cal-nav{display:flex;gap:4px}
-.cal-nav-btn{width:28px;height:28px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-secondary)}
-.cal-nav-btn:hover{background:var(--bg-secondary)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
-.cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--text-tertiary);padding:8px 0;text-transform:uppercase;letter-spacing:.04em}
-.cal-day{min-height:64px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:6px;cursor:pointer;position:relative;transition:background .1s}
-.cal-day:hover{background:var(--bg-secondary)}
-.cal-day.other-month .cal-day-num{color:var(--text-tertiary)}
-.cal-day.today .cal-day-num{background:var(--blue);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:500}
-.cal-day-num{font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:3px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
-.cal-event{font-size:10px;font-weight:500;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
-.cal-event.ev-red{background:var(--red-light);color:var(--red)}
-.cal-event.ev-amber{background:var(--amber-light);color:var(--amber)}
-.cal-event.ev-green{background:var(--green-light);color:var(--green)}
-.cal-event.ev-blue{background:var(--blue-light);color:var(--blue)}
-.cal-day.selected{background:var(--blue-light)}
-.schedule-panel{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-top:12px;display:none}
-.schedule-panel.open{display:block}
-.schedule-date-title{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:12px}
-.sched-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;font-size:13px}
-.sched-rm{font-size:11px;color:var(--text-tertiary);cursor:pointer;margin-left:auto;padding:2px 6px;border-radius:4px}
-.sched-rm:hover{color:var(--red);background:var(--red-light)}
-.tx-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.tx-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
-.tx-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
-.tx-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tx-table tr:last-child td{border-bottom:none}
-.tx-table tr:hover td{background:var(--bg-secondary)}
-.txamt{font-weight:600}
-.tx-client-main{font-weight:500;font-size:13px}
-.tx-client-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
-.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:10px}
-.b-paid{background:var(--green-light);color:var(--green)}
-.b-pend{background:var(--amber-light);color:var(--amber)}
-.b-over{background:var(--red-light);color:var(--red)}
-.admin-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:12px}
-.pb-wrap{background:var(--bg-tertiary);border-radius:6px;height:8px;overflow:hidden;margin:8px 0}
-.pb-fill{height:100%;border-radius:6px;transition:width .4s}
-.user-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-secondary);border-radius:var(--r);margin-bottom:8px}
-.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
-.tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
-.tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
-.modal-overlay.hidden{display:none}
-.modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
-.modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
-.modal-footer-right{display:flex;gap:8px}
 
-/* ===== PROJECT STYLES ===== */
+/* ===== DASHBOARD ===== */
+.dash-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.dash-section-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+/* Dashboard Calendar Mirror */
+.dash-cal-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.dash-cal-inner-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 0}
+.dash-cal-month-lbl{font-size:13px;font-weight:500;color:var(--text-primary)}
+.dash-cal-note{font-size:11px;color:var(--text-tertiary)}
+.dash-scal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:8px 12px 12px}
+.dash-scal-dow{text-align:center;font-size:10px;font-weight:600;color:var(--text-tertiary);padding:5px 0;text-transform:uppercase}
+.dash-scal-day{text-align:center;font-size:12px;color:var(--text-secondary);padding:4px 2px;border-radius:4px;cursor:default;position:relative;line-height:1.5}
+.dash-scal-day.other-m{color:var(--text-tertiary);opacity:.5}
+.dash-scal-day.today-d{background:var(--blue);color:#fff;border-radius:50%;font-weight:600}
+.dash-scal-day.has-ev::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#EF9F27;margin:0 auto}
+.dash-scal-day.has-ev-red::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#E24B4A;margin:0 auto}
+.dash-scal-day.today-d.has-ev::after,.dash-scal-day.today-d.has-ev-red::after{background:#fff}
+.dash-scal-day.selected-d{outline:2px solid var(--blue);outline-offset:-1px;border-radius:4px}
+.dash-scal-day.today-d.selected-d{outline:2px solid rgba(255,255,255,.6)}
+.dash-event-divider{border-top:1px solid var(--border);margin:0 12px}
+
+/* Upcoming events list */
+.dash-upcoming{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
+.dash-upcoming-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.dash-event-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.dash-event-row:last-child{border-bottom:none}
+.dash-event-date{width:36px;text-align:center;flex-shrink:0}
+.dash-event-day{font-size:18px;font-weight:600;color:var(--text-primary);line-height:1}
+.dash-event-mon{font-size:10px;color:var(--text-tertiary);text-transform:uppercase}
+.dash-event-info{}
+.dash-event-label{font-size:13px;font-weight:500;color:var(--text-primary)}
+.dash-event-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
+.dash-empty-events{text-align:center;padding:16px;color:var(--text-tertiary);font-size:13px}
+
+/* Selected day events in dashboard cal */
+.dash-selected-events{padding:10px 14px 12px}
+.dash-sel-date-lbl{font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:8px}
+.dash-sel-event-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
+.dash-sel-event-row:last-child{border-bottom:none}
+
+/* ===== PROJECTS ===== */
 .projects-layout{display:flex;gap:16px;min-height:400px}
 .projects-sidebar{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:8px}
 .project-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;cursor:pointer;transition:all .15s;position:relative}
@@ -189,6 +216,38 @@ nav{padding:10px 0;flex:1}
 .progress-summary{display:flex;gap:16px;padding:10px 16px;border-top:1px solid var(--border);background:var(--bg-secondary)}
 .prog-stat{font-size:12px;color:var(--text-secondary)}
 .prog-stat strong{color:var(--text-primary)}
+
+/* ===== TRANSACTIONS ===== */
+.tx-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.tx-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.tx-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
+.tx-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tx-table tr:last-child td{border-bottom:none}
+.tx-table tr:hover td{background:var(--bg-secondary)}
+.txamt{font-weight:600}
+.tx-client-main{font-weight:500;font-size:13px}
+.tx-client-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:10px}
+.b-paid{background:var(--green-light);color:var(--green)}
+.b-pend{background:var(--amber-light);color:var(--amber)}
+.b-over{background:var(--red-light);color:var(--red)}
+
+/* ===== ADMIN ===== */
+.admin-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:12px}
+.pb-wrap{background:var(--bg-tertiary);border-radius:6px;height:8px;overflow:hidden;margin:8px 0}
+.pb-fill{height:100%;border-radius:6px;transition:width .4s}
+.user-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-secondary);border-radius:var(--r);margin-bottom:8px}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
+.tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+
+/* ===== MODALS ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
+.modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
+.modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.modal-footer-right{display:flex;gap:8px}
 </style>
 </head>
 <body>
@@ -222,6 +281,35 @@ nav{padding:10px 0;flex:1}
         <span>Admin</span>
       </div>
     </nav>
+
+    <!-- SIDEBAR CALENDAR -->
+    <div class="sidebar-cal">
+      <div class="sidebar-cal-header">
+        <div class="sidebar-cal-month" id="scal-month-label"></div>
+        <div class="sidebar-cal-nav">
+          <button onclick="sCalNav(-1)">‹</button>
+          <button onclick="sCalNav(1)">›</button>
+        </div>
+      </div>
+      <div class="scal-grid" id="scal-grid"></div>
+
+      <!-- Selected date events panel -->
+      <div class="sidebar-day-panel" id="sidebar-day-panel">
+        <div class="sidebar-day-title" id="sidebar-day-title"></div>
+        <div id="sidebar-day-events"></div>
+        <div class="sidebar-add-event">
+          <input type="text" id="scal-new-label" placeholder="Add event…">
+          <select id="scal-new-color">
+            <option value="ev-blue">Blue</option>
+            <option value="ev-green">Green</option>
+            <option value="ev-amber">Amber</option>
+            <option value="ev-red">Red</option>
+          </select>
+          <button onclick="addSidebarEvent()">+</button>
+        </div>
+      </div>
+    </div>
+
     <div class="sf">
       <div class="nm">Admin User</div>
       <div class="em">admin@company.com</div>
@@ -247,9 +335,41 @@ nav{padding:10px 0;flex:1}
           <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
           <div class="stat-card"><div class="stat-label">Total Collected</div><div class="stat-value">₱42,500</div><div class="stat-sub c-amber">₱8,000 pending</div></div>
         </div>
-        <p class="section-title">Recent Activity</p>
-        <div class="act-item"><div class="adot" style="background:#639922"></div><span style="color:var(--text-secondary);min-width:140px">Today, 9:41 AM</span><span>Payment received from <strong>Juan Santos</strong> — ₱12,500</span></div>
-        <div class="act-item"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
+
+        <div class="dash-layout">
+          <!-- Left: activity + calendar mirror -->
+          <div>
+            <p class="dash-section-title">Recent Activity</p>
+            <div class="act-item" style="margin-bottom:8px"><div class="adot" style="background:#639922"></div><span style="color:var(--text-secondary);min-width:140px">Today, 9:41 AM</span><span>Payment received from <strong>Juan Santos</strong> — ₱12,500</span></div>
+            <div class="act-item" style="margin-bottom:16px"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
+
+            <!-- Dashboard Calendar Mirror -->
+            <p class="dash-section-title">Calendar</p>
+            <div class="dash-cal-card">
+              <div class="dash-cal-inner-header">
+                <div class="dash-cal-month-lbl" id="dash-cal-month-label"></div>
+                <div class="dash-cal-note">Use sidebar calendar to navigate &amp; add events</div>
+              </div>
+              <div class="dash-scal-grid" id="dash-cal-grid"></div>
+              <!-- Selected day events shown in dashboard cal -->
+              <div id="dash-selected-day-section" style="display:none">
+                <div class="dash-event-divider"></div>
+                <div class="dash-selected-events">
+                  <div class="dash-sel-date-lbl" id="dash-sel-date-lbl"></div>
+                  <div id="dash-sel-events-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: upcoming events -->
+          <div>
+            <p class="dash-section-title">Upcoming Events</p>
+            <div class="dash-upcoming">
+              <div id="dash-upcoming-list"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Checklist (Projects) -->
@@ -258,15 +378,9 @@ nav{padding:10px 0;flex:1}
           <div class="tab active" onclick="switchCheckTab('projects')" id="tab-projects">Projects</div>
           <div class="tab" onclick="switchCheckTab('overview')" id="tab-overview">All Requirements</div>
         </div>
-
-        <!-- Projects tab -->
         <div class="tab-pane active" id="pane-projects">
           <div class="projects-layout">
-            <!-- Left: project list -->
-            <div class="projects-sidebar" id="projects-sidebar">
-              <!-- rendered by JS -->
-            </div>
-            <!-- Right: project detail -->
+            <div class="projects-sidebar" id="projects-sidebar"></div>
             <div id="project-detail-area">
               <div class="proj-empty" id="proj-empty-state">
                 <div class="proj-empty-icon">📁</div>
@@ -321,8 +435,6 @@ nav{padding:10px 0;flex:1}
             </div>
           </div>
         </div>
-
-        <!-- Overview tab: all requirements across all projects -->
         <div class="tab-pane" id="pane-overview">
           <div id="overview-content"></div>
         </div>
@@ -340,36 +452,7 @@ nav{padding:10px 0;flex:1}
             <button class="btn btnp" onclick="addLicense()">Add License</button>
           </div>
         </div>
-        <div class="tab-bar">
-          <div class="tab active" onclick="switchLicTab('monitor')" id="tab-monitor">License Expiry Monitor</div>
-          <div class="tab" onclick="switchLicTab('calendar')" id="tab-calendar">Calendar</div>
-        </div>
-        <div class="tab-pane active" id="pane-monitor">
-          <div class="expiry-list" id="expiry-list"></div>
-        </div>
-        <div class="tab-pane" id="pane-calendar">
-          <div class="cal-wrap">
-            <div class="cal-header">
-              <div class="cal-month" id="cal-month-label"></div>
-              <div class="cal-nav">
-                <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
-                <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
-              </div>
-            </div>
-            <div class="cal-grid" id="cal-grid"></div>
-          </div>
-          <div class="schedule-panel" id="schedule-panel">
-            <div class="schedule-date-title" id="schedule-date-title"></div>
-            <div id="schedule-items"></div>
-            <div style="display:flex;gap:8px;margin-top:10px">
-              <input type="text" id="new-sched-label" placeholder="Add event…" style="flex:1;padding:7px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
-              <select id="new-sched-color" style="padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
-                <option value="ev-blue">Blue</option><option value="ev-green">Green</option><option value="ev-amber">Amber</option><option value="ev-red">Red</option>
-              </select>
-              <button class="btn btnp btnsm" onclick="addScheduleEvent()">Add</button>
-            </div>
-          </div>
-        </div>
+        <div class="expiry-list" id="expiry-list"></div>
       </div>
 
       <!-- Transactions -->
@@ -449,9 +532,7 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- ===== MODALS ===== -->
-
-<!-- New Project Modal -->
+<!-- MODALS -->
 <div class="modal-overlay hidden" id="modal-new-project">
   <div class="modal">
     <div class="modal-title" id="modal-project-title">New Project</div>
@@ -459,7 +540,7 @@ nav{padding:10px 0;flex:1}
       <div class="fg"><label>Project Name</label><input type="text" id="proj-name-input" placeholder="e.g. Business Permit Renewal 2026"></div>
       <div class="fg"><label>Client / Company</label><input type="text" id="proj-client-input" placeholder="e.g. Santos Enterprises"></div>
     </div>
-    <div class="fg" style="margin-bottom:12px"><label>Description (optional)</label><input type="text" id="proj-desc-input" placeholder="Brief description of this project"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Description (optional)</label><input type="text" id="proj-desc-input" placeholder="Brief description"></div>
     <div class="modal-footer">
       <div></div>
       <div class="modal-footer-right">
@@ -470,7 +551,6 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- Confirm Delete Project Modal -->
 <div class="modal-overlay hidden" id="modal-confirm-delete">
   <div class="modal" style="width:380px">
     <div class="modal-title">Remove Project?</div>
@@ -485,7 +565,6 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- Edit Requirement Modal -->
 <div class="modal-overlay hidden" id="modal-req">
   <div class="modal">
     <div class="modal-title">Edit Requirement</div>
@@ -513,7 +592,6 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- Edit License Modal -->
 <div class="modal-overlay hidden" id="modal-license">
   <div class="modal">
     <div class="modal-title">Edit License</div>
@@ -531,7 +609,6 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- Edit Transaction Modal -->
 <div class="modal-overlay hidden" id="modal-transaction">
   <div class="modal">
     <div class="modal-title">Edit Transaction</div>
@@ -557,100 +634,332 @@ nav{padding:10px 0;flex:1}
 <script>
 const TODAY = new Date('2026-04-25');
 let editingId = null;
-let editingReqInfo = null; // {projectId, type, reqId}
+let editingReqInfo = null;
 let deletingProjectId = null;
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS_SHORT = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
 const state = {
   projects: [
     {
-      id: 1,
-      name: 'Business Permit Renewal 2026',
-      client: 'Santos Enterprises',
-      desc: 'Annual renewal of city mayor\'s permit and related documents',
-      technical: [
-        {id:101, label:'Business Permit', category:'Legal', checked:true},
-        {id:102, label:'Fire Safety Inspection Certificate', category:'Safety', checked:false},
-        {id:103, label:'Zoning Clearance', category:'Legal', checked:true},
+      id:1, name:'Business Permit Renewal 2026', client:'Santos Enterprises',
+      desc:'Annual renewal of city mayor\'s permit and related documents',
+      technical:[
+        {id:101,label:'Business Permit',category:'Legal',checked:true},
+        {id:102,label:'Fire Safety Inspection Certificate',category:'Safety',checked:false},
+        {id:103,label:'Zoning Clearance',category:'Legal',checked:true},
       ],
-      financial: [
-        {id:104, label:'BIR Certificate of Registration', category:'Tax', checked:true},
-        {id:105, label:'Audited Financial Statements', category:'Finance', checked:false},
+      financial:[
+        {id:104,label:'BIR Certificate of Registration',category:'Tax',checked:true},
+        {id:105,label:'Audited Financial Statements',category:'Finance',checked:false},
       ],
-      other: [
-        {id:106, label:'Barangay Clearance', category:'Administrative', checked:false},
-      ]
+      other:[{id:106,label:'Barangay Clearance',category:'Administrative',checked:false}]
     },
     {
-      id: 2,
-      name: 'HR Compliance 2026',
-      client: 'Internal',
-      desc: 'SSS, PhilHealth, Pag-IBIG and DOLE requirements',
-      technical: [
-        {id:201, label:'DOLE Registration', category:'Operations', checked:true},
-        {id:202, label:'OSHS Compliance Certificate', category:'Safety', checked:false},
+      id:2, name:'HR Compliance 2026', client:'Internal',
+      desc:'SSS, PhilHealth, Pag-IBIG and DOLE requirements',
+      technical:[
+        {id:201,label:'DOLE Registration',category:'Operations',checked:true},
+        {id:202,label:'OSHS Compliance Certificate',category:'Safety',checked:false},
       ],
-      financial: [
-        {id:203, label:'SSS Registration', category:'HR', checked:true},
-        {id:204, label:'PhilHealth Registration', category:'HR', checked:false},
-        {id:205, label:'Pag-IBIG Registration', category:'HR', checked:false},
+      financial:[
+        {id:203,label:'SSS Registration',category:'HR',checked:true},
+        {id:204,label:'PhilHealth Registration',category:'HR',checked:false},
+        {id:205,label:'Pag-IBIG Registration',category:'HR',checked:false},
       ],
-      other: []
+      other:[]
     }
   ],
-  licenses: [
-    {id:11, name:"Mayor's Business Permit", expiry:'2026-05-09'},
-    {id:12, name:'BIR COR Renewal', expiry:'2026-05-11'},
-    {id:13, name:'Fire Safety Certificate', expiry:'2026-07-15'},
-    {id:14, name:'DOLE Registration', expiry:'2026-09-30'},
+  licenses:[
+    {id:11,name:"Mayor's Business Permit",expiry:'2026-05-09'},
+    {id:12,name:'BIR COR Renewal',expiry:'2026-05-11'},
+    {id:13,name:'Fire Safety Certificate',expiry:'2026-07-15'},
+    {id:14,name:'DOLE Registration',expiry:'2026-09-30'},
   ],
-  transactions: [
-    {id:21, date:'Apr 24, 2026', company:'Santos Enterprises', client:'Juan Santos', desc:'Permit processing fee', amount:12500, status:'Paid'},
-    {id:22, date:'Apr 22, 2026', company:'Cruz & Co.', client:'Maria Cruz', desc:'Document notarization', amount:8000, status:'Paid'},
-    {id:23, date:'Apr 20, 2026', company:'Lim Group', client:'Roberto Lim', desc:'Business registration fee', amount:15000, status:'Paid'},
-    {id:24, date:'Apr 18, 2026', company:'Dela Cruz Corp.', client:'Ana Dela Cruz', desc:'License renewal fee', amount:7000, status:'Paid'},
-    {id:25, date:'Apr 15, 2026', company:'Reyes Trading', client:'Jose Reyes', desc:'Permit processing fee', amount:5000, status:'Pending'},
-    {id:26, date:'Apr 10, 2026', company:'Go Solutions', client:'Linda Go', desc:'Consultation fee', amount:3000, status:'Pending'},
-    {id:27, date:'Apr 5, 2026', company:'Tan Industries', client:'Carlos Tan', desc:'Document filing fee', amount:4500, status:'Overdue'},
+  transactions:[
+    {id:21,date:'Apr 24, 2026',company:'Santos Enterprises',client:'Juan Santos',desc:'Permit processing fee',amount:12500,status:'Paid'},
+    {id:22,date:'Apr 22, 2026',company:'Cruz & Co.',client:'Maria Cruz',desc:'Document notarization',amount:8000,status:'Paid'},
+    {id:23,date:'Apr 20, 2026',company:'Lim Group',client:'Roberto Lim',desc:'Business registration fee',amount:15000,status:'Paid'},
+    {id:24,date:'Apr 18, 2026',company:'Dela Cruz Corp.',client:'Ana Dela Cruz',desc:'License renewal fee',amount:7000,status:'Paid'},
+    {id:25,date:'Apr 15, 2026',company:'Reyes Trading',client:'Jose Reyes',desc:'Permit processing fee',amount:5000,status:'Pending'},
+    {id:26,date:'Apr 10, 2026',company:'Go Solutions',client:'Linda Go',desc:'Consultation fee',amount:3000,status:'Pending'},
+    {id:27,date:'Apr 5, 2026',company:'Tan Industries',client:'Carlos Tan',desc:'Document filing fee',amount:4500,status:'Overdue'},
   ],
-  calendarEvents: {},
-  nextId: 500,
-  activeProjectId: null,
-  activeReqTab: 'technical',
-  activeCheckTab: 'projects',
-  calYear: 2026,
-  calMonth: 3,
-  selectedDate: null,
-  editingProjectId: null,
+  calendarEvents:{},
+  nextId:500,
+  activeProjectId:null,
+  activeReqTab:'technical',
+  activeCheckTab:'projects',
+  // Shared calendar state — sidebar is the source of truth
+  calYear:2026,
+  calMonth:3, // 0-indexed April
+  selectedDate:null, // {d, m, y}
+  editingProjectId:null,
 };
+
+// ===== CALENDAR CORE (shared state) =====
+function getEventKey(y, m, d) { return y+'-'+m+'-'+d; }
+
+function getEventDotClass(evs) {
+  if (!evs || !evs.length) return '';
+  const hasRed = evs.some(e => e.cls === 'ev-red');
+  return hasRed ? 'has-event-red' : 'has-event';
+}
+
+function eventColorDot(cls) {
+  if (cls === 'ev-red') return '#E24B4A';
+  if (cls === 'ev-amber') return '#EF9F27';
+  if (cls === 'ev-green') return '#639922';
+  return '#185FA5';
+}
+
+function initCalendarEvents() {
+  state.calendarEvents = {};
+  state.licenses.forEach(lic => {
+    const d = new Date(lic.expiry + 'T00:00:00');
+    const key = getEventKey(d.getFullYear(), d.getMonth(), d.getDate());
+    if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
+    const days = Math.round((d - TODAY) / 86400000);
+    const cls = days <= 14 ? 'ev-red' : days <= 30 ? 'ev-amber' : 'ev-green';
+    if (!state.calendarEvents[key].find(e => e.label === lic.name + ' expiry'))
+      state.calendarEvents[key].push({id: state.nextId++, label: lic.name + ' expiry', cls, isLicense: true});
+  });
+}
+
+// ===== SIDEBAR CALENDAR =====
+function sCalNav(dir) {
+  state.calMonth += dir;
+  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+  renderSidebarCal();
+  renderDashboardCal();
+  renderFullCal();
+}
+
+function renderSidebarCal() {
+  document.getElementById('scal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
+  const grid = document.getElementById('scal-grid');
+  let html = DAYS_SHORT.map(d => `<div class="scal-dow">${d}</div>`).join('');
+
+  const first = new Date(state.calYear, state.calMonth, 1).getDay();
+  const dim = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+  const dip = new Date(state.calYear, state.calMonth, 0).getDate();
+
+  for (let i = 0; i < first; i++) {
+    html += `<div class="scal-day other-m">${dip - first + 1 + i}</div>`;
+  }
+  for (let d = 1; d <= dim; d++) {
+    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
+    const isSel = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
+    const key = getEventKey(state.calYear, state.calMonth, d);
+    const evs = state.calendarEvents[key] || [];
+    const dotCls = getEventDotClass(evs);
+    let cls = 'scal-day';
+    if (isToday) cls += ' today-s';
+    if (isSel) cls += ' selected-s';
+    if (dotCls) cls += ' ' + dotCls;
+    html += `<div class="${cls}" onclick="selectSidebarDay(${d})">${d}</div>`;
+  }
+  const rem = (first + dim) % 7 === 0 ? 0 : 7 - (first + dim) % 7;
+  for (let i = 1; i <= rem; i++) {
+    html += `<div class="scal-day other-m">${i}</div>`;
+  }
+  grid.innerHTML = html;
+  renderSidebarDayPanel();
+}
+
+function selectSidebarDay(d) {
+  if (state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear) {
+    // Deselect
+    state.selectedDate = null;
+  } else {
+    state.selectedDate = {d, m: state.calMonth, y: state.calYear};
+  }
+  renderSidebarCal();
+  renderDashboardCal();
+}
+
+function renderSidebarDayPanel() {
+  const panel = document.getElementById('sidebar-day-panel');
+  const titleEl = document.getElementById('sidebar-day-title');
+  const listEl = document.getElementById('sidebar-day-events');
+
+  if (!state.selectedDate) {
+    panel.classList.remove('open');
+    return;
+  }
+  const {d, m, y} = state.selectedDate;
+  if (m !== state.calMonth || y !== state.calYear) {
+    panel.classList.remove('open');
+    return;
+  }
+  panel.classList.add('open');
+  const dateStr = new Date(y, m, d).toLocaleDateString('en-PH', {weekday:'short', month:'short', day:'numeric'});
+  titleEl.textContent = dateStr;
+
+  const key = getEventKey(y, m, d);
+  const evs = state.calendarEvents[key] || [];
+
+  if (!evs.length) {
+    listEl.innerHTML = `<div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">No events on this day.</div>`;
+  } else {
+    listEl.innerHTML = evs.map(ev => `
+      <div class="sidebar-event-item">
+        <div class="se-dot" style="background:${eventColorDot(ev.cls)}"></div>
+        <div class="se-label">${ev.label}</div>
+        ${!ev.isLicense ? `<span class="se-remove" onclick="removeSidebarEvent('${key}',${ev.id})">✕</span>` : ''}
+      </div>`).join('');
+  }
+}
+
+function addSidebarEvent() {
+  const label = document.getElementById('scal-new-label').value.trim();
+  const cls = document.getElementById('scal-new-color').value;
+  if (!label || !state.selectedDate) return;
+  const {d, m, y} = state.selectedDate;
+  const key = getEventKey(y, m, d);
+  if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
+  state.calendarEvents[key].push({id: state.nextId++, label, cls});
+  document.getElementById('scal-new-label').value = '';
+  renderSidebarCal();
+  renderDashboardCal();
+  renderFullCal();
+  renderDashUpcoming();
+}
+
+function removeSidebarEvent(key, id) {
+  if (state.calendarEvents[key]) {
+    state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
+  }
+  renderSidebarCal();
+  renderDashboardCal();
+  renderFullCal();
+  renderDashUpcoming();
+}
+
+// ===== DASHBOARD CALENDAR (mirror of sidebar state) =====
+function renderDashboardCal() {
+  document.getElementById('dash-cal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
+  const grid = document.getElementById('dash-cal-grid');
+  let html = DAYS_SHORT.map(d => `<div class="dash-scal-dow">${d}</div>`).join('');
+
+  const first = new Date(state.calYear, state.calMonth, 1).getDay();
+  const dim = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+  const dip = new Date(state.calYear, state.calMonth, 0).getDate();
+
+  for (let i = 0; i < first; i++) {
+    html += `<div class="dash-scal-day other-m">${dip - first + 1 + i}</div>`;
+  }
+  for (let d = 1; d <= dim; d++) {
+    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
+    const isSel = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
+    const key = getEventKey(state.calYear, state.calMonth, d);
+    const evs = state.calendarEvents[key] || [];
+    const dotCls = getEventDotClass(evs);
+    let cls = 'dash-scal-day';
+    if (isToday) cls += ' today-d';
+    if (isSel) cls += ' selected-d';
+    if (dotCls) cls += ' ' + (dotCls === 'has-event-red' ? 'has-ev-red' : 'has-ev');
+    html += `<div class="${cls}">${d}</div>`;
+  }
+  const rem = (first + dim) % 7 === 0 ? 0 : 7 - (first + dim) % 7;
+  for (let i = 1; i <= rem; i++) {
+    html += `<div class="dash-scal-day other-m">${i}</div>`;
+  }
+  grid.innerHTML = html;
+
+  // Selected day events section in dashboard cal
+  const selSection = document.getElementById('dash-selected-day-section');
+  const selLbl = document.getElementById('dash-sel-date-lbl');
+  const selList = document.getElementById('dash-sel-events-list');
+
+  if (state.selectedDate && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear) {
+    const {d, m, y} = state.selectedDate;
+    const dateStr = new Date(y, m, d).toLocaleDateString('en-PH', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+    selLbl.textContent = dateStr;
+    const key = getEventKey(y, m, d);
+    const evs = state.calendarEvents[key] || [];
+    if (!evs.length) {
+      selList.innerHTML = `<div class="dash-sel-event-row" style="color:var(--text-tertiary);border:none">No events on this date.</div>`;
+    } else {
+      selList.innerHTML = evs.map(ev => `
+        <div class="dash-sel-event-row">
+          <div style="width:8px;height:8px;border-radius:50%;background:${eventColorDot(ev.cls)};flex-shrink:0"></div>
+          <span style="color:var(--text-primary)">${ev.label}</span>
+        </div>`).join('');
+    }
+    selSection.style.display = 'block';
+  } else {
+    selSection.style.display = 'none';
+  }
+
+  renderDashUpcoming();
+}
+
+function renderDashUpcoming() {
+  const listEl = document.getElementById('dash-upcoming-list');
+  // Collect all future events, sorted by date
+  const upcoming = [];
+  const now = TODAY;
+  Object.entries(state.calendarEvents).forEach(([key, evs]) => {
+    const [y, m, d] = key.split('-').map(Number);
+    const dt = new Date(y, m, d);
+    if (dt >= now && evs.length) {
+      evs.forEach(ev => upcoming.push({dt, d, m, y, label: ev.label, cls: ev.cls}));
+    }
+  });
+  upcoming.sort((a, b) => a.dt - b.dt);
+  const shown = upcoming.slice(0, 6);
+  if (!shown.length) {
+    listEl.innerHTML = `<div class="dash-empty-events">No upcoming events.</div>`;
+    return;
+  }
+  listEl.innerHTML = shown.map(ev => `
+    <div class="dash-event-row">
+      <div class="dash-event-date">
+        <div class="dash-event-day">${ev.d}</div>
+        <div class="dash-event-mon">${MONTHS_SHORT[ev.m]}</div>
+      </div>
+      <div class="dash-event-info">
+        <div class="dash-event-label">${ev.label}</div>
+        <div class="dash-event-sub" style="color:${eventColorDot(ev.cls)}">${ev.cls === 'ev-red' ? 'Urgent' : ev.cls === 'ev-amber' ? 'Upcoming' : ev.cls === 'ev-green' ? 'Scheduled' : 'Event'}</div>
+      </div>
+    </div>`).join('');
+}
+
+function removeEvent(key, id) {
+  state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
+  renderSidebarCal();
+  renderDashboardCal();
+}
 
 // ===== PROJECTS =====
 function getProject(id) { return state.projects.find(p => p.id === id); }
-
 function getAllRequirements() {
   const all = [];
   state.projects.forEach(p => {
-    p.technical.forEach(r => all.push({...r, projectName: p.name, type:'technical'}));
-    p.financial.forEach(r => all.push({...r, projectName: p.name, type:'financial'}));
-    (p.other||[]).forEach(r => all.push({...r, projectName: p.name, type:'other'}));
+    p.technical.forEach(r => all.push({...r, projectName:p.name, type:'technical'}));
+    p.financial.forEach(r => all.push({...r, projectName:p.name, type:'financial'}));
+    (p.other||[]).forEach(r => all.push({...r, projectName:p.name, type:'other'}));
   });
   return all;
 }
-
 function getProjectProgress(proj) {
   const all = [...proj.technical, ...proj.financial, ...(proj.other||[])];
   const done = all.filter(r => r.checked).length;
-  return {done, total: all.length};
+  return {done, total:all.length};
 }
-
 function renderProjectsSidebar() {
   const sidebar = document.getElementById('projects-sidebar');
   let html = '';
   state.projects.forEach(proj => {
     const {done, total} = getProjectProgress(proj);
-    const pct = total ? Math.round(done / total * 100) : 0;
+    const pct = total ? Math.round(done/total*100) : 0;
     const isActive = proj.id === state.activeProjectId;
-    html += `<div class="project-card ${isActive ? 'active' : ''}" onclick="selectProject(${proj.id})">
-      <button class="project-card-del" onclick="event.stopPropagation();promptDeleteProject(${proj.id})" title="Remove project">
+    html += `<div class="project-card ${isActive?'active':''}" onclick="selectProject(${proj.id})">
+      <button class="project-card-del" onclick="event.stopPropagation();promptDeleteProject(${proj.id})" title="Remove">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
       <div class="project-card-name">${proj.name}</div>
@@ -664,54 +973,43 @@ function renderProjectsSidebar() {
   html += `<button class="proj-add-btn" onclick="openNewProjectModal()">+ New Project</button>`;
   sidebar.innerHTML = html;
 }
-
 function selectProject(id) {
   state.activeProjectId = id;
   renderProjectsSidebar();
   renderProjectDetail();
 }
-
 function renderProjectDetail() {
   const proj = getProject(state.activeProjectId);
   const emptyState = document.getElementById('proj-empty-state');
   const detail = document.getElementById('project-detail');
-  if (!proj) {
-    emptyState.style.display = 'block';
-    detail.classList.add('hidden');
-    return;
-  }
+  if (!proj) { emptyState.style.display='block'; detail.classList.add('hidden'); return; }
   emptyState.style.display = 'none';
   detail.classList.remove('hidden');
   document.getElementById('proj-detail-name').textContent = proj.name;
-  document.getElementById('proj-detail-desc').textContent = proj.client + (proj.desc ? ' · ' + proj.desc : '');
+  document.getElementById('proj-detail-desc').textContent = proj.client + (proj.desc ? ' · '+proj.desc : '');
   renderReqList('technical');
   renderReqList('financial');
   renderReqList('other');
   renderProjectProgress();
 }
-
 function renderReqList(type) {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
-  const container = document.getElementById('req-list-' + type);
+  const container = document.getElementById('req-list-'+type);
   const items = proj[type] || [];
-  if (!items.length) {
-    container.innerHTML = `<div class="empty-state">No ${type} requirements yet. Add one above.</div>`;
-    return;
-  }
+  if (!items.length) { container.innerHTML=`<div class="empty-state">No ${type} requirements yet.</div>`; return; }
   container.innerHTML = '';
   items.forEach(item => {
     const div = document.createElement('div');
     div.className = 'ci';
     div.innerHTML = `<div class="ci-header">
-      <div class="cb ${item.checked ? 'checked' : ''}" onclick="toggleReq(${state.activeProjectId},'${type}',${item.id})"></div>
-      <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
+      <div class="cb ${item.checked?'checked':''}" onclick="toggleReq(${state.activeProjectId},'${type}',${item.id})"></div>
+      <span class="cl ${item.checked?'done':''}">${item.label}</span>
       <span class="ccat">${item.category}</span>
-      <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
+      <span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span>
       <div class="row-actions" style="margin-left:8px">
         <button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          Edit
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit
         </button>
       </div>
     </div>`;
@@ -719,15 +1017,14 @@ function renderReqList(type) {
   });
   renderProjectProgress();
 }
-
 function renderProjectProgress() {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
-  const techDone = proj.technical.filter(r => r.checked).length;
-  const finDone = proj.financial.filter(r => r.checked).length;
-  const otherDone = (proj.other||[]).filter(r => r.checked).length;
-  const total = proj.technical.length + proj.financial.length + (proj.other||[]).length;
-  const done = techDone + finDone + otherDone;
+  const techDone = proj.technical.filter(r=>r.checked).length;
+  const finDone = proj.financial.filter(r=>r.checked).length;
+  const otherDone = (proj.other||[]).filter(r=>r.checked).length;
+  const total = proj.technical.length+proj.financial.length+(proj.other||[]).length;
+  const done = techDone+finDone+otherDone;
   document.getElementById('proj-progress-summary').innerHTML = `
     <span class="prog-stat">Technical: <strong>${techDone}/${proj.technical.length}</strong></span>
     <span class="prog-stat">Financial: <strong>${finDone}/${proj.financial.length}</strong></span>
@@ -735,82 +1032,71 @@ function renderProjectProgress() {
     <span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;
   updateStats();
 }
-
 function toggleReq(projectId, type, reqId) {
   const proj = getProject(projectId);
   if (!proj) return;
-  const item = proj[type].find(r => r.id === reqId);
+  const item = proj[type].find(r=>r.id===reqId);
   if (item) item.checked = !item.checked;
   renderReqList(type);
   renderProjectsSidebar();
 }
-
 function addRequirement(type) {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
-  const inputId = type === 'technical' ? 'new-tech-req' : type === 'financial' ? 'new-fin-req' : 'new-other-req';
-  const catId   = type === 'technical' ? 'new-tech-cat' : type === 'financial' ? 'new-fin-cat' : 'new-other-cat';
+  const inputId = type==='technical'?'new-tech-req':type==='financial'?'new-fin-req':'new-other-req';
+  const catId = type==='technical'?'new-tech-cat':type==='financial'?'new-fin-cat':'new-other-cat';
   const label = document.getElementById(inputId).value.trim();
   if (!label) return;
   if (!proj[type]) proj[type] = [];
-  proj[type].push({id: state.nextId++, label, category: document.getElementById(catId).value, checked: false});
+  proj[type].push({id:state.nextId++,label,category:document.getElementById(catId).value,checked:false});
   document.getElementById(inputId).value = '';
   renderReqList(type);
   renderProjectsSidebar();
 }
-
 function openEditReq(projectId, type, reqId) {
   const proj = getProject(projectId);
   if (!proj) return;
-  const item = proj[type].find(r => r.id === reqId);
+  const item = proj[type].find(r=>r.id===reqId);
   if (!item) return;
   editingReqInfo = {projectId, type, reqId};
   document.getElementById('edit-req-name').value = item.label;
   document.getElementById('edit-req-cat').value = item.category;
-  document.getElementById('edit-req-status').value = item.checked ? '1' : '0';
+  document.getElementById('edit-req-status').value = item.checked?'1':'0';
   openModal('modal-req');
 }
-
 function saveRequirement() {
   const {projectId, type, reqId} = editingReqInfo;
   const proj = getProject(projectId);
-  const item = proj[type].find(r => r.id === reqId);
-  item.label = document.getElementById('edit-req-name').value.trim() || item.label;
+  const item = proj[type].find(r=>r.id===reqId);
+  item.label = document.getElementById('edit-req-name').value.trim()||item.label;
   item.category = document.getElementById('edit-req-cat').value;
-  item.checked = document.getElementById('edit-req-status').value === '1';
+  item.checked = document.getElementById('edit-req-status').value==='1';
   closeModal('modal-req');
   renderReqList(type);
   renderProjectsSidebar();
 }
-
 function deleteRequirement() {
   const {projectId, type, reqId} = editingReqInfo;
   const proj = getProject(projectId);
-  proj[type] = proj[type].filter(r => r.id !== reqId);
+  proj[type] = proj[type].filter(r=>r.id!==reqId);
   closeModal('modal-req');
   renderReqList(type);
   renderProjectsSidebar();
 }
-
 function switchReqTab(tab) {
   state.activeReqTab = tab;
-  document.querySelectorAll('.req-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('rtab-' + tab).classList.add('active');
-  document.querySelectorAll('.req-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('rpane-' + tab).classList.add('active');
+  document.querySelectorAll('.req-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('rtab-'+tab).classList.add('active');
+  document.querySelectorAll('.req-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('rpane-'+tab).classList.add('active');
 }
-
-// New / Edit project modal
 function openNewProjectModal() {
   state.editingProjectId = null;
   document.getElementById('modal-project-title').textContent = 'New Project';
   document.getElementById('save-project-btn').textContent = 'Create Project';
-  document.getElementById('proj-name-input').value = '';
-  document.getElementById('proj-client-input').value = '';
-  document.getElementById('proj-desc-input').value = '';
+  ['proj-name-input','proj-client-input','proj-desc-input'].forEach(id=>document.getElementById(id).value='');
   openModal('modal-new-project');
 }
-
 function openEditProject() {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
@@ -822,7 +1108,6 @@ function openEditProject() {
   document.getElementById('proj-desc-input').value = proj.desc;
   openModal('modal-new-project');
 }
-
 function saveProject() {
   const name = document.getElementById('proj-name-input').value.trim();
   const client = document.getElementById('proj-client-input').value.trim();
@@ -830,9 +1115,9 @@ function saveProject() {
   if (!name) { alert('Please enter a project name.'); return; }
   if (state.editingProjectId) {
     const proj = getProject(state.editingProjectId);
-    proj.name = name; proj.client = client; proj.desc = desc;
+    proj.name=name; proj.client=client; proj.desc=desc;
   } else {
-    const newProj = {id: state.nextId++, name, client, desc, technical: [], financial: [], other: []};
+    const newProj = {id:state.nextId++,name,client,desc,technical:[],financial:[],other:[]};
     state.projects.push(newProj);
     state.activeProjectId = newProj.id;
   }
@@ -840,43 +1125,33 @@ function saveProject() {
   renderProjectsSidebar();
   renderProjectDetail();
 }
-
 function promptDeleteProject(id) {
   deletingProjectId = id;
   const proj = getProject(id);
   document.getElementById('del-proj-name').textContent = proj.name;
   openModal('modal-confirm-delete');
 }
-
 function confirmDeleteProject() {
-  state.projects = state.projects.filter(p => p.id !== deletingProjectId);
-  if (state.activeProjectId === deletingProjectId) {
+  state.projects = state.projects.filter(p=>p.id!==deletingProjectId);
+  if (state.activeProjectId===deletingProjectId)
     state.activeProjectId = state.projects.length ? state.projects[0].id : null;
-  }
   deletingProjectId = null;
   closeModal('modal-confirm-delete');
   renderProjectsSidebar();
   renderProjectDetail();
   updateStats();
 }
-
-// Overview tab
 function renderOverview() {
   const el = document.getElementById('overview-content');
-  if (!state.projects.length) {
-    el.innerHTML = '<div class="empty-state">No projects yet. Create one in the Projects tab.</div>';
-    return;
-  }
+  if (!state.projects.length) { el.innerHTML='<div class="empty-state">No projects yet.</div>'; return; }
   let html = '';
   state.projects.forEach(proj => {
     const {done, total} = getProjectProgress(proj);
     const pct = total ? Math.round(done/total*100) : 0;
     html += `<div style="margin-bottom:20px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div>
-          <span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span>
-          <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span>
-        </div>
+        <div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span>
+        <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div>
         <span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span>
       </div>`;
     ['technical','financial','other'].forEach(type => {
@@ -885,10 +1160,10 @@ function renderOverview() {
         <div class="checklist-list" style="margin-bottom:10px">`;
       (proj[type]||[]).forEach(item => {
         html += `<div class="ci"><div class="ci-header">
-          <div class="cb ${item.checked ? 'checked' : ''}"></div>
-          <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
+          <div class="cb ${item.checked?'checked':''}"></div>
+          <span class="cl ${item.checked?'done':''}">${item.label}</span>
           <span class="ccat">${item.category}</span>
-          <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
+          <span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span>
         </div></div>`;
       });
       html += `</div>`;
@@ -897,55 +1172,41 @@ function renderOverview() {
   });
   el.innerHTML = html;
 }
-
 function switchCheckTab(tab) {
   state.activeCheckTab = tab;
-  document.querySelectorAll('#panel-checklist .tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('#panel-checklist .tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane-' + tab).classList.add('active');
-  if (tab === 'overview') renderOverview();
+  document.querySelectorAll('#panel-checklist .tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('#panel-checklist .tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pane-'+tab).classList.add('active');
+  if (tab==='overview') renderOverview();
 }
 
 // ===== STATS =====
 function updateStats() {
   const all = getAllRequirements();
-  const done = all.filter(r => r.checked).length;
+  const done = all.filter(r=>r.checked).length;
   const total = all.length;
   document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-done-count').textContent = done + ' completed';
+  document.getElementById('stat-done-count').textContent = done+' completed';
   const pct = total ? Math.round(done/total*100) : 0;
   const bar = document.getElementById('progress-bar');
-  if (bar) bar.style.width = pct + '%';
+  if (bar) bar.style.width = pct+'%';
   const lbl = document.getElementById('progress-label');
-  if (lbl) lbl.textContent = done + ' of ' + total + ' items completed';
+  if (lbl) lbl.textContent = done+' of '+total+' items completed';
 }
 
 // ===== LICENSES =====
-function initCalendarEvents() {
-  state.calendarEvents = {};
-  state.licenses.forEach(lic => {
-    const d = new Date(lic.expiry);
-    const key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-    if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
-    const days = Math.round((d - TODAY) / 86400000);
-    const cls = days <= 14 ? 'ev-red' : days <= 30 ? 'ev-amber' : 'ev-green';
-    if (!state.calendarEvents[key].find(e => e.label === lic.name + ' expiry'))
-      state.calendarEvents[key].push({id: state.nextId++, label: lic.name + ' expiry', cls});
-  });
-}
-
 function renderLicenses() {
   const list = document.getElementById('expiry-list');
-  const sorted = [...state.licenses].sort((a,b) => new Date(a.expiry) - new Date(b.expiry));
+  const sorted = [...state.licenses].sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));
   let expCount = 0;
   list.innerHTML = sorted.map(lic => {
-    const days = Math.round((new Date(lic.expiry) - TODAY) / 86400000);
-    let dotColor = '#639922', pillClass = 'dp-g', label = days + ' days left';
-    if (days < 0) { dotColor = '#E24B4A'; pillClass = 'dp-r'; label = 'Expired'; expCount++; }
-    else if (days <= 14) { dotColor = '#E24B4A'; pillClass = 'dp-r'; label = days + 'd left'; expCount++; }
-    else if (days <= 30) { dotColor = '#EF9F27'; pillClass = 'dp-a'; label = days + 'd left'; expCount++; }
-    const dateStr = new Date(lic.expiry).toLocaleDateString('en-PH', {year:'numeric',month:'short',day:'numeric'});
+    const days = Math.round((new Date(lic.expiry+'T00:00:00') - TODAY) / 86400000);
+    let dotColor='#639922', pillClass='dp-g', label=days+' days left';
+    if (days<0) { dotColor='#E24B4A'; pillClass='dp-r'; label='Expired'; expCount++; }
+    else if (days<=14) { dotColor='#E24B4A'; pillClass='dp-r'; label=days+'d left'; expCount++; }
+    else if (days<=30) { dotColor='#EF9F27'; pillClass='dp-a'; label=days+'d left'; expCount++; }
+    const dateStr = new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
     return `<div class="ei">
       <div class="exp-dot" style="background:${dotColor}"></div>
       <div class="exp-info"><div class="exp-name">${lic.name}</div><div class="exp-date">Expires ${dateStr}</div></div>
@@ -960,38 +1221,40 @@ function renderLicenses() {
   document.getElementById('expiry-badge').textContent = expCount;
   document.getElementById('expiry-badge').style.display = expCount ? 'inline' : 'none';
 }
-
 function openEditLicense(id) {
-  const lic = state.licenses.find(l => l.id === id);
+  const lic = state.licenses.find(l=>l.id===id);
   editingId = id;
   document.getElementById('edit-lic-name').value = lic.name;
   document.getElementById('edit-lic-date').value = lic.expiry;
   openModal('modal-license');
 }
 function saveLicense() {
-  const lic = state.licenses.find(l => l.id === editingId);
-  lic.name = document.getElementById('edit-lic-name').value.trim() || lic.name;
+  const lic = state.licenses.find(l=>l.id===editingId);
+  lic.name = document.getElementById('edit-lic-name').value.trim()||lic.name;
   lic.expiry = document.getElementById('edit-lic-date').value;
-  closeModal('modal-license'); initCalendarEvents(); renderLicenses(); renderCalendar();
+  closeModal('modal-license');
+  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
 }
 function deleteLicense() {
-  state.licenses = state.licenses.filter(l => l.id !== editingId);
-  closeModal('modal-license'); initCalendarEvents(); renderLicenses(); renderCalendar();
+  state.licenses = state.licenses.filter(l=>l.id!==editingId);
+  closeModal('modal-license');
+  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
 }
 function addLicense() {
   const name = document.getElementById('new-lic-name').value.trim();
   const date = document.getElementById('new-lic-date').value;
-  if (!name || !date) { alert('Please fill in all fields.'); return; }
-  state.licenses.push({id: state.nextId++, name, expiry: date});
-  document.getElementById('new-lic-name').value = '';
-  document.getElementById('new-lic-date').value = '';
-  closeForm('add-lic-form'); initCalendarEvents(); renderLicenses(); renderCalendar();
+  if (!name||!date) { alert('Please fill in all fields.'); return; }
+  state.licenses.push({id:state.nextId++,name,expiry:date});
+  document.getElementById('new-lic-name').value='';
+  document.getElementById('new-lic-date').value='';
+  closeForm('add-lic-form');
+  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
 }
 
 // ===== TRANSACTIONS =====
 function renderTransactions() {
   document.getElementById('tx-body').innerHTML = state.transactions.map(tx => {
-    const cls = tx.status === 'Paid' ? 'b-paid' : tx.status === 'Pending' ? 'b-pend' : 'b-over';
+    const cls = tx.status==='Paid'?'b-paid':tx.status==='Pending'?'b-pend':'b-over';
     return `<tr>
       <td style="color:var(--text-secondary)">${tx.date}</td>
       <td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company||''}</div></td>
@@ -1005,7 +1268,7 @@ function renderTransactions() {
   }).join('');
 }
 function openEditTransaction(id) {
-  const tx = state.transactions.find(t => t.id === id);
+  const tx = state.transactions.find(t=>t.id===id);
   editingId = id;
   document.getElementById('edit-tx-company').value = tx.company||'';
   document.getElementById('edit-tx-client').value = tx.client;
@@ -1015,7 +1278,7 @@ function openEditTransaction(id) {
   openModal('modal-transaction');
 }
 function saveTransaction() {
-  const tx = state.transactions.find(t => t.id === editingId);
+  const tx = state.transactions.find(t=>t.id===editingId);
   tx.company = document.getElementById('edit-tx-company').value.trim();
   tx.client = document.getElementById('edit-tx-client').value.trim()||tx.client;
   tx.amount = parseFloat(document.getElementById('edit-tx-amount').value)||tx.amount;
@@ -1024,7 +1287,7 @@ function saveTransaction() {
   closeModal('modal-transaction'); renderTransactions();
 }
 function deleteTransaction() {
-  state.transactions = state.transactions.filter(t => t.id !== editingId);
+  state.transactions = state.transactions.filter(t=>t.id!==editingId);
   closeModal('modal-transaction'); renderTransactions();
 }
 function addTransaction() {
@@ -1036,136 +1299,57 @@ function addTransaction() {
   if (!client||!amount) { alert('Please fill in client name and amount.'); return; }
   const dateStr = TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
   state.transactions.unshift({id:state.nextId++,date:dateStr,company,client,desc:desc||'Payment',amount,status});
-  ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id=>{document.getElementById(id).value='';});
+  ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id=>document.getElementById(id).value='');
   closeForm('add-tx-form'); renderTransactions();
 }
 
-// ===== CALENDAR =====
-const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-function changeMonth(dir) {
-  state.calMonth+=dir;
-  if(state.calMonth>11){state.calMonth=0;state.calYear++;}
-  if(state.calMonth<0){state.calMonth=11;state.calYear--;}
-  state.selectedDate=null;
-  document.getElementById('schedule-panel').classList.remove('open');
-  renderCalendar();
-}
-function renderCalendar() {
-  document.getElementById('cal-month-label').textContent=MONTHS[state.calMonth]+' '+state.calYear;
-  const grid=document.getElementById('cal-grid');
-  grid.innerHTML=DAYS.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  const first=new Date(state.calYear,state.calMonth,1).getDay();
-  const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
-  const dip=new Date(state.calYear,state.calMonth,0).getDate();
-  for(let i=0;i<first;i++) grid.innerHTML+=`<div class="cal-day other-month"><div class="cal-day-num">${dip-first+1+i}</div></div>`;
-  for(let d=1;d<=dim;d++){
-    const isToday=d===TODAY.getDate()&&state.calMonth===TODAY.getMonth()&&state.calYear===TODAY.getFullYear();
-    const isSel=state.selectedDate&&state.selectedDate.d===d&&state.selectedDate.m===state.calMonth&&state.selectedDate.y===state.calYear;
-    const key=state.calYear+'-'+state.calMonth+'-'+d;
-    const evs=state.calendarEvents[key]||[];
-    const evHtml=evs.slice(0,2).map(ev=>`<div class="cal-event ${ev.cls}" title="${ev.label}">${ev.label}</div>`).join('');
-    const more=evs.length>2?`<div style="font-size:10px;color:var(--text-tertiary)">+${evs.length-2} more</div>`:'';
-    grid.innerHTML+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}" onclick="selectDay(${d})"><div class="cal-day-num">${d}</div>${evHtml}${more}</div>`;
-  }
-  const rem=(first+dim)%7===0?0:7-(first+dim)%7;
-  for(let i=1;i<=rem;i++) grid.innerHTML+=`<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
-}
-function selectDay(d) {
-  state.selectedDate={d,m:state.calMonth,y:state.calYear};
-  renderCalendar();
-  document.getElementById('schedule-panel').classList.add('open');
-  const dateStr=new Date(state.calYear,state.calMonth,d).toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('schedule-date-title').textContent=dateStr;
-  renderScheduleItems();
-}
-function renderScheduleItems() {
-  const {d,m,y}=state.selectedDate;
-  const key=y+'-'+m+'-'+d;
-  const evs=state.calendarEvents[key]||[];
-  const el=document.getElementById('schedule-items');
-  if(!evs.length){el.innerHTML='<div style="font-size:13px;color:var(--text-tertiary);margin-bottom:8px">No events on this day.</div>';return;}
-  el.innerHTML=evs.map(ev=>`<div class="sched-item">
-    <div style="width:8px;height:8px;border-radius:50%;background:${ev.cls==='ev-red'?'#E24B4A':ev.cls==='ev-amber'?'#EF9F27':ev.cls==='ev-green'?'#639922':'#185FA5'};flex-shrink:0"></div>
-    <span style="font-size:13px;color:var(--text-primary)">${ev.label}</span>
-    <span class="sched-rm" onclick="removeEvent('${key}',${ev.id})">✕ Remove</span>
-  </div>`).join('');
-}
-function addScheduleEvent() {
-  const label=document.getElementById('new-sched-label').value.trim();
-  const cls=document.getElementById('new-sched-color').value;
-  if(!label)return;
-  const {d,m,y}=state.selectedDate;
-  const key=y+'-'+m+'-'+d;
-  if(!state.calendarEvents[key])state.calendarEvents[key]=[];
-  state.calendarEvents[key].push({id:state.nextId++,label,cls});
-  document.getElementById('new-sched-label').value='';
-  renderCalendar();renderScheduleItems();
-}
-function removeEvent(key,id) {
-  state.calendarEvents[key]=state.calendarEvents[key].filter(e=>e.id!==id);
-  renderCalendar();renderScheduleItems();
-}
-
-// ===== MODAL HELPERS =====
-function openModal(id){document.getElementById(id).classList.remove('hidden');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;editingReqInfo=null;}
-document.querySelectorAll('.modal-overlay').forEach(el=>{
-  el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});
+// ===== MODAL & PANEL HELPERS =====
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); editingId=null; editingReqInfo=null; }
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target===el) closeModal(el.id); });
 });
 
-// ===== PANEL NAV =====
-const panelConfig={
+const panelConfig = {
   dashboard:{title:'Dashboard',primary:null,form:null},
   checklist:{title:'Document Checklist',primary:'+ New Project',form:null},
   licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},
   transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},
   admin:{title:'Admin Settings',primary:null,form:null},
 };
-let currentPanel='dashboard';
+let currentPanel = 'dashboard';
 
-function showPanel(name){
+function showPanel(name) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
-  document.querySelectorAll('.ni').forEach(n=>{
-    n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));
+  document.querySelectorAll('.ni').forEach(n => {
+    n.classList.toggle('active', n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));
   });
-  const cfg=panelConfig[name];
-  document.getElementById('page-title').textContent=cfg.title;
-  const pa=document.getElementById('primary-action');
-  if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}
-  else pa.style.display='none';
-  currentPanel=name;
+  const cfg = panelConfig[name];
+  document.getElementById('page-title').textContent = cfg.title;
+  const pa = document.getElementById('primary-action');
+  if (cfg.primary) { pa.style.display=''; pa.textContent=cfg.primary; } else pa.style.display='none';
+  currentPanel = name;
   document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));
 }
-
-function handlePrimaryAction(){
-  if(currentPanel==='checklist'){openNewProjectModal();return;}
-  const cfg=panelConfig[currentPanel];
-  if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');
+function handlePrimaryAction() {
+  if (currentPanel==='checklist') { openNewProjectModal(); return; }
+  const cfg = panelConfig[currentPanel];
+  if (cfg&&cfg.form) document.getElementById(cfg.form).classList.toggle('open');
 }
-
-function closeForm(id){document.getElementById(id).classList.remove('open');}
-
-function toggleSwitch(el){
-  const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';
-  el.style.background=isOn?'#d1d5db':'#185FA5';
-  el.querySelector('.tog-t').style.left=isOn?'2px':'18px';
+function closeForm(id) { document.getElementById(id).classList.remove('open'); }
+function toggleSwitch(el) {
+  const isOn = el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';
+  el.style.background = isOn?'#d1d5db':'#185FA5';
+  el.querySelector('.tog-t').style.left = isOn?'2px':'18px';
 }
-
-function switchLicTab(tab){
-  document.querySelectorAll('#panel-licenses .tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  document.querySelectorAll('#panel-licenses .tab-pane').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pane-'+tab).classList.add('active');
-}
-
 // ===== INIT =====
 initCalendarEvents();
+renderSidebarCal();
+renderDashboardCal();
 renderProjectsSidebar();
-if(state.projects.length){selectProject(state.projects[0].id);}
+if (state.projects.length) selectProject(state.projects[0].id);
 renderLicenses();
-renderCalendar();
 renderTransactions();
 updateStats();
 </script>
