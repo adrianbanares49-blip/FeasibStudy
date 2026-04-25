@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FeasibStudy-ComplianceHub</title>
+<title>ComplianceHub — Document Manager</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -1198,33 +1198,32 @@ function makeDefaultRequirements() {
   const id = () => state.nextId++;
   return {
     technical: [
-      // Class "A" — Legal Documents
-      {id:id(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership) — all pages, per Sec. 8.5.2 IRR',category:'Legal',checked:false},
-      {id:id(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA (whichever applicable)',category:'Legal',checked:false},
-      {id:id(),label:'Certified Copy of valid Mayor\'s / Business Permit or equivalent document',category:'Legal',checked:false},
-      {id:id(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (issued by BIR)',category:'Legal',checked:false},
-      {id:id(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024 stamped "received" by BIR or proof of submission to eAFS',category:'Legal',checked:false},
-      // Class "A" — Technical Documents
-      {id:id(),label:'Statement of all Ongoing Government and Private Contracts (including contracts awarded but not yet started)',category:'Operations',checked:false},
-      {id:id(),label:'Statement of Single Largest Completed Contract (SLCC) similar to the contract to be bid',category:'Operations',checked:false},
-      {id:id(),label:'Original copy of Bid Security (Surety Bond + Insurance Commission certification, OR Notarized Bid Securing Declaration)',category:'Legal',checked:false},
-      {id:id(),label:'Conformity with Technical Specifications (may include production/delivery schedule, manpower requirements, after-sales/parts)',category:'Operations',checked:false},
-      {id:id(),label:'Original duly signed Omnibus Sworn Statement (OSS); and if applicable, Notarized Secretary\'s Certificate / Special Power of Attorney',category:'Legal',checked:false},
+      // ── Class "A" Documents · Legal Documents ──
+      {id:id(),label:'(a) Valid PhilGEPS Registration Certificate (Platinum Membership) — all pages, in accordance with Sec. 8.5.2 of the IRR; Current and Updated copy',category:'Legal',checked:false},
+      {id:id(),label:'(a-i) Certified Copy of Registration Certificate from SEC, DTI, or CDA, whichever is applicable',category:'Legal',checked:false},
+      {id:id(),label:'(a-ii) Certified Copy of a valid Mayor\'s / Business Permit or its Equivalent Document',category:'Legal',checked:false},
+      {id:id(),label:'(a-iii) Certified Copy of a valid Tax Clearance Certificate for FY 2025 issued by the BIR',category:'Legal',checked:false},
+      {id:id(),label:'(a-iv) Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024 stamped "received" by BIR or its duly accredited/authorized institutions, or proof of submission to eAFS',category:'Legal',checked:false},
+      // ── Class "A" Documents · Technical Documents ──
+      {id:id(),label:'(b) Statement of the prospective bidder of all its Ongoing Government and Private Contracts, including contracts awarded but not yet started, if any, whether similar or not similar in nature and complexity to the contract to be bid',category:'Operations',checked:false},
+      {id:id(),label:'(c) Statement of the bidder\'s Single Largest Completed Contract (SLCC) similar to the contract to be bid, per Sections 23.4.1.3 and 23.4.2.4 of the 2016 revised IRR of RA No. 9184',category:'Operations',checked:false},
+      {id:id(),label:'(d) Original copy of Bid Security — if Surety Bond, submit also Insurance Commission certification; OR Original copy of Notarized Bid Securing Declaration',category:'Legal',checked:false},
+      {id:id(),label:'(e) Conformity with the Technical Specifications, which may include production/delivery schedule, manpower requirements, and/or after-sales/parts, if applicable',category:'Operations',checked:false},
+      {id:id(),label:'(f) Original duly signed Omnibus Sworn Statement (OSS); and if applicable, Original Notarized Secretary\'s Certificate (for corporation/partnership/cooperative) or Original Special Power of Attorney of all JV members',category:'Legal',checked:false},
     ],
     financial: [
-      // Class "A" — Financial Documents
-      {id:id(),label:'Computation of Net Financial Contracting Capacity (NFCC) OR Committed Line of Credit from Universal/Commercial Bank in lieu of NFCC',category:'Finance',checked:false},
-      // Financial Component Envelope
-      {id:id(),label:'Original duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},
-      {id:id(),label:'Original duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false},
+      // ── Class "A" Documents · Financial Documents ──
+      {id:id(),label:'(g) Net Financial Contracting Capacity (NFCC) computation; OR Committed Line of Credit from a Universal or Commercial Bank in lieu of NFCC computation',category:'Finance',checked:false},
+      // ── Class "B" Documents ──
+      {id:id(),label:'(h) [If applicable] Duly signed Joint Venture Agreement (JVA) if JV is already in existence; OR Duly notarized statements from all potential JV partners that they will enter into and abide by the JVA if the bid is successful',category:'Finance',checked:false},
+      // ── II. Financial Component Envelope ──
+      {id:id(),label:'(i) Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},
+      {id:id(),label:'(j) Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false},
+      // ── Other documentary requirements under RA No. 9184 ──
+      {id:id(),label:'(k) [For foreign bidders claiming reciprocal rights] Certification from the relevant government office of their country stating that Filipinos are allowed to participate in government procurement for the same item or product',category:'Compliance',checked:false},
+      {id:id(),label:'(l) Certification from the DTI if the Bidder claims preference as a Domestic Bidder or Domestic Entity',category:'Compliance',checked:false},
     ],
-    other: [
-      // Class "B"
-      {id:id(),label:'[If applicable] Duly signed Joint Venture Agreement (JVA) or duly notarized statements from all potential JV partners',category:'Compliance',checked:false},
-      // Other documentary requirements under RA 9184
-      {id:id(),label:'[For foreign bidders] Certification from relevant government office that Filipinos are allowed to participate in procurement for the same item (reciprocal rights)',category:'Compliance',checked:false},
-      {id:id(),label:'[If claiming preference] Certification from DTI as Domestic Bidder or Domestic Entity',category:'Compliance',checked:false},
-    ]
+    other: []
   };
 }
 function saveProject(){
