@@ -1,4 +1,9 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComplianceHub — Document Manager</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -53,8 +58,8 @@ nav{padding:10px 0;flex:1}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
 .fg label{display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px}
-.fg input,.fg select{width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);background:var(--bg-primary);color:var(--text-primary);font-size:13px;font-family:inherit;outline:none}
-.fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.1)}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);background:var(--bg-primary);color:var(--text-primary);font-size:13px;font-family:inherit;outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.1)}
 .form-actions{display:flex;gap:8px;justify-content:flex-end}
 .section-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
 .checklist-list{display:flex;flex-direction:column;gap:8px}
@@ -143,15 +148,50 @@ nav{padding:10px 0;flex:1}
 .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
 .tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
 .tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-
-/* Edit Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
 .modal-overlay.hidden{display:none}
 .modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
 .modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
 .modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
 .modal-footer-right{display:flex;gap:8px}
+
+/* ===== PROJECT STYLES ===== */
+.projects-layout{display:flex;gap:16px;min-height:400px}
+.projects-sidebar{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:8px}
+.project-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;cursor:pointer;transition:all .15s;position:relative}
+.project-card:hover{border-color:#B5D4F4;background:var(--blue-light)}
+.project-card.active{border-color:var(--blue);background:var(--blue-light)}
+.project-card-name{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:4px;padding-right:20px}
+.project-card-meta{font-size:11px;color:var(--text-tertiary)}
+.project-card-prog{margin-top:8px}
+.proj-pb{background:var(--bg-tertiary);border-radius:4px;height:4px;overflow:hidden}
+.proj-pb-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .3s}
+.project-card-del{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-tertiary);cursor:pointer;border:none;background:transparent}
+.project-card-del:hover{background:var(--red-light);color:var(--red)}
+.proj-add-btn{border:1.5px dashed var(--border-strong);background:transparent;border-radius:var(--rl);padding:12px 14px;cursor:pointer;font-size:13px;color:var(--text-secondary);text-align:center;font-family:inherit;width:100%;transition:all .15s}
+.proj-add-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light)}
+.project-detail{flex:1;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.project-detail-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.project-detail-title{font-size:14px;font-weight:500;color:var(--text-primary)}
+.project-detail-desc{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.project-detail-body{padding:16px}
+.req-tab-bar{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:14px}
+.req-tab{padding:8px 16px;font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1.5px;user-select:none}
+.req-tab:hover{color:var(--text-primary)}
+.req-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.req-pane{display:none}.req-pane.active{display:block}
+.req-add-row{display:flex;gap:8px;margin-bottom:12px}
+.req-add-row input,.req-add-row select{padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
+.req-add-row input:focus,.req-add-row select:focus{border-color:var(--blue)}
+.req-add-row input{flex:1}
+.proj-empty{text-align:center;padding:60px 20px;color:var(--text-tertiary);font-size:13px}
+.proj-empty-icon{font-size:32px;margin-bottom:12px;opacity:.4}
+.progress-summary{display:flex;gap:16px;padding:10px 16px;border-top:1px solid var(--border);background:var(--bg-secondary)}
+.prog-stat{font-size:12px;color:var(--text-secondary)}
+.prog-stat strong{color:var(--text-primary)}
 </style>
+</head>
+<body>
 
 <div class="app">
   <aside class="sidebar">
@@ -192,7 +232,7 @@ nav{padding:10px 0;flex:1}
     <div class="topbar">
       <div class="ptitle" id="page-title">Dashboard</div>
       <div>
-        <button class="btn btnp" id="primary-action" style="display:none" onclick="handlePrimaryAction()">+ Add Item</button>
+        <button class="btn btnp" id="primary-action" style="display:none" onclick="handlePrimaryAction()">+ Add</button>
       </div>
     </div>
 
@@ -203,7 +243,7 @@ nav{padding:10px 0;flex:1}
         <div class="notif notif-d"><div class="ndot dot-r"></div><strong>2 licenses expiring within 30 days.</strong>&nbsp; Review in the Licenses tab.</div>
         <div class="notif notif-w"><div class="ndot dot-a"></div><strong>1 payment overdue.</strong>&nbsp; Check Transactions for details.</div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Checklist Items</div><div class="stat-value" id="stat-total">10</div><div class="stat-sub c-green" id="stat-done-count">4 completed</div></div>
+          <div class="stat-card"><div class="stat-label">Checklist Items</div><div class="stat-value" id="stat-total">0</div><div class="stat-sub c-green" id="stat-done-count">0 completed</div></div>
           <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
           <div class="stat-card"><div class="stat-label">Total Collected</div><div class="stat-value">₱42,500</div><div class="stat-sub c-amber">₱8,000 pending</div></div>
         </div>
@@ -212,39 +252,70 @@ nav{padding:10px 0;flex:1}
         <div class="act-item"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
       </div>
 
-      <!-- Checklist -->
+      <!-- Checklist (Projects) -->
       <div class="panel" id="panel-checklist">
         <div class="tab-bar">
-          <div class="tab active" onclick="switchTab('technical')" id="tab-technical">Technical Requirements</div>
-          <div class="tab" onclick="switchTab('financial')" id="tab-financial">Financial Requirements</div>
+          <div class="tab active" onclick="switchCheckTab('projects')" id="tab-projects">Projects</div>
+          <div class="tab" onclick="switchCheckTab('overview')" id="tab-overview">All Requirements</div>
         </div>
-        <div class="tab-pane active" id="pane-technical">
-          <div class="add-form" id="add-tech-form">
-            <div class="form-row">
-              <div class="fg"><label>Requirement Name</label><input type="text" id="tech-name" placeholder="e.g. Fire Safety Inspection Certificate"></div>
-              <div class="fg"><label>Category</label><select id="tech-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option></select></div>
+
+        <!-- Projects tab -->
+        <div class="tab-pane active" id="pane-projects">
+          <div class="projects-layout">
+            <!-- Left: project list -->
+            <div class="projects-sidebar" id="projects-sidebar">
+              <!-- rendered by JS -->
             </div>
-            <div class="form-actions">
-              <button class="btn" onclick="closeForm('add-tech-form')">Cancel</button>
-              <button class="btn btnp" onclick="addItem('technical')">Add Item</button>
+            <!-- Right: project detail -->
+            <div id="project-detail-area">
+              <div class="proj-empty" id="proj-empty-state">
+                <div class="proj-empty-icon">📁</div>
+                <div>Select a project to view its requirements,<br>or create a new one.</div>
+              </div>
+              <div class="project-detail hidden" id="project-detail">
+                <div class="project-detail-header">
+                  <div>
+                    <div class="project-detail-title" id="proj-detail-name"></div>
+                    <div class="project-detail-desc" id="proj-detail-desc"></div>
+                  </div>
+                  <div class="row-actions">
+                    <button class="icon-btn edit-btn" onclick="openEditProject()">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+                      Edit Project
+                    </button>
+                  </div>
+                </div>
+                <div class="project-detail-body">
+                  <div class="req-tab-bar">
+                    <div class="req-tab active" onclick="switchReqTab('technical')" id="rtab-technical">Technical Requirements</div>
+                    <div class="req-tab" onclick="switchReqTab('financial')" id="rtab-financial">Financial Requirements</div>
+                  </div>
+                  <div class="req-pane active" id="rpane-technical">
+                    <div class="req-add-row">
+                      <input type="text" id="new-tech-req" placeholder="Add technical requirement…">
+                      <select id="new-tech-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option></select>
+                      <button class="btn btnp btnsm" onclick="addRequirement('technical')">Add</button>
+                    </div>
+                    <div class="checklist-list" id="req-list-technical"></div>
+                  </div>
+                  <div class="req-pane" id="rpane-financial">
+                    <div class="req-add-row">
+                      <input type="text" id="new-fin-req" placeholder="Add financial requirement…">
+                      <select id="new-fin-cat"><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option></select>
+                      <button class="btn btnp btnsm" onclick="addRequirement('financial')">Add</button>
+                    </div>
+                    <div class="checklist-list" id="req-list-financial"></div>
+                  </div>
+                </div>
+                <div class="progress-summary" id="proj-progress-summary"></div>
+              </div>
             </div>
           </div>
-          <p class="section-title">Technical Requirements</p>
-          <div class="checklist-list" id="list-technical"></div>
         </div>
-        <div class="tab-pane" id="pane-financial">
-          <div class="add-form" id="add-fin-form">
-            <div class="form-row">
-              <div class="fg"><label>Requirement Name</label><input type="text" id="fin-name" placeholder="e.g. Audited Financial Statements"></div>
-              <div class="fg"><label>Category</label><select id="fin-cat"><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option></select></div>
-            </div>
-            <div class="form-actions">
-              <button class="btn" onclick="closeForm('add-fin-form')">Cancel</button>
-              <button class="btn btnp" onclick="addItem('financial')">Add Item</button>
-            </div>
-          </div>
-          <p class="section-title">Financial Requirements</p>
-          <div class="checklist-list" id="list-financial"></div>
+
+        <!-- Overview tab: all requirements across all projects -->
+        <div class="tab-pane" id="pane-overview">
+          <div id="overview-content"></div>
         </div>
       </div>
 
@@ -282,7 +353,7 @@ nav{padding:10px 0;flex:1}
             <div class="schedule-date-title" id="schedule-date-title"></div>
             <div id="schedule-items"></div>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <input type="text" id="new-sched-label" placeholder="Add event (e.g. Submit BIR renewal)" style="flex:1;padding:7px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
+              <input type="text" id="new-sched-label" placeholder="Add event…" style="flex:1;padding:7px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
               <select id="new-sched-color" style="padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
                 <option value="ev-blue">Blue</option><option value="ev-green">Green</option><option value="ev-amber">Amber</option><option value="ev-red">Red</option>
               </select>
@@ -330,8 +401,8 @@ nav{padding:10px 0;flex:1}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
           <div class="admin-card">
             <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Checklist Progress</div>
-            <div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:40%;background:var(--blue)"></div></div>
-            <div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">4 of 10 items completed</div>
+            <div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:0%;background:var(--blue)"></div></div>
+            <div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">0 of 0 items completed</div>
           </div>
           <div class="admin-card">
             <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div>
@@ -369,14 +440,50 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
-<!-- Edit Modals -->
-<div class="modal-overlay hidden" id="modal-checklist">
+<!-- ===== MODALS ===== -->
+
+<!-- New Project Modal -->
+<div class="modal-overlay hidden" id="modal-new-project">
   <div class="modal">
-    <div class="modal-title">Edit Checklist Item</div>
+    <div class="modal-title" id="modal-project-title">New Project</div>
+    <div class="form-row" style="margin-bottom:12px">
+      <div class="fg"><label>Project Name</label><input type="text" id="proj-name-input" placeholder="e.g. Business Permit Renewal 2026"></div>
+      <div class="fg"><label>Client / Company</label><input type="text" id="proj-client-input" placeholder="e.g. Santos Enterprises"></div>
+    </div>
+    <div class="fg" style="margin-bottom:12px"><label>Description (optional)</label><input type="text" id="proj-desc-input" placeholder="Brief description of this project"></div>
+    <div class="modal-footer">
+      <div></div>
+      <div class="modal-footer-right">
+        <button class="btn" onclick="closeModal('modal-new-project')">Cancel</button>
+        <button class="btn btnp" id="save-project-btn" onclick="saveProject()">Create Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Project Modal -->
+<div class="modal-overlay hidden" id="modal-confirm-delete">
+  <div class="modal" style="width:380px">
+    <div class="modal-title">Remove Project?</div>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">This will permanently delete <strong id="del-proj-name"></strong> and all its requirements. This cannot be undone.</p>
+    <div class="modal-footer">
+      <div></div>
+      <div class="modal-footer-right">
+        <button class="btn" onclick="closeModal('modal-confirm-delete')">Cancel</button>
+        <button class="btn btndanger" onclick="confirmDeleteProject()">Delete Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Requirement Modal -->
+<div class="modal-overlay hidden" id="modal-req">
+  <div class="modal">
+    <div class="modal-title">Edit Requirement</div>
     <div class="form-row">
-      <div class="fg"><label>Requirement Name</label><input type="text" id="edit-cl-name"></div>
+      <div class="fg"><label>Requirement Name</label><input type="text" id="edit-req-name"></div>
       <div class="fg"><label>Category</label>
-        <select id="edit-cl-cat">
+        <select id="edit-req-cat">
           <option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option>
           <option>Environmental</option><option>Tax</option><option>Finance</option><option>HR</option>
           <option>Accounting</option><option>Insurance</option>
@@ -384,18 +491,19 @@ nav{padding:10px 0;flex:1}
       </div>
     </div>
     <div class="fg" style="margin-bottom:12px"><label>Status</label>
-      <select id="edit-cl-status"><option value="0">Pending</option><option value="1">Complete</option></select>
+      <select id="edit-req-status"><option value="0">Pending</option><option value="1">Complete</option></select>
     </div>
     <div class="modal-footer">
-      <button class="btn btndanger" onclick="deleteChecklist()">Delete</button>
+      <button class="btn btndanger" onclick="deleteRequirement()">Delete</button>
       <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-checklist')">Cancel</button>
-        <button class="btn btnp" onclick="saveChecklist()">Save Changes</button>
+        <button class="btn" onclick="closeModal('modal-req')">Cancel</button>
+        <button class="btn btnp" onclick="saveRequirement()">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Edit License Modal -->
 <div class="modal-overlay hidden" id="modal-license">
   <div class="modal">
     <div class="modal-title">Edit License</div>
@@ -413,6 +521,7 @@ nav{padding:10px 0;flex:1}
   </div>
 </div>
 
+<!-- Edit Transaction Modal -->
 <div class="modal-overlay hidden" id="modal-transaction">
   <div class="modal">
     <div class="modal-title">Edit Transaction</div>
@@ -438,21 +547,41 @@ nav{padding:10px 0;flex:1}
 <script>
 const TODAY = new Date('2026-04-25');
 let editingId = null;
+let editingReqInfo = null; // {projectId, type, reqId}
+let deletingProjectId = null;
 
 const state = {
-  technical: [
-    {id:1, label:'Business Permit', category:'Legal', checked:true},
-    {id:2, label:'DTI / SEC Registration', category:'Legal', checked:true},
-    {id:3, label:'Fire Safety Inspection Certificate', category:'Safety', checked:false},
-    {id:4, label:'Environmental Compliance Certificate', category:'Environmental', checked:false},
-    {id:5, label:'IT Security Assessment', category:'IT', checked:false},
-  ],
-  financial: [
-    {id:6, label:'BIR Certificate of Registration', category:'Tax', checked:true},
-    {id:7, label:'SSS Registration', category:'HR', checked:true},
-    {id:8, label:'PhilHealth Registration', category:'HR', checked:false},
-    {id:9, label:'Pag-IBIG Registration', category:'HR', checked:false},
-    {id:10, label:'Audited Financial Statements', category:'Finance', checked:false},
+  projects: [
+    {
+      id: 1,
+      name: 'Business Permit Renewal 2026',
+      client: 'Santos Enterprises',
+      desc: 'Annual renewal of city mayor\'s permit and related documents',
+      technical: [
+        {id:101, label:'Business Permit', category:'Legal', checked:true},
+        {id:102, label:'Fire Safety Inspection Certificate', category:'Safety', checked:false},
+        {id:103, label:'Zoning Clearance', category:'Legal', checked:true},
+      ],
+      financial: [
+        {id:104, label:'BIR Certificate of Registration', category:'Tax', checked:true},
+        {id:105, label:'Audited Financial Statements', category:'Finance', checked:false},
+      ]
+    },
+    {
+      id: 2,
+      name: 'HR Compliance 2026',
+      client: 'Internal',
+      desc: 'SSS, PhilHealth, Pag-IBIG and DOLE requirements',
+      technical: [
+        {id:201, label:'DOLE Registration', category:'Operations', checked:true},
+        {id:202, label:'OSHS Compliance Certificate', category:'Safety', checked:false},
+      ],
+      financial: [
+        {id:203, label:'SSS Registration', category:'HR', checked:true},
+        {id:204, label:'PhilHealth Registration', category:'HR', checked:false},
+        {id:205, label:'Pag-IBIG Registration', category:'HR', checked:false},
+      ]
+    }
   ],
   licenses: [
     {id:11, name:"Mayor's Business Permit", expiry:'2026-05-09'},
@@ -470,13 +599,310 @@ const state = {
     {id:27, date:'Apr 5, 2026', company:'Tan Industries', client:'Carlos Tan', desc:'Document filing fee', amount:4500, status:'Overdue'},
   ],
   calendarEvents: {},
-  nextId: 50,
-  currentTab: 'technical',
+  nextId: 500,
+  activeProjectId: null,
+  activeReqTab: 'technical',
+  activeCheckTab: 'projects',
   calYear: 2026,
   calMonth: 3,
   selectedDate: null,
+  editingProjectId: null,
 };
 
+// ===== PROJECTS =====
+function getProject(id) { return state.projects.find(p => p.id === id); }
+
+function getAllRequirements() {
+  const all = [];
+  state.projects.forEach(p => {
+    p.technical.forEach(r => all.push({...r, projectName: p.name, type:'technical'}));
+    p.financial.forEach(r => all.push({...r, projectName: p.name, type:'financial'}));
+  });
+  return all;
+}
+
+function getProjectProgress(proj) {
+  const all = [...proj.technical, ...proj.financial];
+  const done = all.filter(r => r.checked).length;
+  return {done, total: all.length};
+}
+
+function renderProjectsSidebar() {
+  const sidebar = document.getElementById('projects-sidebar');
+  let html = '';
+  state.projects.forEach(proj => {
+    const {done, total} = getProjectProgress(proj);
+    const pct = total ? Math.round(done / total * 100) : 0;
+    const isActive = proj.id === state.activeProjectId;
+    html += `<div class="project-card ${isActive ? 'active' : ''}" onclick="selectProject(${proj.id})">
+      <button class="project-card-del" onclick="event.stopPropagation();promptDeleteProject(${proj.id})" title="Remove project">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="project-card-name">${proj.name}</div>
+      <div class="project-card-meta">${proj.client} · ${total} items</div>
+      <div class="project-card-prog">
+        <div class="proj-pb"><div class="proj-pb-fill" style="width:${pct}%"></div></div>
+        <div style="font-size:10px;color:var(--text-tertiary);margin-top:3px">${done}/${total} complete</div>
+      </div>
+    </div>`;
+  });
+  html += `<button class="proj-add-btn" onclick="openNewProjectModal()">+ New Project</button>`;
+  sidebar.innerHTML = html;
+}
+
+function selectProject(id) {
+  state.activeProjectId = id;
+  renderProjectsSidebar();
+  renderProjectDetail();
+}
+
+function renderProjectDetail() {
+  const proj = getProject(state.activeProjectId);
+  const emptyState = document.getElementById('proj-empty-state');
+  const detail = document.getElementById('project-detail');
+  if (!proj) {
+    emptyState.style.display = 'block';
+    detail.classList.add('hidden');
+    return;
+  }
+  emptyState.style.display = 'none';
+  detail.classList.remove('hidden');
+  document.getElementById('proj-detail-name').textContent = proj.name;
+  document.getElementById('proj-detail-desc').textContent = proj.client + (proj.desc ? ' · ' + proj.desc : '');
+  renderReqList('technical');
+  renderReqList('financial');
+  renderProjectProgress();
+}
+
+function renderReqList(type) {
+  const proj = getProject(state.activeProjectId);
+  if (!proj) return;
+  const container = document.getElementById('req-list-' + type);
+  const items = proj[type];
+  if (!items.length) {
+    container.innerHTML = `<div class="empty-state">No ${type} requirements yet. Add one above.</div>`;
+    return;
+  }
+  container.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'ci';
+    div.innerHTML = `<div class="ci-header">
+      <div class="cb ${item.checked ? 'checked' : ''}" onclick="toggleReq(${state.activeProjectId},'${type}',${item.id})"></div>
+      <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
+      <span class="ccat">${item.category}</span>
+      <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
+      <div class="row-actions" style="margin-left:8px">
+        <button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          Edit
+        </button>
+      </div>
+    </div>`;
+    container.appendChild(div);
+  });
+  renderProjectProgress();
+}
+
+function renderProjectProgress() {
+  const proj = getProject(state.activeProjectId);
+  if (!proj) return;
+  const techDone = proj.technical.filter(r => r.checked).length;
+  const finDone = proj.financial.filter(r => r.checked).length;
+  const total = proj.technical.length + proj.financial.length;
+  const done = techDone + finDone;
+  document.getElementById('proj-progress-summary').innerHTML = `
+    <span class="prog-stat">Technical: <strong>${techDone}/${proj.technical.length}</strong></span>
+    <span class="prog-stat">Financial: <strong>${finDone}/${proj.financial.length}</strong></span>
+    <span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;
+  updateStats();
+}
+
+function toggleReq(projectId, type, reqId) {
+  const proj = getProject(projectId);
+  if (!proj) return;
+  const item = proj[type].find(r => r.id === reqId);
+  if (item) item.checked = !item.checked;
+  renderReqList(type);
+  renderProjectsSidebar();
+}
+
+function addRequirement(type) {
+  const proj = getProject(state.activeProjectId);
+  if (!proj) return;
+  const inputId = type === 'technical' ? 'new-tech-req' : 'new-fin-req';
+  const catId = type === 'technical' ? 'new-tech-cat' : 'new-fin-cat';
+  const label = document.getElementById(inputId).value.trim();
+  if (!label) return;
+  proj[type].push({id: state.nextId++, label, category: document.getElementById(catId).value, checked: false});
+  document.getElementById(inputId).value = '';
+  renderReqList(type);
+  renderProjectsSidebar();
+}
+
+function openEditReq(projectId, type, reqId) {
+  const proj = getProject(projectId);
+  if (!proj) return;
+  const item = proj[type].find(r => r.id === reqId);
+  if (!item) return;
+  editingReqInfo = {projectId, type, reqId};
+  document.getElementById('edit-req-name').value = item.label;
+  document.getElementById('edit-req-cat').value = item.category;
+  document.getElementById('edit-req-status').value = item.checked ? '1' : '0';
+  openModal('modal-req');
+}
+
+function saveRequirement() {
+  const {projectId, type, reqId} = editingReqInfo;
+  const proj = getProject(projectId);
+  const item = proj[type].find(r => r.id === reqId);
+  item.label = document.getElementById('edit-req-name').value.trim() || item.label;
+  item.category = document.getElementById('edit-req-cat').value;
+  item.checked = document.getElementById('edit-req-status').value === '1';
+  closeModal('modal-req');
+  renderReqList(type);
+  renderProjectsSidebar();
+}
+
+function deleteRequirement() {
+  const {projectId, type, reqId} = editingReqInfo;
+  const proj = getProject(projectId);
+  proj[type] = proj[type].filter(r => r.id !== reqId);
+  closeModal('modal-req');
+  renderReqList(type);
+  renderProjectsSidebar();
+}
+
+function switchReqTab(tab) {
+  state.activeReqTab = tab;
+  document.querySelectorAll('.req-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('rtab-' + tab).classList.add('active');
+  document.querySelectorAll('.req-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('rpane-' + tab).classList.add('active');
+}
+
+// New / Edit project modal
+function openNewProjectModal() {
+  state.editingProjectId = null;
+  document.getElementById('modal-project-title').textContent = 'New Project';
+  document.getElementById('save-project-btn').textContent = 'Create Project';
+  document.getElementById('proj-name-input').value = '';
+  document.getElementById('proj-client-input').value = '';
+  document.getElementById('proj-desc-input').value = '';
+  openModal('modal-new-project');
+}
+
+function openEditProject() {
+  const proj = getProject(state.activeProjectId);
+  if (!proj) return;
+  state.editingProjectId = proj.id;
+  document.getElementById('modal-project-title').textContent = 'Edit Project';
+  document.getElementById('save-project-btn').textContent = 'Save Changes';
+  document.getElementById('proj-name-input').value = proj.name;
+  document.getElementById('proj-client-input').value = proj.client;
+  document.getElementById('proj-desc-input').value = proj.desc;
+  openModal('modal-new-project');
+}
+
+function saveProject() {
+  const name = document.getElementById('proj-name-input').value.trim();
+  const client = document.getElementById('proj-client-input').value.trim();
+  const desc = document.getElementById('proj-desc-input').value.trim();
+  if (!name) { alert('Please enter a project name.'); return; }
+  if (state.editingProjectId) {
+    const proj = getProject(state.editingProjectId);
+    proj.name = name; proj.client = client; proj.desc = desc;
+  } else {
+    const newProj = {id: state.nextId++, name, client, desc, technical: [], financial: []};
+    state.projects.push(newProj);
+    state.activeProjectId = newProj.id;
+  }
+  closeModal('modal-new-project');
+  renderProjectsSidebar();
+  renderProjectDetail();
+}
+
+function promptDeleteProject(id) {
+  deletingProjectId = id;
+  const proj = getProject(id);
+  document.getElementById('del-proj-name').textContent = proj.name;
+  openModal('modal-confirm-delete');
+}
+
+function confirmDeleteProject() {
+  state.projects = state.projects.filter(p => p.id !== deletingProjectId);
+  if (state.activeProjectId === deletingProjectId) {
+    state.activeProjectId = state.projects.length ? state.projects[0].id : null;
+  }
+  deletingProjectId = null;
+  closeModal('modal-confirm-delete');
+  renderProjectsSidebar();
+  renderProjectDetail();
+  updateStats();
+}
+
+// Overview tab
+function renderOverview() {
+  const el = document.getElementById('overview-content');
+  if (!state.projects.length) {
+    el.innerHTML = '<div class="empty-state">No projects yet. Create one in the Projects tab.</div>';
+    return;
+  }
+  let html = '';
+  state.projects.forEach(proj => {
+    const {done, total} = getProjectProgress(proj);
+    const pct = total ? Math.round(done/total*100) : 0;
+    html += `<div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span>
+          <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span>
+        </div>
+        <span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span>
+      </div>`;
+    ['technical','financial'].forEach(type => {
+      if (!proj[type].length) return;
+      html += `<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p>
+        <div class="checklist-list" style="margin-bottom:10px">`;
+      proj[type].forEach(item => {
+        html += `<div class="ci"><div class="ci-header">
+          <div class="cb ${item.checked ? 'checked' : ''}"></div>
+          <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
+          <span class="ccat">${item.category}</span>
+          <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
+        </div></div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;
+  });
+  el.innerHTML = html;
+}
+
+function switchCheckTab(tab) {
+  state.activeCheckTab = tab;
+  document.querySelectorAll('#panel-checklist .tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('#panel-checklist .tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+  if (tab === 'overview') renderOverview();
+}
+
+// ===== STATS =====
+function updateStats() {
+  const all = getAllRequirements();
+  const done = all.filter(r => r.checked).length;
+  const total = all.length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-done-count').textContent = done + ' completed';
+  const pct = total ? Math.round(done/total*100) : 0;
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.width = pct + '%';
+  const lbl = document.getElementById('progress-label');
+  if (lbl) lbl.textContent = done + ' of ' + total + ' items completed';
+}
+
+// ===== LICENSES =====
 function initCalendarEvents() {
   state.calendarEvents = {};
   state.licenses.forEach(lic => {
@@ -490,90 +916,6 @@ function initCalendarEvents() {
   });
 }
 
-// --- Checklist ---
-function renderList(type) {
-  const container = document.getElementById('list-' + type);
-  const items = state[type];
-  if (!items.length) { container.innerHTML = '<div class="empty-state">No requirements yet.</div>'; return; }
-  container.innerHTML = '';
-  items.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'ci';
-    div.innerHTML = `<div class="ci-header">
-      <div class="cb ${item.checked ? 'checked' : ''}" onclick="toggleDone('${type}',${item.id})"></div>
-      <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
-      <span class="ccat">${item.category}</span>
-      <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
-      <div class="row-actions" style="margin-left:8px">
-        <button class="icon-btn edit-btn" onclick="openEditChecklist('${type}',${item.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          Edit
-        </button>
-      </div>
-    </div>`;
-    container.appendChild(div);
-  });
-  updateStats();
-}
-
-function openEditChecklist(type, id) {
-  const item = state[type].find(i => i.id === id);
-  if (!item) return;
-  editingId = {type, id};
-  document.getElementById('edit-cl-name').value = item.label;
-  document.getElementById('edit-cl-cat').value = item.category;
-  document.getElementById('edit-cl-status').value = item.checked ? '1' : '0';
-  openModal('modal-checklist');
-}
-
-function saveChecklist() {
-  const {type, id} = editingId;
-  const item = state[type].find(i => i.id === id);
-  item.label = document.getElementById('edit-cl-name').value.trim() || item.label;
-  item.category = document.getElementById('edit-cl-cat').value;
-  item.checked = document.getElementById('edit-cl-status').value === '1';
-  closeModal('modal-checklist');
-  renderList(type);
-}
-
-function deleteChecklist() {
-  const {type, id} = editingId;
-  state[type] = state[type].filter(i => i.id !== id);
-  closeModal('modal-checklist');
-  renderList(type);
-}
-
-function toggleDone(type, id) {
-  const item = state[type].find(i => i.id === id);
-  if (item) item.checked = !item.checked;
-  renderList(type);
-}
-
-function addItem(type) {
-  const nameEl = document.getElementById(type === 'technical' ? 'tech-name' : 'fin-name');
-  const catEl = document.getElementById(type === 'technical' ? 'tech-cat' : 'fin-cat');
-  const name = nameEl.value.trim();
-  if (!name) { alert('Please enter a requirement name.'); return; }
-  state[type].push({id: state.nextId++, label: name, category: catEl.value, checked: false});
-  nameEl.value = '';
-  closeForm(type === 'technical' ? 'add-tech-form' : 'add-fin-form');
-  renderList(type);
-}
-
-function updateStats() {
-  const all = [...state.technical, ...state.financial];
-  const done = all.filter(i => i.checked).length;
-  const total = all.length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-done-count').textContent = done + ' completed';
-  const pct = total ? Math.round(done / total * 100) : 0;
-  const bar = document.getElementById('progress-bar');
-  if (bar) bar.style.width = pct + '%';
-  const lbl = document.getElementById('progress-label');
-  if (lbl) lbl.textContent = done + ' of ' + total + ' items completed';
-}
-
-// --- Licenses ---
 function renderLicenses() {
   const list = document.getElementById('expiry-list');
   const sorted = [...state.licenses].sort((a,b) => new Date(a.expiry) - new Date(b.expiry));
@@ -591,8 +933,7 @@ function renderLicenses() {
       <span class="days-pill ${pillClass}">${label}</span>
       <div class="row-actions" style="margin-left:8px">
         <button class="icon-btn edit-btn" onclick="openEditLicense(${lic.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          Edit
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit
         </button>
       </div>
     </div>`;
@@ -603,31 +944,21 @@ function renderLicenses() {
 
 function openEditLicense(id) {
   const lic = state.licenses.find(l => l.id === id);
-  if (!lic) return;
   editingId = id;
   document.getElementById('edit-lic-name').value = lic.name;
   document.getElementById('edit-lic-date').value = lic.expiry;
   openModal('modal-license');
 }
-
 function saveLicense() {
   const lic = state.licenses.find(l => l.id === editingId);
   lic.name = document.getElementById('edit-lic-name').value.trim() || lic.name;
   lic.expiry = document.getElementById('edit-lic-date').value;
-  closeModal('modal-license');
-  initCalendarEvents();
-  renderLicenses();
-  renderCalendar();
+  closeModal('modal-license'); initCalendarEvents(); renderLicenses(); renderCalendar();
 }
-
 function deleteLicense() {
   state.licenses = state.licenses.filter(l => l.id !== editingId);
-  closeModal('modal-license');
-  initCalendarEvents();
-  renderLicenses();
-  renderCalendar();
+  closeModal('modal-license'); initCalendarEvents(); renderLicenses(); renderCalendar();
 }
-
 function addLicense() {
   const name = document.getElementById('new-lic-name').value.trim();
   const date = document.getElementById('new-lic-date').value;
@@ -635,229 +966,189 @@ function addLicense() {
   state.licenses.push({id: state.nextId++, name, expiry: date});
   document.getElementById('new-lic-name').value = '';
   document.getElementById('new-lic-date').value = '';
-  closeForm('add-lic-form');
-  initCalendarEvents();
-  renderLicenses();
-  renderCalendar();
+  closeForm('add-lic-form'); initCalendarEvents(); renderLicenses(); renderCalendar();
 }
 
-// --- Transactions ---
+// ===== TRANSACTIONS =====
 function renderTransactions() {
   document.getElementById('tx-body').innerHTML = state.transactions.map(tx => {
     const cls = tx.status === 'Paid' ? 'b-paid' : tx.status === 'Pending' ? 'b-pend' : 'b-over';
     return `<tr>
       <td style="color:var(--text-secondary)">${tx.date}</td>
-      <td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company || ''}</div></td>
+      <td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company||''}</div></td>
       <td style="color:var(--text-secondary)">${tx.desc}</td>
       <td class="txamt">₱${tx.amount.toLocaleString()}</td>
       <td><span class="badge ${cls}">${tx.status}</span></td>
-      <td>
-        <button class="icon-btn edit-btn" onclick="openEditTransaction(${tx.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          Edit
-        </button>
-      </td>
+      <td><button class="icon-btn edit-btn" onclick="openEditTransaction(${tx.id})">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit
+      </button></td>
     </tr>`;
   }).join('');
 }
-
 function openEditTransaction(id) {
   const tx = state.transactions.find(t => t.id === id);
-  if (!tx) return;
   editingId = id;
-  document.getElementById('edit-tx-company').value = tx.company || '';
+  document.getElementById('edit-tx-company').value = tx.company||'';
   document.getElementById('edit-tx-client').value = tx.client;
   document.getElementById('edit-tx-amount').value = tx.amount;
   document.getElementById('edit-tx-desc').value = tx.desc;
   document.getElementById('edit-tx-status').value = tx.status;
   openModal('modal-transaction');
 }
-
 function saveTransaction() {
   const tx = state.transactions.find(t => t.id === editingId);
   tx.company = document.getElementById('edit-tx-company').value.trim();
-  tx.client = document.getElementById('edit-tx-client').value.trim() || tx.client;
-  tx.amount = parseFloat(document.getElementById('edit-tx-amount').value) || tx.amount;
-  tx.desc = document.getElementById('edit-tx-desc').value.trim() || tx.desc;
+  tx.client = document.getElementById('edit-tx-client').value.trim()||tx.client;
+  tx.amount = parseFloat(document.getElementById('edit-tx-amount').value)||tx.amount;
+  tx.desc = document.getElementById('edit-tx-desc').value.trim()||tx.desc;
   tx.status = document.getElementById('edit-tx-status').value;
-  closeModal('modal-transaction');
-  renderTransactions();
+  closeModal('modal-transaction'); renderTransactions();
 }
-
 function deleteTransaction() {
   state.transactions = state.transactions.filter(t => t.id !== editingId);
-  closeModal('modal-transaction');
-  renderTransactions();
+  closeModal('modal-transaction'); renderTransactions();
 }
-
 function addTransaction() {
   const company = document.getElementById('new-tx-company').value.trim();
   const client = document.getElementById('new-tx-client').value.trim();
   const amount = parseFloat(document.getElementById('new-tx-amount').value);
   const desc = document.getElementById('new-tx-desc').value.trim();
   const status = document.getElementById('new-tx-status').value;
-  if (!client || !amount) { alert('Please fill in client name and amount.'); return; }
-  const dateStr = TODAY.toLocaleDateString('en-PH', {year:'numeric',month:'short',day:'numeric'});
-  state.transactions.unshift({id: state.nextId++, date: dateStr, company, client, desc: desc || 'Payment', amount, status});
-  ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id => { document.getElementById(id).value = ''; });
-  closeForm('add-tx-form');
-  renderTransactions();
+  if (!client||!amount) { alert('Please fill in client name and amount.'); return; }
+  const dateStr = TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+  state.transactions.unshift({id:state.nextId++,date:dateStr,company,client,desc:desc||'Payment',amount,status});
+  ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id=>{document.getElementById(id).value='';});
+  closeForm('add-tx-form'); renderTransactions();
 }
 
-// --- Modal helpers ---
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); editingId = null; }
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
-});
-
-// --- Calendar ---
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
+// ===== CALENDAR =====
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 function changeMonth(dir) {
-  state.calMonth += dir;
-  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
-  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
-  state.selectedDate = null;
+  state.calMonth+=dir;
+  if(state.calMonth>11){state.calMonth=0;state.calYear++;}
+  if(state.calMonth<0){state.calMonth=11;state.calYear--;}
+  state.selectedDate=null;
   document.getElementById('schedule-panel').classList.remove('open');
   renderCalendar();
 }
-
 function renderCalendar() {
-  document.getElementById('cal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
-  const grid = document.getElementById('cal-grid');
-  grid.innerHTML = DAYS.map(d => `<div class="cal-dow">${d}</div>`).join('');
-  const first = new Date(state.calYear, state.calMonth, 1).getDay();
-  const daysInMonth = new Date(state.calYear, state.calMonth + 1, 0).getDate();
-  const daysInPrev = new Date(state.calYear, state.calMonth, 0).getDate();
-  for (let i = 0; i < first; i++) {
-    grid.innerHTML += `<div class="cal-day other-month"><div class="cal-day-num">${daysInPrev - first + 1 + i}</div></div>`;
+  document.getElementById('cal-month-label').textContent=MONTHS[state.calMonth]+' '+state.calYear;
+  const grid=document.getElementById('cal-grid');
+  grid.innerHTML=DAYS.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const first=new Date(state.calYear,state.calMonth,1).getDay();
+  const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
+  const dip=new Date(state.calYear,state.calMonth,0).getDate();
+  for(let i=0;i<first;i++) grid.innerHTML+=`<div class="cal-day other-month"><div class="cal-day-num">${dip-first+1+i}</div></div>`;
+  for(let d=1;d<=dim;d++){
+    const isToday=d===TODAY.getDate()&&state.calMonth===TODAY.getMonth()&&state.calYear===TODAY.getFullYear();
+    const isSel=state.selectedDate&&state.selectedDate.d===d&&state.selectedDate.m===state.calMonth&&state.selectedDate.y===state.calYear;
+    const key=state.calYear+'-'+state.calMonth+'-'+d;
+    const evs=state.calendarEvents[key]||[];
+    const evHtml=evs.slice(0,2).map(ev=>`<div class="cal-event ${ev.cls}" title="${ev.label}">${ev.label}</div>`).join('');
+    const more=evs.length>2?`<div style="font-size:10px;color:var(--text-tertiary)">+${evs.length-2} more</div>`:'';
+    grid.innerHTML+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}" onclick="selectDay(${d})"><div class="cal-day-num">${d}</div>${evHtml}${more}</div>`;
   }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
-    const isSelected = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
-    const key = state.calYear + '-' + state.calMonth + '-' + d;
-    const events = state.calendarEvents[key] || [];
-    const evHtml = events.slice(0,2).map(ev => `<div class="cal-event ${ev.cls}" title="${ev.label}">${ev.label}</div>`).join('');
-    const more = events.length > 2 ? `<div style="font-size:10px;color:var(--text-tertiary)">+${events.length-2} more</div>` : '';
-    grid.innerHTML += `<div class="cal-day${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" onclick="selectDay(${d})">
-      <div class="cal-day-num">${d}</div>${evHtml}${more}
-    </div>`;
-  }
-  const total = first + daysInMonth;
-  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let i = 1; i <= remaining; i++) {
-    grid.innerHTML += `<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
-  }
+  const rem=(first+dim)%7===0?0:7-(first+dim)%7;
+  for(let i=1;i<=rem;i++) grid.innerHTML+=`<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
 }
-
 function selectDay(d) {
-  state.selectedDate = {d, m: state.calMonth, y: state.calYear};
+  state.selectedDate={d,m:state.calMonth,y:state.calYear};
   renderCalendar();
-  const panel = document.getElementById('schedule-panel');
-  panel.classList.add('open');
-  const dateStr = new Date(state.calYear, state.calMonth, d).toLocaleDateString('en-PH', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-  document.getElementById('schedule-date-title').textContent = dateStr;
+  document.getElementById('schedule-panel').classList.add('open');
+  const dateStr=new Date(state.calYear,state.calMonth,d).toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('schedule-date-title').textContent=dateStr;
   renderScheduleItems();
 }
-
 function renderScheduleItems() {
-  const {d, m, y} = state.selectedDate;
-  const key = y + '-' + m + '-' + d;
-  const events = state.calendarEvents[key] || [];
-  const el = document.getElementById('schedule-items');
-  if (!events.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);margin-bottom:8px">No events on this day.</div>'; return; }
-  el.innerHTML = events.map(ev => `
-    <div class="sched-item">
-      <div style="width:8px;height:8px;border-radius:50%;background:${ev.cls === 'ev-red' ? '#E24B4A' : ev.cls === 'ev-amber' ? '#EF9F27' : ev.cls === 'ev-green' ? '#639922' : '#185FA5'};flex-shrink:0"></div>
-      <span style="font-size:13px;color:var(--text-primary)">${ev.label}</span>
-      <span class="sched-rm" onclick="removeEvent('${key}',${ev.id})">✕ Remove</span>
-    </div>`).join('');
+  const {d,m,y}=state.selectedDate;
+  const key=y+'-'+m+'-'+d;
+  const evs=state.calendarEvents[key]||[];
+  const el=document.getElementById('schedule-items');
+  if(!evs.length){el.innerHTML='<div style="font-size:13px;color:var(--text-tertiary);margin-bottom:8px">No events on this day.</div>';return;}
+  el.innerHTML=evs.map(ev=>`<div class="sched-item">
+    <div style="width:8px;height:8px;border-radius:50%;background:${ev.cls==='ev-red'?'#E24B4A':ev.cls==='ev-amber'?'#EF9F27':ev.cls==='ev-green'?'#639922':'#185FA5'};flex-shrink:0"></div>
+    <span style="font-size:13px;color:var(--text-primary)">${ev.label}</span>
+    <span class="sched-rm" onclick="removeEvent('${key}',${ev.id})">✕ Remove</span>
+  </div>`).join('');
 }
-
 function addScheduleEvent() {
-  const label = document.getElementById('new-sched-label').value.trim();
-  const cls = document.getElementById('new-sched-color').value;
-  if (!label) return;
-  const {d, m, y} = state.selectedDate;
-  const key = y + '-' + m + '-' + d;
-  if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
-  state.calendarEvents[key].push({id: state.nextId++, label, cls});
-  document.getElementById('new-sched-label').value = '';
-  renderCalendar();
-  renderScheduleItems();
+  const label=document.getElementById('new-sched-label').value.trim();
+  const cls=document.getElementById('new-sched-color').value;
+  if(!label)return;
+  const {d,m,y}=state.selectedDate;
+  const key=y+'-'+m+'-'+d;
+  if(!state.calendarEvents[key])state.calendarEvents[key]=[];
+  state.calendarEvents[key].push({id:state.nextId++,label,cls});
+  document.getElementById('new-sched-label').value='';
+  renderCalendar();renderScheduleItems();
+}
+function removeEvent(key,id) {
+  state.calendarEvents[key]=state.calendarEvents[key].filter(e=>e.id!==id);
+  renderCalendar();renderScheduleItems();
 }
 
-function removeEvent(key, id) {
-  state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
-  renderCalendar();
-  renderScheduleItems();
-}
+// ===== MODAL HELPERS =====
+function openModal(id){document.getElementById(id).classList.remove('hidden');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;editingReqInfo=null;}
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});
+});
 
-// --- Panel nav ---
-const panelConfig = {
-  dashboard: {title:'Dashboard', primary:null, form:null},
-  checklist: {title:'Document Checklist', primary:'+ Add Item', form:null},
-  licenses: {title:'License Monitor', primary:'+ Add License', form:'add-lic-form'},
-  transactions: {title:'Transactions', primary:'+ Add Transaction', form:'add-tx-form'},
-  admin: {title:'Admin Settings', primary:null, form:null},
+// ===== PANEL NAV =====
+const panelConfig={
+  dashboard:{title:'Dashboard',primary:null,form:null},
+  checklist:{title:'Document Checklist',primary:'+ New Project',form:null},
+  licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},
+  transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},
+  admin:{title:'Admin Settings',primary:null,form:null},
 };
-let currentPanel = 'dashboard';
+let currentPanel='dashboard';
 
-function showPanel(name) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  document.querySelectorAll('.ni').forEach(n => {
-    n.classList.toggle('active', n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + name + "'"));
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>{
+    n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));
   });
-  const cfg = panelConfig[name];
-  document.getElementById('page-title').textContent = cfg.title;
-  const pa = document.getElementById('primary-action');
-  if (cfg.primary) { pa.style.display = ''; pa.textContent = cfg.primary; }
-  else pa.style.display = 'none';
-  currentPanel = name;
-  document.querySelectorAll('.add-form.open').forEach(f => f.classList.remove('open'));
+  const cfg=panelConfig[name];
+  document.getElementById('page-title').textContent=cfg.title;
+  const pa=document.getElementById('primary-action');
+  if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}
+  else pa.style.display='none';
+  currentPanel=name;
+  document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));
 }
 
-function handlePrimaryAction() {
-  if (currentPanel === 'checklist') {
-    const formId = state.currentTab === 'technical' ? 'add-tech-form' : 'add-fin-form';
-    document.getElementById(formId).classList.toggle('open');
-  } else {
-    const cfg = panelConfig[currentPanel];
-    if (cfg && cfg.form) document.getElementById(cfg.form).classList.toggle('open');
-  }
+function handlePrimaryAction(){
+  if(currentPanel==='checklist'){openNewProjectModal();return;}
+  const cfg=panelConfig[currentPanel];
+  if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');
 }
 
-function closeForm(id) { document.getElementById(id).classList.remove('open'); }
+function closeForm(id){document.getElementById(id).classList.remove('open');}
 
-function switchTab(tab) {
-  state.currentTab = tab;
-  document.querySelectorAll('#panel-checklist .tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('#panel-checklist .tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane-' + tab).classList.add('active');
-  document.querySelectorAll('.add-form.open').forEach(f => f.classList.remove('open'));
+function toggleSwitch(el){
+  const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';
+  el.style.background=isOn?'#d1d5db':'#185FA5';
+  el.querySelector('.tog-t').style.left=isOn?'2px':'18px';
 }
 
-function switchLicTab(tab) {
-  document.querySelectorAll('#panel-licenses .tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('#panel-licenses .tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane-' + tab).classList.add('active');
+function switchLicTab(tab){
+  document.querySelectorAll('#panel-licenses .tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('#panel-licenses .tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pane-'+tab).classList.add('active');
 }
 
-function toggleSwitch(el) {
-  const isOn = el.style.background === 'rgb(24, 95, 165)' || el.style.background === '#185FA5';
-  el.style.background = isOn ? '#d1d5db' : '#185FA5';
-  el.querySelector('.tog-t').style.left = isOn ? '2px' : '18px';
-}
-
+// ===== INIT =====
 initCalendarEvents();
-renderList('technical');
-renderList('financial');
+renderProjectsSidebar();
+if(state.projects.length){selectProject(state.projects[0].id);}
 renderLicenses();
 renderCalendar();
 renderTransactions();
+updateStats();
 </script>
+</body>
+</html>
