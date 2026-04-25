@@ -1,0 +1,686 @@
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
+:root{
+  --bg-primary:var(--color-background-primary,#fff);
+  --bg-secondary:var(--color-background-secondary,#f9fafb);
+  --bg-tertiary:var(--color-background-tertiary,#f3f4f6);
+  --text-primary:var(--color-text-primary,#111827);
+  --text-secondary:var(--color-text-secondary,#6b7280);
+  --text-tertiary:var(--color-text-tertiary,#9ca3af);
+  --border:var(--color-border-tertiary,rgba(0,0,0,0.12));
+  --border-strong:var(--color-border-secondary,rgba(0,0,0,0.22));
+  --blue:#185FA5;--blue-light:#E6F1FB;--blue-dark:#0C447C;
+  --green:#3B6D11;--green-light:#EAF3DE;
+  --amber:#854F0B;--amber-light:#FAEEDA;
+  --red:#A32D2D;--red-light:#FCEBEB;
+  --r:8px;--rl:12px;
+}
+.app{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--bg-primary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10}
+.logo{padding:20px 18px;border-bottom:1px solid var(--border)}
+.logo-t{font-size:15px;font-weight:500;color:var(--text-primary)}
+.logo-s{font-size:11px;color:var(--text-tertiary);margin-top:2px}
+nav{padding:10px 0;flex:1}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;font-size:13px;color:var(--text-secondary);border-left:2px solid transparent;user-select:none}
+.ni:hover{background:var(--bg-secondary);color:var(--text-primary)}
+.ni.active{background:var(--bg-secondary);color:var(--text-primary);border-left-color:var(--blue);font-weight:500}
+.ni svg{width:16px;height:16px;flex-shrink:0}
+.nbadge{margin-left:auto;background:#E24B4A;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
+.sf{padding:14px 18px;border-top:1px solid var(--border)}
+.sf .nm{font-size:13px;font-weight:500}
+.sf .em{font-size:11px;color:var(--text-tertiary)}
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--bg-primary);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.ptitle{font-size:16px;font-weight:500}
+.btn{padding:7px 16px;border-radius:var(--r);font-size:13px;cursor:pointer;border:1px solid var(--border-strong);background:var(--bg-primary);color:var(--text-primary);font-family:inherit}
+.btn:hover{background:var(--bg-secondary)}
+.btnp{background:var(--blue);border-color:var(--blue);color:#fff}
+.btnp:hover{background:var(--blue-dark)}
+.btnsm{padding:5px 12px;font-size:12px}
+.content{padding:24px;flex:1}
+.panel{display:none}.panel.active{display:block}
+.tab-bar{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:20px}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1.5px;user-select:none;transition:color 0.15s}
+.tab:hover{color:var(--text-primary)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.add-form{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:16px;display:none}
+.add-form.open{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);background:var(--bg-primary);color:var(--text-primary);font-size:13px;font-family:inherit;outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.1)}
+.form-actions{display:flex;gap:8px;justify-content:flex-end}
+.section-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.checklist-list{display:flex;flex-direction:column;gap:8px}
+.ci{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.ci-header{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.cb{width:18px;height:18px;border:2px solid var(--border-strong);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.cb.checked{background:var(--blue);border-color:var(--blue)}
+.cb.checked::after{content:'';display:block;width:9px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+.cl{flex:1;font-size:13px;color:var(--text-primary)}
+.cl.done{text-decoration:line-through;color:var(--text-tertiary)}
+.ccat{font-size:11px;color:var(--text-tertiary);margin-right:10px}
+.sbadge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:10px}
+.s-done{background:var(--green-light);color:var(--green)}
+.s-missing{background:var(--red-light);color:var(--red)}
+.empty-state{text-align:center;padding:32px;color:var(--text-tertiary);font-size:13px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--bg-secondary);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
+.stat-label{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.stat-value{font-size:26px;font-weight:600;color:var(--text-primary);line-height:1}
+.stat-sub{font-size:12px;margin-top:4px}
+.c-green{color:var(--green)}.c-red{color:var(--red)}.c-amber{color:var(--amber)}
+.notif{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r);margin-bottom:12px;font-size:13px}
+.notif-d{background:var(--red-light);color:#501313;border:1px solid #F7C1C1}
+.notif-w{background:var(--amber-light);color:#412402;border:1px solid #FAC775}
+.ndot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-r{background:#E24B4A}.dot-a{background:#EF9F27}
+.act-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;font-size:13px}
+.adot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Expiry list */
+.expiry-list{display:flex;flex-direction:column;gap:8px}
+.ei{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl)}
+.exp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.exp-info{flex:1}
+.exp-name{font-size:13px;font-weight:500;color:var(--text-primary)}
+.exp-date{font-size:12px;color:var(--text-secondary);margin-top:2px}
+.days-pill{font-size:12px;font-weight:600;padding:4px 12px;border-radius:12px}
+.dp-r{background:var(--red-light);color:var(--red)}
+.dp-a{background:var(--amber-light);color:var(--amber)}
+.dp-g{background:var(--green-light);color:var(--green)}
+
+/* Calendar */
+.cal-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.cal-month{font-size:14px;font-weight:500;color:var(--text-primary)}
+.cal-nav{display:flex;gap:4px}
+.cal-nav-btn{width:28px;height:28px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-secondary)}
+.cal-nav-btn:hover{background:var(--bg-secondary)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--text-tertiary);padding:8px 0;text-transform:uppercase;letter-spacing:.04em}
+.cal-day{min-height:64px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:6px;cursor:pointer;position:relative;transition:background .1s}
+.cal-day:hover{background:var(--bg-secondary)}
+.cal-day.other-month .cal-day-num{color:var(--text-tertiary)}
+.cal-day.today .cal-day-num{background:var(--blue);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:500}
+.cal-day-num{font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:3px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.cal-event{font-size:10px;font-weight:500;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.cal-event.ev-red{background:var(--red-light);color:var(--red)}
+.cal-event.ev-amber{background:var(--amber-light);color:var(--amber)}
+.cal-event.ev-green{background:var(--green-light);color:var(--green)}
+.cal-event.ev-blue{background:var(--blue-light);color:var(--blue)}
+.cal-day.selected{background:var(--blue-light)}
+
+/* Schedule panel */
+.schedule-panel{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-top:12px;display:none}
+.schedule-panel.open{display:block}
+.schedule-date-title{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:12px}
+.sched-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;font-size:13px}
+.sched-rm{font-size:11px;color:var(--text-tertiary);cursor:pointer;margin-left:auto;padding:2px 6px;border-radius:4px}
+.sched-rm:hover{color:var(--red);background:var(--red-light)}
+
+/* Transactions */
+.tx-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.tx-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.tx-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
+.tx-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tx-table tr:last-child td{border-bottom:none}
+.tx-table tr:hover td{background:var(--bg-secondary)}
+.txamt{font-weight:600}
+.tx-client-main{font-weight:500;font-size:13px}
+.tx-client-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:10px}
+.b-paid{background:var(--green-light);color:var(--green)}
+.b-pend{background:var(--amber-light);color:var(--amber)}
+.b-over{background:var(--red-light);color:var(--red)}
+
+.admin-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:12px}
+.pb-wrap{background:var(--bg-tertiary);border-radius:6px;height:8px;overflow:hidden;margin:8px 0}
+.pb-fill{height:100%;border-radius:6px;transition:width .4s}
+.user-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-secondary);border-radius:var(--r);margin-bottom:8px}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
+.tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+</style>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-t">ComplianceHub</div>
+      <div class="logo-s">Document Manager</div>
+    </div>
+    <nav>
+      <div class="ni active" onclick="showPanel('dashboard')">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div class="ni" onclick="showPanel('checklist')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>Checklist</span>
+      </div>
+      <div class="ni" onclick="showPanel('licenses')">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Licenses</span>
+        <span class="nbadge" id="expiry-badge">2</span>
+      </div>
+      <div class="ni" onclick="showPanel('transactions')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M1 5h14M1 11h14M4 2v12M12 2v12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>Transactions</span>
+      </div>
+      <div class="ni" onclick="showPanel('admin')">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>Admin</span>
+      </div>
+    </nav>
+    <div class="sf">
+      <div class="nm">Admin User</div>
+      <div class="em">admin@company.com</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="ptitle" id="page-title">Dashboard</div>
+      <div>
+        <button class="btn btnp" id="primary-action" style="display:none" onclick="handlePrimaryAction()">+ Add Item</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Dashboard -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="notif notif-d"><div class="ndot dot-r"></div><strong>2 licenses expiring within 30 days.</strong>&nbsp; Review in the Licenses tab.</div>
+        <div class="notif notif-w"><div class="ndot dot-a"></div><strong>1 payment overdue.</strong>&nbsp; Check Transactions for details.</div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Checklist Items</div><div class="stat-value" id="stat-total">10</div><div class="stat-sub c-green" id="stat-done-count">4 completed</div></div>
+          <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
+          <div class="stat-card"><div class="stat-label">Total Collected</div><div class="stat-value">₱42,500</div><div class="stat-sub c-amber">₱8,000 pending</div></div>
+        </div>
+        <p class="section-title">Recent Activity</p>
+        <div class="act-item"><div class="adot" style="background:#639922"></div><span style="color:var(--text-secondary);min-width:140px">Today, 9:41 AM</span><span>Payment received from <strong>Juan Santos</strong> — ₱12,500</span></div>
+        <div class="act-item"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
+      </div>
+
+      <!-- Checklist -->
+      <div class="panel" id="panel-checklist">
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab('technical')" id="tab-technical">Technical Requirements</div>
+          <div class="tab" onclick="switchTab('financial')" id="tab-financial">Financial Requirements</div>
+        </div>
+        <div class="tab-pane active" id="pane-technical">
+          <div class="add-form" id="add-tech-form">
+            <div class="form-row">
+              <div class="fg"><label>Requirement Name</label><input type="text" id="tech-name" placeholder="e.g. Fire Safety Inspection Certificate"></div>
+              <div class="fg"><label>Category</label><select id="tech-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option></select></div>
+            </div>
+            <div class="form-actions">
+              <button class="btn" onclick="closeForm('add-tech-form')">Cancel</button>
+              <button class="btn btnp" onclick="addItem('technical')">Add Item</button>
+            </div>
+          </div>
+          <p class="section-title">Technical Requirements</p>
+          <div class="checklist-list" id="list-technical"></div>
+        </div>
+        <div class="tab-pane" id="pane-financial">
+          <div class="add-form" id="add-fin-form">
+            <div class="form-row">
+              <div class="fg"><label>Requirement Name</label><input type="text" id="fin-name" placeholder="e.g. Audited Financial Statements"></div>
+              <div class="fg"><label>Category</label><select id="fin-cat"><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option></select></div>
+            </div>
+            <div class="form-actions">
+              <button class="btn" onclick="closeForm('add-fin-form')">Cancel</button>
+              <button class="btn btnp" onclick="addItem('financial')">Add Item</button>
+            </div>
+          </div>
+          <p class="section-title">Financial Requirements</p>
+          <div class="checklist-list" id="list-financial"></div>
+        </div>
+      </div>
+
+      <!-- Licenses -->
+      <div class="panel" id="panel-licenses">
+        <div class="add-form" id="add-lic-form">
+          <div class="form-row">
+            <div class="fg"><label>License Name</label><input type="text" id="new-lic-name" placeholder="e.g. Mayor's Permit"></div>
+            <div class="fg"><label>Expiry Date</label><input type="date" id="new-lic-date"></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="closeForm('add-lic-form')">Cancel</button>
+            <button class="btn btnp" onclick="addLicense()">Add License</button>
+          </div>
+        </div>
+
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchLicTab('monitor')" id="tab-monitor">License Expiry Monitor</div>
+          <div class="tab" onclick="switchLicTab('calendar')" id="tab-calendar">Calendar</div>
+        </div>
+
+        <div class="tab-pane active" id="pane-monitor">
+          <div class="expiry-list" id="expiry-list"></div>
+        </div>
+
+        <div class="tab-pane" id="pane-calendar">
+          <div class="cal-wrap">
+            <div class="cal-header">
+              <div class="cal-month" id="cal-month-label"></div>
+              <div class="cal-nav">
+                <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+                <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+              </div>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+          </div>
+
+          <!-- Schedule panel for selected day -->
+          <div class="schedule-panel" id="schedule-panel">
+            <div class="schedule-date-title" id="schedule-date-title"></div>
+            <div id="schedule-items"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <input type="text" id="new-sched-label" placeholder="Add event (e.g. Submit BIR renewal)" style="flex:1;padding:7px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
+              <select id="new-sched-color" style="padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
+                <option value="ev-blue">Blue</option>
+                <option value="ev-green">Green</option>
+                <option value="ev-amber">Amber</option>
+                <option value="ev-red">Red</option>
+              </select>
+              <button class="btn btnp btnsm" onclick="addScheduleEvent()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div class="panel" id="panel-transactions">
+        <div class="add-form" id="add-tx-form">
+          <div class="form-row-3">
+            <div class="fg"><label>Company Name</label><input type="text" id="new-tx-company" placeholder="Company name"></div>
+            <div class="fg"><label>Client Name</label><input type="text" id="new-tx-client" placeholder="Full name"></div>
+            <div class="fg"><label>Amount (₱)</label><input type="number" id="new-tx-amount" placeholder="0.00"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Description</label><input type="text" id="new-tx-desc" placeholder="e.g. Permit processing fee"></div>
+            <div class="fg"><label>Status</label><select id="new-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="closeForm('add-tx-form')">Cancel</button>
+            <button class="btn btnp" onclick="addTransaction()">Add Transaction</button>
+          </div>
+        </div>
+        <div class="tx-wrap">
+          <table class="tx-table">
+            <thead><tr>
+              <th style="width:100px">Date</th>
+              <th style="width:180px">Client</th>
+              <th>Description</th>
+              <th style="width:110px">Amount</th>
+              <th style="width:90px">Status</th>
+            </tr></thead>
+            <tbody id="tx-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admin -->
+      <div class="panel" id="panel-admin">
+        <p class="section-title">System Overview</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div class="admin-card">
+            <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Checklist Progress</div>
+            <div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:40%;background:var(--blue)"></div></div>
+            <div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">4 of 10 items completed</div>
+          </div>
+          <div class="admin-card">
+            <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div>
+            <div class="pb-wrap"><div class="pb-fill" style="width:84%;background:#639922"></div></div>
+            <div style="font-size:12px;color:var(--text-tertiary)">₱42,500 of ₱50,500 collected (84%)</div>
+          </div>
+        </div>
+        <p class="section-title">User Management</p>
+        <div class="user-row">
+          <div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">Admin User</div><div style="font-size:12px;color:var(--text-tertiary)">admin@company.com</div></div>
+          <span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span>
+        </div>
+        <div class="user-row">
+          <div class="avatar" style="background:var(--green-light);color:var(--green)">MR</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">Maria Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">m.reyes@company.com</div></div>
+          <span class="badge b-paid">Staff</span>
+        </div>
+        <p class="section-title" style="margin-top:20px">Notification Settings</p>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div style="font-size:13px;font-weight:500">License expiry alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify 30, 14, and 7 days before expiry</div></div>
+          <div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div>
+        </div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><div style="font-size:13px;font-weight:500">Payment overdue alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify when payment passes due date</div></div>
+          <div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div>
+        </div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-size:13px;font-weight:500">Checklist completion alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify admin when all docs are submitted</div></div>
+          <div class="tog" style="background:#d1d5db" onclick="toggleSwitch(this)"><div class="tog-t" style="left:2px"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const TODAY = new Date('2026-04-25');
+
+const state = {
+  technical: [
+    {id:1, label:'Business Permit', category:'Legal', checked:true},
+    {id:2, label:'DTI / SEC Registration', category:'Legal', checked:true},
+    {id:3, label:'Fire Safety Inspection Certificate', category:'Safety', checked:false},
+    {id:4, label:'Environmental Compliance Certificate', category:'Environmental', checked:false},
+    {id:5, label:'IT Security Assessment', category:'IT', checked:false},
+  ],
+  financial: [
+    {id:6, label:'BIR Certificate of Registration', category:'Tax', checked:true},
+    {id:7, label:'SSS Registration', category:'HR', checked:true},
+    {id:8, label:'PhilHealth Registration', category:'HR', checked:false},
+    {id:9, label:'Pag-IBIG Registration', category:'HR', checked:false},
+    {id:10, label:'Audited Financial Statements', category:'Finance', checked:false},
+  ],
+  licenses: [
+    {id:11, name:"Mayor's Business Permit", expiry:'2026-05-09'},
+    {id:12, name:'BIR COR Renewal', expiry:'2026-05-11'},
+    {id:13, name:'Fire Safety Certificate', expiry:'2026-07-15'},
+    {id:14, name:'DOLE Registration', expiry:'2026-09-30'},
+  ],
+  transactions: [
+    {id:21, date:'Apr 24, 2026', company:'Santos Enterprises', client:'Juan Santos', desc:'Permit processing fee', amount:12500, status:'Paid'},
+    {id:22, date:'Apr 22, 2026', company:'Cruz & Co.', client:'Maria Cruz', desc:'Document notarization', amount:8000, status:'Paid'},
+    {id:23, date:'Apr 20, 2026', company:'Lim Group', client:'Roberto Lim', desc:'Business registration fee', amount:15000, status:'Paid'},
+    {id:24, date:'Apr 18, 2026', company:'Dela Cruz Corp.', client:'Ana Dela Cruz', desc:'License renewal fee', amount:7000, status:'Paid'},
+    {id:25, date:'Apr 15, 2026', company:'Reyes Trading', client:'Jose Reyes', desc:'Permit processing fee', amount:5000, status:'Pending'},
+    {id:26, date:'Apr 10, 2026', company:'Go Solutions', client:'Linda Go', desc:'Consultation fee', amount:3000, status:'Pending'},
+    {id:27, date:'Apr 5, 2026', company:'Tan Industries', client:'Carlos Tan', desc:'Document filing fee', amount:4500, status:'Overdue'},
+  ],
+  calendarEvents: {},
+  nextId: 50,
+  currentTab: 'technical',
+  calYear: 2026,
+  calMonth: 3,
+  selectedDate: null,
+};
+
+// Pre-populate calendar with license expiry dates
+function initCalendarEvents() {
+  state.licenses.forEach(lic => {
+    const d = new Date(lic.expiry);
+    const key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+    if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
+    const days = Math.round((d - TODAY) / 86400000);
+    const cls = days <= 14 ? 'ev-red' : days <= 30 ? 'ev-amber' : 'ev-green';
+    state.calendarEvents[key].push({id: state.nextId++, label: lic.name + ' expiry', cls});
+  });
+}
+
+function renderList(type) {
+  const container = document.getElementById('list-' + type);
+  const items = state[type];
+  if (!items.length) { container.innerHTML = '<div class="empty-state">No requirements yet.</div>'; return; }
+  container.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'ci';
+    div.innerHTML = `<div class="ci-header">
+      <div class="cb ${item.checked ? 'checked' : ''}" onclick="toggleDone('${type}',${item.id})"></div>
+      <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
+      <span class="ccat">${item.category}</span>
+      <span class="sbadge ${item.checked ? 's-done' : 's-missing'}">${item.checked ? 'Complete' : 'Pending'}</span>
+    </div>`;
+    container.appendChild(div);
+  });
+  updateStats();
+}
+
+function toggleDone(type, id) {
+  const item = state[type].find(i => i.id === id);
+  if (item) item.checked = !item.checked;
+  renderList(type);
+}
+
+function addItem(type) {
+  const nameEl = document.getElementById(type === 'technical' ? 'tech-name' : 'fin-name');
+  const catEl = document.getElementById(type === 'technical' ? 'tech-cat' : 'fin-cat');
+  const name = nameEl.value.trim();
+  if (!name) { alert('Please enter a requirement name.'); return; }
+  state[type].push({id: state.nextId++, label: name, category: catEl.value, checked: false});
+  nameEl.value = '';
+  closeForm(type === 'technical' ? 'add-tech-form' : 'add-fin-form');
+  renderList(type);
+}
+
+function updateStats() {
+  const all = [...state.technical, ...state.financial];
+  const done = all.filter(i => i.checked).length;
+  const total = all.length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-done-count').textContent = done + ' completed';
+  const pct = total ? Math.round(done / total * 100) : 0;
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.width = pct + '%';
+  const lbl = document.getElementById('progress-label');
+  if (lbl) lbl.textContent = done + ' of ' + total + ' items completed';
+}
+
+function renderLicenses() {
+  const list = document.getElementById('expiry-list');
+  const sorted = [...state.licenses].sort((a,b) => new Date(a.expiry) - new Date(b.expiry));
+  let expCount = 0;
+  list.innerHTML = sorted.map(lic => {
+    const days = Math.round((new Date(lic.expiry) - TODAY) / 86400000);
+    let dotColor = '#639922', pillClass = 'dp-g', label = days + ' days left';
+    if (days < 0) { dotColor = '#E24B4A'; pillClass = 'dp-r'; label = 'Expired'; expCount++; }
+    else if (days <= 14) { dotColor = '#E24B4A'; pillClass = 'dp-r'; label = days + 'd left'; expCount++; }
+    else if (days <= 30) { dotColor = '#EF9F27'; pillClass = 'dp-a'; label = days + 'd left'; expCount++; }
+    const dateStr = new Date(lic.expiry).toLocaleDateString('en-PH', {year:'numeric',month:'short',day:'numeric'});
+    return `<div class="ei"><div class="exp-dot" style="background:${dotColor}"></div><div class="exp-info"><div class="exp-name">${lic.name}</div><div class="exp-date">Expires ${dateStr}</div></div><span class="days-pill ${pillClass}">${label}</span></div>`;
+  }).join('');
+  document.getElementById('expiry-badge').textContent = expCount;
+  document.getElementById('expiry-badge').style.display = expCount ? 'inline' : 'none';
+}
+
+function addLicense() {
+  const name = document.getElementById('new-lic-name').value.trim();
+  const date = document.getElementById('new-lic-date').value;
+  if (!name || !date) { alert('Please fill in all fields.'); return; }
+  state.licenses.push({id: state.nextId++, name, expiry: date});
+  document.getElementById('new-lic-name').value = '';
+  document.getElementById('new-lic-date').value = '';
+  closeForm('add-lic-form');
+  renderLicenses();
+  initCalendarEvents();
+  renderCalendar();
+}
+
+function switchLicTab(tab) {
+  document.querySelectorAll('#panel-licenses .tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('#panel-licenses .tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+}
+
+// Calendar
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function changeMonth(dir) {
+  state.calMonth += dir;
+  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+  state.selectedDate = null;
+  document.getElementById('schedule-panel').classList.remove('open');
+  renderCalendar();
+}
+
+function renderCalendar() {
+  document.getElementById('cal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  const first = new Date(state.calYear, state.calMonth, 1).getDay();
+  const daysInMonth = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+  const daysInPrev = new Date(state.calYear, state.calMonth, 0).getDate();
+
+  for (let i = 0; i < first; i++) {
+    const day = daysInPrev - first + 1 + i;
+    grid.innerHTML += `<div class="cal-day other-month"><div class="cal-day-num">${day}</div></div>`;
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
+    const isSelected = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
+    const key = state.calYear + '-' + state.calMonth + '-' + d;
+    const events = state.calendarEvents[key] || [];
+    const evHtml = events.slice(0,2).map(ev => `<div class="cal-event ${ev.cls}" title="${ev.label}">${ev.label}</div>`).join('');
+    const more = events.length > 2 ? `<div style="font-size:10px;color:var(--text-tertiary)">+${events.length-2} more</div>` : '';
+    grid.innerHTML += `<div class="cal-day${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" onclick="selectDay(${d})">
+      <div class="cal-day-num">${d}</div>
+      ${evHtml}${more}
+    </div>`;
+  }
+
+  const total = first + daysInMonth;
+  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 1; i <= remaining; i++) {
+    grid.innerHTML += `<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
+  }
+}
+
+function selectDay(d) {
+  state.selectedDate = {d, m: state.calMonth, y: state.calYear};
+  renderCalendar();
+  const panel = document.getElementById('schedule-panel');
+  panel.classList.add('open');
+  const dateStr = new Date(state.calYear, state.calMonth, d).toLocaleDateString('en-PH', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  document.getElementById('schedule-date-title').textContent = dateStr;
+  renderScheduleItems();
+}
+
+function renderScheduleItems() {
+  const {d, m, y} = state.selectedDate;
+  const key = y + '-' + m + '-' + d;
+  const events = state.calendarEvents[key] || [];
+  const el = document.getElementById('schedule-items');
+  if (!events.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);margin-bottom:8px">No events on this day.</div>'; return; }
+  el.innerHTML = events.map(ev => `
+    <div class="sched-item">
+      <div style="width:8px;height:8px;border-radius:50%;background:${ev.cls === 'ev-red' ? '#E24B4A' : ev.cls === 'ev-amber' ? '#EF9F27' : ev.cls === 'ev-green' ? '#639922' : '#185FA5'};flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text-primary)">${ev.label}</span>
+      <span class="sched-rm" onclick="removeEvent('${key}',${ev.id})">✕ Remove</span>
+    </div>`).join('');
+}
+
+function addScheduleEvent() {
+  const label = document.getElementById('new-sched-label').value.trim();
+  const cls = document.getElementById('new-sched-color').value;
+  if (!label) return;
+  const {d, m, y} = state.selectedDate;
+  const key = y + '-' + m + '-' + d;
+  if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
+  state.calendarEvents[key].push({id: state.nextId++, label, cls});
+  document.getElementById('new-sched-label').value = '';
+  renderCalendar();
+  renderScheduleItems();
+}
+
+function removeEvent(key, id) {
+  state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
+  renderCalendar();
+  renderScheduleItems();
+}
+
+function renderTransactions() {
+  document.getElementById('tx-body').innerHTML = state.transactions.map(tx => {
+    const cls = tx.status === 'Paid' ? 'b-paid' : tx.status === 'Pending' ? 'b-pend' : 'b-over';
+    return `<tr>
+      <td style="color:var(--text-secondary)">${tx.date}</td>
+      <td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company || ''}</div></td>
+      <td style="color:var(--text-secondary)">${tx.desc}</td>
+      <td class="txamt">₱${tx.amount.toLocaleString()}</td>
+      <td><span class="badge ${cls}">${tx.status}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function addTransaction() {
+  const company = document.getElementById('new-tx-company').value.trim();
+  const client = document.getElementById('new-tx-client').value.trim();
+  const amount = parseFloat(document.getElementById('new-tx-amount').value);
+  const desc = document.getElementById('new-tx-desc').value.trim();
+  const status = document.getElementById('new-tx-status').value;
+  if (!client || !amount) { alert('Please fill in client name and amount.'); return; }
+  const dateStr = TODAY.toLocaleDateString('en-PH', {year:'numeric',month:'short',day:'numeric'});
+  state.transactions.unshift({id: state.nextId++, date: dateStr, company, client, desc: desc || 'Payment', amount, status});
+  ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id => { document.getElementById(id).value = ''; });
+  closeForm('add-tx-form');
+  renderTransactions();
+}
+
+const panelConfig = {
+  dashboard: {title:'Dashboard', primary:null, form:null},
+  checklist: {title:'Document Checklist', primary:'+ Add Item', form:null},
+  licenses: {title:'License Monitor', primary:'+ Add License', form:'add-lic-form'},
+  transactions: {title:'Transactions', primary:'+ Add Transaction', form:'add-tx-form'},
+  admin: {title:'Admin Settings', primary:null, form:null},
+};
+let currentPanel = 'dashboard';
+
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n => {
+    n.classList.toggle('active', n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + name + "'"));
+  });
+  const cfg = panelConfig[name];
+  document.getElementById('page-title').textContent = cfg.title;
+  const pa = document.getElementById('primary-action');
+  if (cfg.primary) { pa.style.display = ''; pa.textContent = cfg.primary; }
+  else pa.style.display = 'none';
+  currentPanel = name;
+  document.querySelectorAll('.add-form.open').forEach(f => f.classList.remove('open'));
+}
+
+function handlePrimaryAction() {
+  if (currentPanel === 'checklist') {
+    const formId = state.currentTab === 'technical' ? 'add-tech-form' : 'add-fin-form';
+    document.getElementById(formId).classList.toggle('open');
+  } else {
+    const cfg = panelConfig[currentPanel];
+    if (cfg && cfg.form) document.getElementById(cfg.form).classList.toggle('open');
+  }
+}
+
+function closeForm(id) { document.getElementById(id).classList.remove('open'); }
+
+function switchTab(tab) {
+  state.currentTab = tab;
+  document.querySelectorAll('#panel-checklist .tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('#panel-checklist .tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+  document.querySelectorAll('.add-form.open').forEach(f => f.classList.remove('open'));
+}
+
+function toggleSwitch(el) {
+  const isOn = el.style.background === 'rgb(24, 95, 165)' || el.style.background === '#185FA5';
+  el.style.background = isOn ? '#d1d5db' : '#185FA5';
+  el.querySelector('.tog-t').style.left = isOn ? '2px' : '18px';
+}
+
+initCalendarEvents();
+renderList('technical');
+renderList('financial');
+renderLicenses();
+renderCalendar();
+renderTransactions();
+</script>
