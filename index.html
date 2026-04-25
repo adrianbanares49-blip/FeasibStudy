@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ComplianceHub — Document Manager</title>
+<title>FeasibStudy-ComplianceHub</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -1193,13 +1193,51 @@ function openEditProject(){
   document.getElementById('proj-desc-input').value=proj.desc;
   openModal('modal-new-project');
 }
+// Default checklist items from the PhilGEPS / RA 9184 Bidding Documents
+function makeDefaultRequirements() {
+  const id = () => state.nextId++;
+  return {
+    technical: [
+      // Class "A" — Legal Documents
+      {id:id(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership) — all pages, per Sec. 8.5.2 IRR',category:'Legal',checked:false},
+      {id:id(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA (whichever applicable)',category:'Legal',checked:false},
+      {id:id(),label:'Certified Copy of valid Mayor\'s / Business Permit or equivalent document',category:'Legal',checked:false},
+      {id:id(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (issued by BIR)',category:'Legal',checked:false},
+      {id:id(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024 stamped "received" by BIR or proof of submission to eAFS',category:'Legal',checked:false},
+      // Class "A" — Technical Documents
+      {id:id(),label:'Statement of all Ongoing Government and Private Contracts (including contracts awarded but not yet started)',category:'Operations',checked:false},
+      {id:id(),label:'Statement of Single Largest Completed Contract (SLCC) similar to the contract to be bid',category:'Operations',checked:false},
+      {id:id(),label:'Original copy of Bid Security (Surety Bond + Insurance Commission certification, OR Notarized Bid Securing Declaration)',category:'Legal',checked:false},
+      {id:id(),label:'Conformity with Technical Specifications (may include production/delivery schedule, manpower requirements, after-sales/parts)',category:'Operations',checked:false},
+      {id:id(),label:'Original duly signed Omnibus Sworn Statement (OSS); and if applicable, Notarized Secretary\'s Certificate / Special Power of Attorney',category:'Legal',checked:false},
+    ],
+    financial: [
+      // Class "A" — Financial Documents
+      {id:id(),label:'Computation of Net Financial Contracting Capacity (NFCC) OR Committed Line of Credit from Universal/Commercial Bank in lieu of NFCC',category:'Finance',checked:false},
+      // Financial Component Envelope
+      {id:id(),label:'Original duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},
+      {id:id(),label:'Original duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false},
+    ],
+    other: [
+      // Class "B"
+      {id:id(),label:'[If applicable] Duly signed Joint Venture Agreement (JVA) or duly notarized statements from all potential JV partners',category:'Compliance',checked:false},
+      // Other documentary requirements under RA 9184
+      {id:id(),label:'[For foreign bidders] Certification from relevant government office that Filipinos are allowed to participate in procurement for the same item (reciprocal rights)',category:'Compliance',checked:false},
+      {id:id(),label:'[If claiming preference] Certification from DTI as Domestic Bidder or Domestic Entity',category:'Compliance',checked:false},
+    ]
+  };
+}
 function saveProject(){
   const name=document.getElementById('proj-name-input').value.trim();
   const client=document.getElementById('proj-client-input').value.trim();
   const desc=document.getElementById('proj-desc-input').value.trim();
   if(!name){alert('Please enter a project name.');return;}
   if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}
-  else{const newProj={id:state.nextId++,name,client,desc,technical:[],financial:[],other:[]};state.projects.push(newProj);state.activeProjectId=newProj.id;}
+  else{
+    const defaults=makeDefaultRequirements();
+    const newProj={id:state.nextId++,name,client,desc,technical:defaults.technical,financial:defaults.financial,other:defaults.other};
+    state.projects.push(newProj);state.activeProjectId=newProj.id;
+  }
   closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();
 }
 function promptDeleteProject(id){
