@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feasibility_Compliance-Document-Hub</title>
+<title>ComplianceHub — Document Manager</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -289,6 +289,7 @@ nav{padding:10px 0;flex:1}
                   <div class="req-tab-bar">
                     <div class="req-tab active" onclick="switchReqTab('technical')" id="rtab-technical">Technical Requirements</div>
                     <div class="req-tab" onclick="switchReqTab('financial')" id="rtab-financial">Financial Requirements</div>
+                    <div class="req-tab" onclick="switchReqTab('other')" id="rtab-other">Other Requirements</div>
                   </div>
                   <div class="req-pane active" id="rpane-technical">
                     <div class="req-add-row">
@@ -305,6 +306,14 @@ nav{padding:10px 0;flex:1}
                       <button class="btn btnp btnsm" onclick="addRequirement('financial')">Add</button>
                     </div>
                     <div class="checklist-list" id="req-list-financial"></div>
+                  </div>
+                  <div class="req-pane" id="rpane-other">
+                    <div class="req-add-row">
+                      <input type="text" id="new-other-req" placeholder="Add other requirement…">
+                      <select id="new-other-cat"><option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option></select>
+                      <button class="btn btnp btnsm" onclick="addRequirement('other')">Add</button>
+                    </div>
+                    <div class="checklist-list" id="req-list-other"></div>
                   </div>
                 </div>
                 <div class="progress-summary" id="proj-progress-summary"></div>
@@ -487,6 +496,7 @@ nav{padding:10px 0;flex:1}
           <option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option>
           <option>Environmental</option><option>Tax</option><option>Finance</option><option>HR</option>
           <option>Accounting</option><option>Insurance</option>
+          <option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option>
         </select>
       </div>
     </div>
@@ -565,6 +575,9 @@ const state = {
       financial: [
         {id:104, label:'BIR Certificate of Registration', category:'Tax', checked:true},
         {id:105, label:'Audited Financial Statements', category:'Finance', checked:false},
+      ],
+      other: [
+        {id:106, label:'Barangay Clearance', category:'Administrative', checked:false},
       ]
     },
     {
@@ -580,7 +593,8 @@ const state = {
         {id:203, label:'SSS Registration', category:'HR', checked:true},
         {id:204, label:'PhilHealth Registration', category:'HR', checked:false},
         {id:205, label:'Pag-IBIG Registration', category:'HR', checked:false},
-      ]
+      ],
+      other: []
     }
   ],
   licenses: [
@@ -617,12 +631,13 @@ function getAllRequirements() {
   state.projects.forEach(p => {
     p.technical.forEach(r => all.push({...r, projectName: p.name, type:'technical'}));
     p.financial.forEach(r => all.push({...r, projectName: p.name, type:'financial'}));
+    (p.other||[]).forEach(r => all.push({...r, projectName: p.name, type:'other'}));
   });
   return all;
 }
 
 function getProjectProgress(proj) {
-  const all = [...proj.technical, ...proj.financial];
+  const all = [...proj.technical, ...proj.financial, ...(proj.other||[])];
   const done = all.filter(r => r.checked).length;
   return {done, total: all.length};
 }
@@ -671,6 +686,7 @@ function renderProjectDetail() {
   document.getElementById('proj-detail-desc').textContent = proj.client + (proj.desc ? ' · ' + proj.desc : '');
   renderReqList('technical');
   renderReqList('financial');
+  renderReqList('other');
   renderProjectProgress();
 }
 
@@ -678,7 +694,7 @@ function renderReqList(type) {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
   const container = document.getElementById('req-list-' + type);
-  const items = proj[type];
+  const items = proj[type] || [];
   if (!items.length) {
     container.innerHTML = `<div class="empty-state">No ${type} requirements yet. Add one above.</div>`;
     return;
@@ -709,11 +725,13 @@ function renderProjectProgress() {
   if (!proj) return;
   const techDone = proj.technical.filter(r => r.checked).length;
   const finDone = proj.financial.filter(r => r.checked).length;
-  const total = proj.technical.length + proj.financial.length;
-  const done = techDone + finDone;
+  const otherDone = (proj.other||[]).filter(r => r.checked).length;
+  const total = proj.technical.length + proj.financial.length + (proj.other||[]).length;
+  const done = techDone + finDone + otherDone;
   document.getElementById('proj-progress-summary').innerHTML = `
     <span class="prog-stat">Technical: <strong>${techDone}/${proj.technical.length}</strong></span>
     <span class="prog-stat">Financial: <strong>${finDone}/${proj.financial.length}</strong></span>
+    <span class="prog-stat">Other: <strong>${otherDone}/${(proj.other||[]).length}</strong></span>
     <span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;
   updateStats();
 }
@@ -730,10 +748,11 @@ function toggleReq(projectId, type, reqId) {
 function addRequirement(type) {
   const proj = getProject(state.activeProjectId);
   if (!proj) return;
-  const inputId = type === 'technical' ? 'new-tech-req' : 'new-fin-req';
-  const catId = type === 'technical' ? 'new-tech-cat' : 'new-fin-cat';
+  const inputId = type === 'technical' ? 'new-tech-req' : type === 'financial' ? 'new-fin-req' : 'new-other-req';
+  const catId   = type === 'technical' ? 'new-tech-cat' : type === 'financial' ? 'new-fin-cat' : 'new-other-cat';
   const label = document.getElementById(inputId).value.trim();
   if (!label) return;
+  if (!proj[type]) proj[type] = [];
   proj[type].push({id: state.nextId++, label, category: document.getElementById(catId).value, checked: false});
   document.getElementById(inputId).value = '';
   renderReqList(type);
@@ -813,7 +832,7 @@ function saveProject() {
     const proj = getProject(state.editingProjectId);
     proj.name = name; proj.client = client; proj.desc = desc;
   } else {
-    const newProj = {id: state.nextId++, name, client, desc, technical: [], financial: []};
+    const newProj = {id: state.nextId++, name, client, desc, technical: [], financial: [], other: []};
     state.projects.push(newProj);
     state.activeProjectId = newProj.id;
   }
@@ -860,11 +879,11 @@ function renderOverview() {
         </div>
         <span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span>
       </div>`;
-    ['technical','financial'].forEach(type => {
-      if (!proj[type].length) return;
+    ['technical','financial','other'].forEach(type => {
+      if (!(proj[type]||[]).length) return;
       html += `<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p>
         <div class="checklist-list" style="margin-bottom:10px">`;
-      proj[type].forEach(item => {
+      (proj[type]||[]).forEach(item => {
         html += `<div class="ci"><div class="ci-header">
           <div class="cb ${item.checked ? 'checked' : ''}"></div>
           <span class="cl ${item.checked ? 'done' : ''}">${item.label}</span>
