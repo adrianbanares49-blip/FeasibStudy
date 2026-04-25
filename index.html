@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feasibility-ComplianceHub</title>
+<title>ComplianceHub — Document Manager</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -25,56 +25,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .app{display:flex;min-height:100vh}
 
 /* ===== SIDEBAR ===== */
-.sidebar{width:280px;background:var(--bg-primary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10;overflow-y:auto}
+.sidebar{width:240px;background:var(--bg-primary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10;overflow-y:auto}
 .logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
 .logo-t{font-size:15px;font-weight:500;color:var(--text-primary)}
 .logo-s{font-size:11px;color:var(--text-tertiary);margin-top:2px}
-nav{padding:8px 0}
+nav{padding:8px 0;flex:1}
 .ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:var(--text-secondary);border-left:2px solid transparent;user-select:none}
 .ni:hover{background:var(--bg-secondary);color:var(--text-primary)}
 .ni.active{background:var(--bg-secondary);color:var(--text-primary);border-left-color:var(--blue);font-weight:500}
 .ni svg{width:16px;height:16px;flex-shrink:0}
 .nbadge{margin-left:auto;background:#E24B4A;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
-.sf{padding:12px 16px;border-top:1px solid var(--border)}
+.sf{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0}
 .sf .nm{font-size:13px;font-weight:500}
 .sf .em{font-size:11px;color:var(--text-tertiary)}
 
-/* ===== SIDEBAR CALENDAR ===== */
-.sidebar-cal{border-top:1px solid var(--border);padding:12px 14px 14px;flex-shrink:0}
-.sidebar-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.sidebar-cal-month{font-size:12px;font-weight:600;color:var(--text-primary)}
-.sidebar-cal-nav{display:flex;gap:2px}
-.sidebar-cal-nav button{width:22px;height:22px;border-radius:5px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:11px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;padding:0}
-.sidebar-cal-nav button:hover{background:var(--bg-secondary)}
-.scal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
-.scal-dow{text-align:center;font-size:9px;font-weight:600;color:var(--text-tertiary);padding:3px 0;text-transform:uppercase}
-.scal-day{text-align:center;font-size:11px;color:var(--text-secondary);padding:3px 1px;border-radius:4px;cursor:pointer;position:relative;line-height:1.5;user-select:none}
-.scal-day:hover{background:var(--bg-secondary);color:var(--text-primary)}
-.scal-day.other-m{color:var(--text-tertiary)}
-.scal-day.today-s{background:var(--blue);color:#fff;border-radius:50%;font-weight:600}
-.scal-day.has-event::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#EF9F27;margin:0 auto}
-.scal-day.has-event-red::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#E24B4A;margin:0 auto}
-.scal-day.today-s.has-event::after,.scal-day.today-s.has-event-red::after{background:#fff}
-.scal-day.selected-s{outline:2px solid var(--blue);outline-offset:-1px;border-radius:4px}
-.scal-day.today-s.selected-s{outline:2px solid #fff;outline-offset:-1px}
-
-/* Selected date panel inside sidebar */
-.sidebar-day-panel{margin-top:10px;border-top:1px solid var(--border);padding-top:10px;display:none}
-.sidebar-day-panel.open{display:block}
-.sidebar-day-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
-.sidebar-event-item{display:flex;align-items:flex-start;gap:6px;margin-bottom:5px}
-.se-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.se-label{font-size:11px;color:var(--text-primary);line-height:1.4;flex:1}
-.se-remove{font-size:10px;color:var(--text-tertiary);cursor:pointer;padding:1px 4px;border-radius:3px;flex-shrink:0}
-.se-remove:hover{color:var(--red);background:var(--red-light)}
-.sidebar-add-event{display:flex;gap:5px;margin-top:8px}
-.sidebar-add-event input{flex:1;padding:5px 8px;border:1px solid var(--border-strong);border-radius:5px;font-size:11px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);min-width:0}
-.sidebar-add-event input:focus{border-color:var(--blue)}
-.sidebar-add-event select{padding:5px 6px;border:1px solid var(--border-strong);border-radius:5px;font-size:11px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
-.sidebar-add-event button{padding:5px 8px;border-radius:5px;border:1px solid var(--blue);background:var(--blue);color:#fff;font-size:11px;cursor:pointer;white-space:nowrap}
-
 /* ===== MAIN ===== */
-.main{margin-left:280px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:var(--bg-primary);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
 .ptitle{font-size:16px;font-weight:500}
 .btn{padding:7px 16px;border-radius:var(--r);font-size:13px;cursor:pointer;border:1px solid var(--border-strong);background:var(--bg-primary);color:var(--text-primary);font-family:inherit}
@@ -145,8 +111,6 @@ nav{padding:8px 0}
 /* ===== DASHBOARD ===== */
 .dash-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 .dash-section-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-
-/* Dashboard Calendar Mirror */
 .dash-cal-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
 .dash-cal-inner-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 0}
 .dash-cal-month-lbl{font-size:13px;font-weight:500;color:var(--text-primary)}
@@ -162,8 +126,6 @@ nav{padding:8px 0}
 .dash-scal-day.selected-d{outline:2px solid var(--blue);outline-offset:-1px;border-radius:4px}
 .dash-scal-day.today-d.selected-d{outline:2px solid rgba(255,255,255,.6)}
 .dash-event-divider{border-top:1px solid var(--border);margin:0 12px}
-
-/* Upcoming events list */
 .dash-upcoming{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
 .dash-upcoming-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
 .dash-event-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
@@ -171,16 +133,53 @@ nav{padding:8px 0}
 .dash-event-date{width:36px;text-align:center;flex-shrink:0}
 .dash-event-day{font-size:18px;font-weight:600;color:var(--text-primary);line-height:1}
 .dash-event-mon{font-size:10px;color:var(--text-tertiary);text-transform:uppercase}
-.dash-event-info{}
 .dash-event-label{font-size:13px;font-weight:500;color:var(--text-primary)}
 .dash-event-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
 .dash-empty-events{text-align:center;padding:16px;color:var(--text-tertiary);font-size:13px}
-
-/* Selected day events in dashboard cal */
 .dash-selected-events{padding:10px 14px 12px}
 .dash-sel-date-lbl{font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:8px}
 .dash-sel-event-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
 .dash-sel-event-row:last-child{border-bottom:none}
+
+/* ===== FULL CALENDAR PANEL ===== */
+.cal-panel-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+.full-cal-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.full-cal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.full-cal-month-label{font-size:15px;font-weight:500;color:var(--text-primary)}
+.full-cal-nav{display:flex;gap:6px;align-items:center}
+.full-cal-nav button{padding:6px 12px;border-radius:var(--r);border:1px solid var(--border-strong);background:transparent;cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:inherit}
+.full-cal-nav button:hover{background:var(--bg-secondary);color:var(--text-primary)}
+.full-cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.fc-dow{text-align:center;font-size:11px;font-weight:600;color:var(--text-tertiary);padding:10px 0;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.fc-day{min-height:90px;padding:6px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;cursor:pointer;transition:background .1s}
+.fc-day:hover{background:var(--bg-secondary)}
+.fc-day:nth-child(7n){border-right:none}
+.fc-day.other-m .fc-day-num{color:var(--text-tertiary);opacity:.5}
+.fc-day.today-fc .fc-day-num{background:var(--blue);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.fc-day.selected-fc{background:var(--blue-light)}
+.fc-day-num{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:4px;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.fc-event{font-size:10px;font-weight:500;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.fc-ev-blue{background:#DBEAFE;color:#1e40af}
+.fc-ev-green{background:var(--green-light);color:var(--green)}
+.fc-ev-amber{background:var(--amber-light);color:var(--amber)}
+.fc-ev-red{background:var(--red-light);color:var(--red)}
+.fc-more{font-size:10px;color:var(--text-tertiary);cursor:pointer}
+.cal-side-panel{display:flex;flex-direction:column;gap:12px}
+.cal-side-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
+.cal-side-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.cal-sel-date-label{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:10px}
+.cal-event-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.cal-event-item:last-child{border-bottom:none}
+.cal-ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cal-ev-label{flex:1;color:var(--text-primary)}
+.cal-ev-remove{font-size:11px;color:var(--text-tertiary);cursor:pointer;padding:2px 5px;border-radius:3px}
+.cal-ev-remove:hover{color:var(--red);background:var(--red-light)}
+.cal-add-event{display:flex;flex-direction:column;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.cal-add-event input,.cal-add-event select{padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);width:100%}
+.cal-add-event input:focus,.cal-add-event select:focus{border-color:var(--blue)}
+.cal-add-event button{padding:7px;border-radius:var(--r);border:none;background:var(--blue);color:#fff;font-size:12px;cursor:pointer;font-family:inherit}
+.cal-add-event button:hover{background:var(--blue-dark)}
+.no-date-selected{text-align:center;padding:20px;color:var(--text-tertiary);font-size:12px}
 
 /* ===== PROJECTS ===== */
 .projects-layout{display:flex;gap:16px;min-height:400px}
@@ -241,6 +240,55 @@ nav{padding:8px 0}
 .tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
 .tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 
+/* ===== DOCUMENTS ===== */
+.docs-layout{display:flex;gap:0;min-height:500px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.docs-sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--border);background:var(--bg-secondary);display:flex;flex-direction:column}
+.docs-sidebar-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.docs-sidebar-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em}
+.folder-add-btn{width:22px;height:22px;border-radius:5px;border:1px solid var(--border-strong);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:14px;line-height:1}
+.folder-add-btn:hover{background:var(--blue-light);border-color:#B5D4F4;color:var(--blue)}
+.folder-list{flex:1;padding:8px 0;overflow-y:auto}
+.folder-item{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--text-secondary);user-select:none;position:relative}
+.folder-item:hover{background:rgba(0,0,0,0.04);color:var(--text-primary)}
+.folder-item.active{background:var(--blue-light);color:var(--blue);font-weight:500}
+.folder-item svg{flex-shrink:0;width:15px;height:15px}
+.folder-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.folder-item-count{font-size:10px;color:var(--text-tertiary);background:var(--bg-tertiary);padding:1px 5px;border-radius:8px;flex-shrink:0}
+.folder-item.active .folder-item-count{background:rgba(24,95,165,0.15);color:var(--blue)}
+.folder-del{opacity:0;width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);flex-shrink:0}
+.folder-item:hover .folder-del{opacity:1}
+.folder-del:hover{background:var(--red-light);color:var(--red)}
+.docs-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.docs-main-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.docs-folder-title{font-size:14px;font-weight:500;color:var(--text-primary);display:flex;align-items:center;gap:8px}
+.docs-folder-title svg{color:var(--blue)}
+.docs-actions{display:flex;gap:8px}
+.docs-body{flex:1;padding:16px 18px;overflow-y:auto}
+.docs-empty{text-align:center;padding:48px 20px}
+.docs-empty-icon{font-size:40px;margin-bottom:12px;opacity:.3}
+.docs-empty-text{font-size:13px;color:var(--text-tertiary);margin-bottom:16px}
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.doc-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;transition:all .15s;position:relative}
+.doc-card:hover{border-color:#B5D4F4;background:var(--blue-light)}
+.doc-card-icon{font-size:28px;margin-bottom:8px}
+.doc-card-name{font-size:12px;font-weight:500;color:var(--text-primary);word-break:break-word;margin-bottom:4px}
+.doc-card-meta{font-size:10px;color:var(--text-tertiary)}
+.doc-card-del{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);cursor:pointer;border:none;background:transparent;opacity:0}
+.doc-card:hover .doc-card-del{opacity:1}
+.doc-card-del:hover{background:var(--red-light);color:var(--red)}
+.docs-no-folder{display:flex;align-items:center;justify-content:center;flex:1;color:var(--text-tertiary);font-size:13px;flex-direction:column;gap:8px;padding:40px}
+
+/* Upload drop zone */
+.upload-zone{border:2px dashed var(--border-strong);border-radius:var(--rl);padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:var(--blue-light)}
+.upload-zone-icon{font-size:28px;margin-bottom:8px;opacity:.5}
+.upload-zone-text{font-size:13px;color:var(--text-secondary)}
+.upload-zone-sub{font-size:11px;color:var(--text-tertiary);margin-top:4px}
+#file-input-hidden{display:none}
+
+/* Inline folder name input */
+.folder-name-input{flex:1;padding:3px 6px;border:1px solid var(--blue);border-radius:4px;font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);min-width:0}
+
 /* ===== MODALS ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
 .modal-overlay.hidden{display:none}
@@ -272,6 +320,14 @@ nav{padding:8px 0}
         <span>Licenses</span>
         <span class="nbadge" id="expiry-badge">2</span>
       </div>
+      <div class="ni" onclick="showPanel('calendar')">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>Calendar</span>
+      </div>
+      <div class="ni" onclick="showPanel('documents')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 3.5A1.5 1.5 0 013.5 2h4l2 2h3A1.5 1.5 0 0114 5.5v7A1.5 1.5 0 0112.5 14h-9A1.5 1.5 0 012 12.5v-9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        <span>Documents</span>
+      </div>
       <div class="ni" onclick="showPanel('transactions')">
         <svg viewBox="0 0 16 16" fill="none"><path d="M1 5h14M1 11h14M4 2v12M12 2v12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         <span>Transactions</span>
@@ -281,35 +337,6 @@ nav{padding:8px 0}
         <span>Admin</span>
       </div>
     </nav>
-
-    <!-- SIDEBAR CALENDAR -->
-    <div class="sidebar-cal">
-      <div class="sidebar-cal-header">
-        <div class="sidebar-cal-month" id="scal-month-label"></div>
-        <div class="sidebar-cal-nav">
-          <button onclick="sCalNav(-1)">‹</button>
-          <button onclick="sCalNav(1)">›</button>
-        </div>
-      </div>
-      <div class="scal-grid" id="scal-grid"></div>
-
-      <!-- Selected date events panel -->
-      <div class="sidebar-day-panel" id="sidebar-day-panel">
-        <div class="sidebar-day-title" id="sidebar-day-title"></div>
-        <div id="sidebar-day-events"></div>
-        <div class="sidebar-add-event">
-          <input type="text" id="scal-new-label" placeholder="Add event…">
-          <select id="scal-new-color">
-            <option value="ev-blue">Blue</option>
-            <option value="ev-green">Green</option>
-            <option value="ev-amber">Amber</option>
-            <option value="ev-red">Red</option>
-          </select>
-          <button onclick="addSidebarEvent()">+</button>
-        </div>
-      </div>
-    </div>
-
     <div class="sf">
       <div class="nm">Admin User</div>
       <div class="em">admin@company.com</div>
@@ -335,23 +362,18 @@ nav{padding:8px 0}
           <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
           <div class="stat-card"><div class="stat-label">Total Collected</div><div class="stat-value">₱42,500</div><div class="stat-sub c-amber">₱8,000 pending</div></div>
         </div>
-
         <div class="dash-layout">
-          <!-- Left: activity + calendar mirror -->
           <div>
             <p class="dash-section-title">Recent Activity</p>
-            <div class="act-item" style="margin-bottom:8px"><div class="adot" style="background:#639922"></div><span style="color:var(--text-secondary);min-width:140px">Today, 9:41 AM</span><span>Payment received from <strong>Juan Santos</strong> — ₱12,500</span></div>
-            <div class="act-item" style="margin-bottom:16px"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
-
-            <!-- Dashboard Calendar Mirror -->
+            <div class="act-item"><div class="adot" style="background:#639922"></div><span style="color:var(--text-secondary);min-width:140px">Today, 9:41 AM</span><span>Payment received from <strong>Juan Santos</strong> — ₱12,500</span></div>
+            <div class="act-item" style="margin-top:8px;margin-bottom:16px"><div class="adot" style="background:#E24B4A"></div><span style="color:var(--text-secondary);min-width:140px">Apr 23</span><span>License <strong>BIR COR</strong> flagged — expires in 14 days</span></div>
             <p class="dash-section-title">Calendar</p>
             <div class="dash-cal-card">
               <div class="dash-cal-inner-header">
                 <div class="dash-cal-month-lbl" id="dash-cal-month-label"></div>
-                <div class="dash-cal-note">Use sidebar calendar to navigate &amp; add events</div>
+                <div class="dash-cal-note">Click Calendar in the sidebar for full view</div>
               </div>
               <div class="dash-scal-grid" id="dash-cal-grid"></div>
-              <!-- Selected day events shown in dashboard cal -->
               <div id="dash-selected-day-section" style="display:none">
                 <div class="dash-event-divider"></div>
                 <div class="dash-selected-events">
@@ -361,13 +383,9 @@ nav{padding:8px 0}
               </div>
             </div>
           </div>
-
-          <!-- Right: upcoming events -->
           <div>
             <p class="dash-section-title">Upcoming Events</p>
-            <div class="dash-upcoming">
-              <div id="dash-upcoming-list"></div>
-            </div>
+            <div class="dash-upcoming"><div id="dash-upcoming-list"></div></div>
           </div>
         </div>
       </div>
@@ -382,22 +400,11 @@ nav{padding:8px 0}
           <div class="projects-layout">
             <div class="projects-sidebar" id="projects-sidebar"></div>
             <div id="project-detail-area">
-              <div class="proj-empty" id="proj-empty-state">
-                <div class="proj-empty-icon">📁</div>
-                <div>Select a project to view its requirements,<br>or create a new one.</div>
-              </div>
+              <div class="proj-empty" id="proj-empty-state"><div class="proj-empty-icon">📁</div><div>Select a project to view its requirements,<br>or create a new one.</div></div>
               <div class="project-detail hidden" id="project-detail">
                 <div class="project-detail-header">
-                  <div>
-                    <div class="project-detail-title" id="proj-detail-name"></div>
-                    <div class="project-detail-desc" id="proj-detail-desc"></div>
-                  </div>
-                  <div class="row-actions">
-                    <button class="icon-btn edit-btn" onclick="openEditProject()">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-                      Edit Project
-                    </button>
-                  </div>
+                  <div><div class="project-detail-title" id="proj-detail-name"></div><div class="project-detail-desc" id="proj-detail-desc"></div></div>
+                  <div class="row-actions"><button class="icon-btn edit-btn" onclick="openEditProject()"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit Project</button></div>
                 </div>
                 <div class="project-detail-body">
                   <div class="req-tab-bar">
@@ -406,27 +413,15 @@ nav{padding:8px 0}
                     <div class="req-tab" onclick="switchReqTab('other')" id="rtab-other">Other Requirements</div>
                   </div>
                   <div class="req-pane active" id="rpane-technical">
-                    <div class="req-add-row">
-                      <input type="text" id="new-tech-req" placeholder="Add technical requirement…">
-                      <select id="new-tech-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option></select>
-                      <button class="btn btnp btnsm" onclick="addRequirement('technical')">Add</button>
-                    </div>
+                    <div class="req-add-row"><input type="text" id="new-tech-req" placeholder="Add technical requirement…"><select id="new-tech-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option></select><button class="btn btnp btnsm" onclick="addRequirement('technical')">Add</button></div>
                     <div class="checklist-list" id="req-list-technical"></div>
                   </div>
                   <div class="req-pane" id="rpane-financial">
-                    <div class="req-add-row">
-                      <input type="text" id="new-fin-req" placeholder="Add financial requirement…">
-                      <select id="new-fin-cat"><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option></select>
-                      <button class="btn btnp btnsm" onclick="addRequirement('financial')">Add</button>
-                    </div>
+                    <div class="req-add-row"><input type="text" id="new-fin-req" placeholder="Add financial requirement…"><select id="new-fin-cat"><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option></select><button class="btn btnp btnsm" onclick="addRequirement('financial')">Add</button></div>
                     <div class="checklist-list" id="req-list-financial"></div>
                   </div>
                   <div class="req-pane" id="rpane-other">
-                    <div class="req-add-row">
-                      <input type="text" id="new-other-req" placeholder="Add other requirement…">
-                      <select id="new-other-cat"><option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option></select>
-                      <button class="btn btnp btnsm" onclick="addRequirement('other')">Add</button>
-                    </div>
+                    <div class="req-add-row"><input type="text" id="new-other-req" placeholder="Add other requirement…"><select id="new-other-cat"><option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option></select><button class="btn btnp btnsm" onclick="addRequirement('other')">Add</button></div>
                     <div class="checklist-list" id="req-list-other"></div>
                   </div>
                 </div>
@@ -435,9 +430,7 @@ nav{padding:8px 0}
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="pane-overview">
-          <div id="overview-content"></div>
-        </div>
+        <div class="tab-pane" id="pane-overview"><div id="overview-content"></div></div>
       </div>
 
       <!-- Licenses -->
@@ -447,12 +440,94 @@ nav{padding:8px 0}
             <div class="fg"><label>License Name</label><input type="text" id="new-lic-name" placeholder="e.g. Mayor's Permit"></div>
             <div class="fg"><label>Expiry Date</label><input type="date" id="new-lic-date"></div>
           </div>
-          <div class="form-actions">
-            <button class="btn" onclick="closeForm('add-lic-form')">Cancel</button>
-            <button class="btn btnp" onclick="addLicense()">Add License</button>
-          </div>
+          <div class="form-actions"><button class="btn" onclick="closeForm('add-lic-form')">Cancel</button><button class="btn btnp" onclick="addLicense()">Add License</button></div>
         </div>
         <div class="expiry-list" id="expiry-list"></div>
+      </div>
+
+      <!-- Calendar (Full Panel) -->
+      <div class="panel" id="panel-calendar">
+        <div class="cal-panel-layout">
+          <div class="full-cal-card">
+            <div class="full-cal-header">
+              <div class="full-cal-month-label" id="fc-month-label"></div>
+              <div class="full-cal-nav">
+                <button onclick="fcNav(-1)">‹ Prev</button>
+                <button onclick="fcGoToday()">Today</button>
+                <button onclick="fcNav(1)">Next ›</button>
+              </div>
+            </div>
+            <div class="full-cal-grid" id="fc-grid"></div>
+          </div>
+          <div class="cal-side-panel">
+            <div class="cal-side-card">
+              <div id="cal-day-content">
+                <div class="no-date-selected">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;opacity:.3"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div>Click a date to view<br>or add events</div>
+                </div>
+              </div>
+            </div>
+            <div class="cal-side-card">
+              <div class="cal-side-title">Upcoming Events</div>
+              <div id="cal-upcoming-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="panel" id="panel-documents">
+        <div class="docs-layout">
+          <!-- Folders sidebar -->
+          <div class="docs-sidebar">
+            <div class="docs-sidebar-header">
+              <span class="docs-sidebar-title">Folders</span>
+              <button class="folder-add-btn" onclick="startAddFolder()" title="New folder">+</button>
+            </div>
+            <div class="folder-list" id="folder-list">
+              <!-- rendered by JS -->
+            </div>
+          </div>
+          <!-- Main documents area -->
+          <div class="docs-main">
+            <div id="docs-no-folder-msg" class="docs-no-folder">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="opacity:.25"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <span style="color:var(--text-tertiary);font-size:13px">Select or create a folder to get started</span>
+            </div>
+            <div id="docs-folder-view" style="display:none;flex-direction:column;flex:1">
+              <div class="docs-main-header">
+                <div class="docs-folder-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                  <span id="docs-active-folder-name"></span>
+                </div>
+                <div class="docs-actions">
+                  <label class="btn btnsm" style="cursor:pointer">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;vertical-align:-1px"><path d="M8 2v8M5 7l3 3 3-3M2 12v1.5A.5.5 0 002.5 14h11a.5.5 0 00.5-.5V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Upload File
+                    <input type="file" id="file-input-hidden" multiple style="display:none" onchange="handleFileUpload(this)">
+                  </label>
+                  <button class="btn btnsm btndanger" onclick="promptDeleteFolder()">Delete Folder</button>
+                </div>
+              </div>
+              <div class="docs-body">
+                <!-- Drop zone -->
+                <div class="upload-zone" id="upload-drop-zone" onclick="document.getElementById('file-input-hidden').click()">
+                  <div class="upload-zone-icon">📎</div>
+                  <div class="upload-zone-text">Drop files here or click to upload</div>
+                  <div class="upload-zone-sub">Supports any file type</div>
+                </div>
+                <div id="docs-grid-container">
+                  <div class="docs-empty" id="docs-empty-msg">
+                    <div class="docs-empty-icon">📄</div>
+                    <div class="docs-empty-text">No documents yet. Upload files to get started.</div>
+                  </div>
+                  <div class="docs-grid" id="docs-grid" style="display:none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Transactions -->
@@ -467,10 +542,7 @@ nav{padding:8px 0}
             <div class="fg"><label>Description</label><input type="text" id="new-tx-desc" placeholder="e.g. Permit processing fee"></div>
             <div class="fg"><label>Status</label><select id="new-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div>
           </div>
-          <div class="form-actions">
-            <button class="btn" onclick="closeForm('add-tx-form')">Cancel</button>
-            <button class="btn btnp" onclick="addTransaction()">Add Transaction</button>
-          </div>
+          <div class="form-actions"><button class="btn" onclick="closeForm('add-tx-form')">Cancel</button><button class="btn btnp" onclick="addTransaction()">Add Transaction</button></div>
         </div>
         <div class="tx-wrap">
           <table class="tx-table">
@@ -491,41 +563,16 @@ nav{padding:8px 0}
       <div class="panel" id="panel-admin">
         <p class="section-title">System Overview</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-          <div class="admin-card">
-            <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Checklist Progress</div>
-            <div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:0%;background:var(--blue)"></div></div>
-            <div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">0 of 0 items completed</div>
-          </div>
-          <div class="admin-card">
-            <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div>
-            <div class="pb-wrap"><div class="pb-fill" style="width:84%;background:#639922"></div></div>
-            <div style="font-size:12px;color:var(--text-tertiary)">₱42,500 of ₱50,500 collected (84%)</div>
-          </div>
+          <div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Checklist Progress</div><div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:0%;background:var(--blue)"></div></div><div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">0 of 0 items completed</div></div>
+          <div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div><div class="pb-wrap"><div class="pb-fill" style="width:84%;background:#639922"></div></div><div style="font-size:12px;color:var(--text-tertiary)">₱42,500 of ₱50,500 collected (84%)</div></div>
         </div>
         <p class="section-title">User Management</p>
-        <div class="user-row">
-          <div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div>
-          <div style="flex:1"><div style="font-size:13px;font-weight:500">Admin User</div><div style="font-size:12px;color:var(--text-tertiary)">admin@company.com</div></div>
-          <span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span>
-        </div>
-        <div class="user-row">
-          <div class="avatar" style="background:var(--green-light);color:var(--green)">MR</div>
-          <div style="flex:1"><div style="font-size:13px;font-weight:500">Maria Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">m.reyes@company.com</div></div>
-          <span class="badge b-paid">Staff</span>
-        </div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Admin User</div><div style="font-size:12px;color:var(--text-tertiary)">admin@company.com</div></div><span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--green-light);color:var(--green)">MR</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Maria Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">m.reyes@company.com</div></div><span class="badge b-paid">Staff</span></div>
         <p class="section-title" style="margin-top:20px">Notification Settings</p>
-        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div><div style="font-size:13px;font-weight:500">License expiry alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify 30, 14, and 7 days before expiry</div></div>
-          <div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div>
-        </div>
-        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div><div style="font-size:13px;font-weight:500">Payment overdue alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify when payment passes due date</div></div>
-          <div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div>
-        </div>
-        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between">
-          <div><div style="font-size:13px;font-weight:500">Checklist completion alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify admin when all docs are submitted</div></div>
-          <div class="tog" style="background:#d1d5db" onclick="toggleSwitch(this)"><div class="tog-t" style="left:2px"></div></div>
-        </div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:13px;font-weight:500">License expiry alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify 30, 14, and 7 days before expiry</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:13px;font-weight:500">Payment overdue alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify when payment passes due date</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Checklist completion alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify admin when all docs are submitted</div></div><div class="tog" style="background:#d1d5db" onclick="toggleSwitch(this)"><div class="tog-t" style="left:2px"></div></div></div>
       </div>
 
     </div>
@@ -541,93 +588,41 @@ nav{padding:8px 0}
       <div class="fg"><label>Client / Company</label><input type="text" id="proj-client-input" placeholder="e.g. Santos Enterprises"></div>
     </div>
     <div class="fg" style="margin-bottom:12px"><label>Description (optional)</label><input type="text" id="proj-desc-input" placeholder="Brief description"></div>
-    <div class="modal-footer">
-      <div></div>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-new-project')">Cancel</button>
-        <button class="btn btnp" id="save-project-btn" onclick="saveProject()">Create Project</button>
-      </div>
-    </div>
+    <div class="modal-footer"><div></div><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-new-project')">Cancel</button><button class="btn btnp" id="save-project-btn" onclick="saveProject()">Create Project</button></div></div>
   </div>
 </div>
 
 <div class="modal-overlay hidden" id="modal-confirm-delete">
   <div class="modal" style="width:380px">
-    <div class="modal-title">Remove Project?</div>
-    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">This will permanently delete <strong id="del-proj-name"></strong> and all its requirements. This cannot be undone.</p>
-    <div class="modal-footer">
-      <div></div>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-confirm-delete')">Cancel</button>
-        <button class="btn btndanger" onclick="confirmDeleteProject()">Delete Project</button>
-      </div>
-    </div>
+    <div class="modal-title" id="modal-del-title">Remove Project?</div>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px" id="modal-del-body">This cannot be undone.</p>
+    <div class="modal-footer"><div></div><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-confirm-delete')">Cancel</button><button class="btn btndanger" id="modal-del-confirm-btn">Delete</button></div></div>
   </div>
 </div>
 
 <div class="modal-overlay hidden" id="modal-req">
   <div class="modal">
     <div class="modal-title">Edit Requirement</div>
-    <div class="form-row">
-      <div class="fg"><label>Requirement Name</label><input type="text" id="edit-req-name"></div>
-      <div class="fg"><label>Category</label>
-        <select id="edit-req-cat">
-          <option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option>
-          <option>Environmental</option><option>Tax</option><option>Finance</option><option>HR</option>
-          <option>Accounting</option><option>Insurance</option>
-          <option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option>
-        </select>
-      </div>
-    </div>
-    <div class="fg" style="margin-bottom:12px"><label>Status</label>
-      <select id="edit-req-status"><option value="0">Pending</option><option value="1">Complete</option></select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btndanger" onclick="deleteRequirement()">Delete</button>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-req')">Cancel</button>
-        <button class="btn btnp" onclick="saveRequirement()">Save Changes</button>
-      </div>
-    </div>
+    <div class="form-row"><div class="fg"><label>Requirement Name</label><input type="text" id="edit-req-name"></div><div class="fg"><label>Category</label><select id="edit-req-cat"><option>Legal</option><option>Operations</option><option>Safety</option><option>IT</option><option>Environmental</option><option>Tax</option><option>Finance</option><option>HR</option><option>Accounting</option><option>Insurance</option><option>Administrative</option><option>Compliance</option><option>Permits</option><option>Certifications</option><option>Miscellaneous</option></select></div></div>
+    <div class="fg" style="margin-bottom:12px"><label>Status</label><select id="edit-req-status"><option value="0">Pending</option><option value="1">Complete</option></select></div>
+    <div class="modal-footer"><button class="btn btndanger" onclick="deleteRequirement()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-req')">Cancel</button><button class="btn btnp" onclick="saveRequirement()">Save Changes</button></div></div>
   </div>
 </div>
 
 <div class="modal-overlay hidden" id="modal-license">
   <div class="modal">
     <div class="modal-title">Edit License</div>
-    <div class="form-row">
-      <div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div>
-      <div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btndanger" onclick="deleteLicense()">Delete</button>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-license')">Cancel</button>
-        <button class="btn btnp" onclick="saveLicense()">Save Changes</button>
-      </div>
-    </div>
+    <div class="form-row"><div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div><div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div></div>
+    <div class="modal-footer"><button class="btn btndanger" onclick="deleteLicense()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-license')">Cancel</button><button class="btn btnp" onclick="saveLicense()">Save Changes</button></div></div>
   </div>
 </div>
 
 <div class="modal-overlay hidden" id="modal-transaction">
   <div class="modal">
     <div class="modal-title">Edit Transaction</div>
-    <div class="form-row-3">
-      <div class="fg"><label>Company Name</label><input type="text" id="edit-tx-company"></div>
-      <div class="fg"><label>Client Name</label><input type="text" id="edit-tx-client"></div>
-      <div class="fg"><label>Amount (₱)</label><input type="number" id="edit-tx-amount"></div>
-    </div>
-    <div class="form-row">
-      <div class="fg"><label>Description</label><input type="text" id="edit-tx-desc"></div>
-      <div class="fg"><label>Status</label><select id="edit-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btndanger" onclick="deleteTransaction()">Delete</button>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-transaction')">Cancel</button>
-        <button class="btn btnp" onclick="saveTransaction()">Save Changes</button>
-      </div>
-    </div>
+    <div class="form-row-3"><div class="fg"><label>Company Name</label><input type="text" id="edit-tx-company"></div><div class="fg"><label>Client Name</label><input type="text" id="edit-tx-client"></div><div class="fg"><label>Amount (₱)</label><input type="number" id="edit-tx-amount"></div></div>
+    <div class="form-row"><div class="fg"><label>Description</label><input type="text" id="edit-tx-desc"></div><div class="fg"><label>Status</label><select id="edit-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div></div>
+    <div class="modal-footer"><button class="btn btndanger" onclick="deleteTransaction()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-transaction')">Cancel</button><button class="btn btnp" onclick="saveTransaction()">Save Changes</button></div></div>
   </div>
 </div>
 
@@ -636,6 +631,7 @@ const TODAY = new Date('2026-04-25');
 let editingId = null;
 let editingReqInfo = null;
 let deletingProjectId = null;
+let pendingDeleteAction = null;
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -643,34 +639,8 @@ const DAYS_SHORT = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
 const state = {
   projects: [
-    {
-      id:1, name:'Business Permit Renewal 2026', client:'Santos Enterprises',
-      desc:'Annual renewal of city mayor\'s permit and related documents',
-      technical:[
-        {id:101,label:'Business Permit',category:'Legal',checked:true},
-        {id:102,label:'Fire Safety Inspection Certificate',category:'Safety',checked:false},
-        {id:103,label:'Zoning Clearance',category:'Legal',checked:true},
-      ],
-      financial:[
-        {id:104,label:'BIR Certificate of Registration',category:'Tax',checked:true},
-        {id:105,label:'Audited Financial Statements',category:'Finance',checked:false},
-      ],
-      other:[{id:106,label:'Barangay Clearance',category:'Administrative',checked:false}]
-    },
-    {
-      id:2, name:'HR Compliance 2026', client:'Internal',
-      desc:'SSS, PhilHealth, Pag-IBIG and DOLE requirements',
-      technical:[
-        {id:201,label:'DOLE Registration',category:'Operations',checked:true},
-        {id:202,label:'OSHS Compliance Certificate',category:'Safety',checked:false},
-      ],
-      financial:[
-        {id:203,label:'SSS Registration',category:'HR',checked:true},
-        {id:204,label:'PhilHealth Registration',category:'HR',checked:false},
-        {id:205,label:'Pag-IBIG Registration',category:'HR',checked:false},
-      ],
-      other:[]
-    }
+    {id:1,name:'Business Permit Renewal 2026',client:'Santos Enterprises',desc:"Annual renewal of city mayor's permit and related documents",technical:[{id:101,label:'Business Permit',category:'Legal',checked:true},{id:102,label:'Fire Safety Inspection Certificate',category:'Safety',checked:false},{id:103,label:'Zoning Clearance',category:'Legal',checked:true}],financial:[{id:104,label:'BIR Certificate of Registration',category:'Tax',checked:true},{id:105,label:'Audited Financial Statements',category:'Finance',checked:false}],other:[{id:106,label:'Barangay Clearance',category:'Administrative',checked:false}]},
+    {id:2,name:'HR Compliance 2026',client:'Internal',desc:'SSS, PhilHealth, Pag-IBIG and DOLE requirements',technical:[{id:201,label:'DOLE Registration',category:'Operations',checked:true},{id:202,label:'OSHS Compliance Certificate',category:'Safety',checked:false}],financial:[{id:203,label:'SSS Registration',category:'HR',checked:true},{id:204,label:'PhilHealth Registration',category:'HR',checked:false},{id:205,label:'Pag-IBIG Registration',category:'HR',checked:false}],other:[]}
   ],
   licenses:[
     {id:11,name:"Mayor's Business Permit",expiry:'2026-05-09'},
@@ -688,670 +658,739 @@ const state = {
     {id:27,date:'Apr 5, 2026',company:'Tan Industries',client:'Carlos Tan',desc:'Document filing fee',amount:4500,status:'Overdue'},
   ],
   calendarEvents:{},
+  // Documents
+  folders:[
+    {id:'f1',name:'Business Permits',docs:[
+      {id:'d1',name:'Mayors Permit 2025.pdf',type:'pdf',size:'1.2 MB',date:'Apr 10, 2026'},
+      {id:'d2',name:'Zoning Clearance.pdf',type:'pdf',size:'845 KB',date:'Apr 11, 2026'},
+    ]},
+    {id:'f2',name:'BIR Documents',docs:[
+      {id:'d3',name:'BIR COR.pdf',type:'pdf',size:'612 KB',date:'Apr 12, 2026'},
+    ]},
+    {id:'f3',name:'HR Compliance',docs:[]},
+  ],
+  activeFolderId:null,
   nextId:500,
   activeProjectId:null,
   activeReqTab:'technical',
   activeCheckTab:'projects',
-  // Shared calendar state — sidebar is the source of truth
   calYear:2026,
-  calMonth:3, // 0-indexed April
-  selectedDate:null, // {d, m, y}
+  calMonth:3,
+  selectedDate:null,
   editingProjectId:null,
 };
 
-// ===== CALENDAR CORE (shared state) =====
-function getEventKey(y, m, d) { return y+'-'+m+'-'+d; }
-
-function getEventDotClass(evs) {
-  if (!evs || !evs.length) return '';
-  const hasRed = evs.some(e => e.cls === 'ev-red');
-  return hasRed ? 'has-event-red' : 'has-event';
+// ===== FILE TYPE HELPERS =====
+function fileIcon(type) {
+  const t = (type||'').toLowerCase();
+  if (t==='pdf') return '📄';
+  if (['doc','docx'].includes(t)) return '📝';
+  if (['xls','xlsx'].includes(t)) return '📊';
+  if (['jpg','jpeg','png','gif','webp','svg'].includes(t)) return '🖼️';
+  if (['zip','rar','7z'].includes(t)) return '🗜️';
+  if (['ppt','pptx'].includes(t)) return '📑';
+  return '📎';
+}
+function getFileExt(name) {
+  const parts = name.split('.');
+  return parts.length > 1 ? parts[parts.length-1].toLowerCase() : 'file';
+}
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
 }
 
+// ===== DOCUMENTS =====
+function getActiveFolder() { return state.folders.find(f => f.id === state.activeFolderId); }
+
+function renderFolderList() {
+  const list = document.getElementById('folder-list');
+  if (!state.folders.length) {
+    list.innerHTML = '<div class="empty-state" style="padding:20px 14px;font-size:12px">No folders yet.<br>Click + to create one.</div>';
+    return;
+  }
+  list.innerHTML = state.folders.map(f => `
+    <div class="folder-item ${f.id===state.activeFolderId?'active':''}" onclick="selectFolder('${f.id}')">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="${f.id===state.activeFolderId?'rgba(24,95,165,0.12)':'none'}"/></svg>
+      <span class="folder-item-name">${escHtml(f.name)}</span>
+      <span class="folder-item-count">${f.docs.length}</span>
+      <span class="folder-del" onclick="event.stopPropagation();promptDeleteFolder('${f.id}')" title="Delete folder">✕</span>
+    </div>`).join('');
+}
+
+function selectFolder(id) {
+  state.activeFolderId = id;
+  renderFolderList();
+  renderDocsView();
+}
+
+function renderDocsView() {
+  const folder = getActiveFolder();
+  document.getElementById('docs-no-folder-msg').style.display = folder ? 'none' : 'flex';
+  const view = document.getElementById('docs-folder-view');
+  if (!folder) { view.style.display = 'none'; return; }
+  view.style.display = 'flex';
+  document.getElementById('docs-active-folder-name').textContent = folder.name;
+  const grid = document.getElementById('docs-grid');
+  const emptyMsg = document.getElementById('docs-empty-msg');
+  if (!folder.docs.length) {
+    emptyMsg.style.display = 'block';
+    grid.style.display = 'none';
+    return;
+  }
+  emptyMsg.style.display = 'none';
+  grid.style.display = 'grid';
+  grid.innerHTML = folder.docs.map(doc => `
+    <div class="doc-card" title="${escHtml(doc.name)}">
+      <button class="doc-card-del" onclick="deleteDocument('${doc.id}')" title="Remove">✕</button>
+      <div class="doc-card-icon">${fileIcon(doc.type)}</div>
+      <div class="doc-card-name">${escHtml(doc.name)}</div>
+      <div class="doc-card-meta">${doc.size} · ${doc.date}</div>
+    </div>`).join('');
+}
+
+function startAddFolder() {
+  // Inline folder creation in sidebar
+  const list = document.getElementById('folder-list');
+  const inputRow = document.createElement('div');
+  inputRow.className = 'folder-item';
+  inputRow.style.padding = '6px 10px';
+  inputRow.innerHTML = `
+    <svg viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    <input class="folder-name-input" id="new-folder-input" type="text" placeholder="Folder name" maxlength="50" autofocus>`;
+  list.appendChild(inputRow);
+  const inp = document.getElementById('new-folder-input');
+  inp.focus();
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmAddFolder(inp.value);
+    if (e.key === 'Escape') { inputRow.remove(); }
+  });
+  inp.addEventListener('blur', () => { setTimeout(()=>{ if(document.getElementById('new-folder-input')) inputRow.remove(); }, 150); });
+}
+
+function confirmAddFolder(name) {
+  name = (name||'').trim();
+  if (!name) return;
+  const id = 'f' + state.nextId++;
+  state.folders.push({id, name, docs:[]});
+  renderFolderList();
+  selectFolder(id);
+}
+
+function promptDeleteFolder(id) {
+  const folder = id ? state.folders.find(f=>f.id===id) : getActiveFolder();
+  if (!folder) return;
+  document.getElementById('modal-del-title').textContent = 'Delete Folder?';
+  document.getElementById('modal-del-body').innerHTML = `This will permanently delete <strong>${escHtml(folder.name)}</strong> and all its ${folder.docs.length} document(s). This cannot be undone.`;
+  const btn = document.getElementById('modal-del-confirm-btn');
+  btn.textContent = 'Delete Folder';
+  btn.onclick = () => {
+    state.folders = state.folders.filter(f=>f.id!==folder.id);
+    if (state.activeFolderId===folder.id) state.activeFolderId=null;
+    closeModal('modal-confirm-delete');
+    renderFolderList();
+    renderDocsView();
+  };
+  openModal('modal-confirm-delete');
+}
+
+function handleFileUpload(input) {
+  const folder = getActiveFolder();
+  if (!folder || !input.files.length) return;
+  const today = TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+  Array.from(input.files).forEach(file => {
+    const ext = getFileExt(file.name);
+    folder.docs.push({
+      id:'d'+state.nextId++,
+      name:file.name,
+      type:ext,
+      size:formatBytes(file.size),
+      date:today
+    });
+  });
+  input.value='';
+  renderDocsView();
+}
+
+function deleteDocument(docId) {
+  const folder = getActiveFolder();
+  if (!folder) return;
+  folder.docs = folder.docs.filter(d=>d.id!==docId);
+  renderFolderList();
+  renderDocsView();
+}
+
+// Drag-and-drop upload
+document.addEventListener('DOMContentLoaded', ()=>{
+  const zone = document.getElementById('upload-drop-zone');
+  if (!zone) return;
+  zone.addEventListener('dragover', e=>{ e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', ()=>zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e=>{
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    const folder = getActiveFolder();
+    if (!folder) return;
+    const today = TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+    Array.from(e.dataTransfer.files).forEach(file=>{
+      const ext = getFileExt(file.name);
+      folder.docs.push({id:'d'+state.nextId++,name:file.name,type:ext,size:formatBytes(file.size),date:today});
+    });
+    renderDocsView();
+    renderFolderList();
+  });
+});
+
+function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ===== CALENDAR CORE =====
+function getEventKey(y, m, d) { return y+'-'+m+'-'+d; }
+function getEventDotClass(evs) {
+  if (!evs||!evs.length) return '';
+  return evs.some(e=>e.cls==='ev-red')?'has-event-red':'has-event';
+}
 function eventColorDot(cls) {
-  if (cls === 'ev-red') return '#E24B4A';
-  if (cls === 'ev-amber') return '#EF9F27';
-  if (cls === 'ev-green') return '#639922';
+  if (cls==='ev-red') return '#E24B4A';
+  if (cls==='ev-amber') return '#EF9F27';
+  if (cls==='ev-green') return '#639922';
   return '#185FA5';
 }
-
 function initCalendarEvents() {
-  state.calendarEvents = {};
-  state.licenses.forEach(lic => {
-    const d = new Date(lic.expiry + 'T00:00:00');
-    const key = getEventKey(d.getFullYear(), d.getMonth(), d.getDate());
-    if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
-    const days = Math.round((d - TODAY) / 86400000);
-    const cls = days <= 14 ? 'ev-red' : days <= 30 ? 'ev-amber' : 'ev-green';
-    if (!state.calendarEvents[key].find(e => e.label === lic.name + ' expiry'))
-      state.calendarEvents[key].push({id: state.nextId++, label: lic.name + ' expiry', cls, isLicense: true});
+  state.calendarEvents={};
+  state.licenses.forEach(lic=>{
+    const d=new Date(lic.expiry+'T00:00:00');
+    const key=getEventKey(d.getFullYear(),d.getMonth(),d.getDate());
+    if (!state.calendarEvents[key]) state.calendarEvents[key]=[];
+    const days=Math.round((d-TODAY)/86400000);
+    const cls=days<=14?'ev-red':days<=30?'ev-amber':'ev-green';
+    if (!state.calendarEvents[key].find(e=>e.label===lic.name+' expiry'))
+      state.calendarEvents[key].push({id:state.nextId++,label:lic.name+' expiry',cls,isLicense:true});
   });
 }
 
-// ===== SIDEBAR CALENDAR =====
-function sCalNav(dir) {
-  state.calMonth += dir;
-  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
-  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
-  renderSidebarCal();
-  renderDashboardCal();
-  renderFullCal();
-}
-
-function renderSidebarCal() {
-  document.getElementById('scal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
-  const grid = document.getElementById('scal-grid');
-  let html = DAYS_SHORT.map(d => `<div class="scal-dow">${d}</div>`).join('');
-
-  const first = new Date(state.calYear, state.calMonth, 1).getDay();
-  const dim = new Date(state.calYear, state.calMonth + 1, 0).getDate();
-  const dip = new Date(state.calYear, state.calMonth, 0).getDate();
-
-  for (let i = 0; i < first; i++) {
-    html += `<div class="scal-day other-m">${dip - first + 1 + i}</div>`;
-  }
-  for (let d = 1; d <= dim; d++) {
-    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
-    const isSel = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
-    const key = getEventKey(state.calYear, state.calMonth, d);
-    const evs = state.calendarEvents[key] || [];
-    const dotCls = getEventDotClass(evs);
-    let cls = 'scal-day';
-    if (isToday) cls += ' today-s';
-    if (isSel) cls += ' selected-s';
-    if (dotCls) cls += ' ' + dotCls;
-    html += `<div class="${cls}" onclick="selectSidebarDay(${d})">${d}</div>`;
-  }
-  const rem = (first + dim) % 7 === 0 ? 0 : 7 - (first + dim) % 7;
-  for (let i = 1; i <= rem; i++) {
-    html += `<div class="scal-day other-m">${i}</div>`;
-  }
-  grid.innerHTML = html;
-  renderSidebarDayPanel();
-}
-
-function selectSidebarDay(d) {
-  if (state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear) {
-    // Deselect
-    state.selectedDate = null;
-  } else {
-    state.selectedDate = {d, m: state.calMonth, y: state.calYear};
-  }
-  renderSidebarCal();
-  renderDashboardCal();
-}
-
-function renderSidebarDayPanel() {
-  const panel = document.getElementById('sidebar-day-panel');
-  const titleEl = document.getElementById('sidebar-day-title');
-  const listEl = document.getElementById('sidebar-day-events');
-
-  if (!state.selectedDate) {
-    panel.classList.remove('open');
-    return;
-  }
-  const {d, m, y} = state.selectedDate;
-  if (m !== state.calMonth || y !== state.calYear) {
-    panel.classList.remove('open');
-    return;
-  }
-  panel.classList.add('open');
-  const dateStr = new Date(y, m, d).toLocaleDateString('en-PH', {weekday:'short', month:'short', day:'numeric'});
-  titleEl.textContent = dateStr;
-
-  const key = getEventKey(y, m, d);
-  const evs = state.calendarEvents[key] || [];
-
-  if (!evs.length) {
-    listEl.innerHTML = `<div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">No events on this day.</div>`;
-  } else {
-    listEl.innerHTML = evs.map(ev => `
-      <div class="sidebar-event-item">
-        <div class="se-dot" style="background:${eventColorDot(ev.cls)}"></div>
-        <div class="se-label">${ev.label}</div>
-        ${!ev.isLicense ? `<span class="se-remove" onclick="removeSidebarEvent('${key}',${ev.id})">✕</span>` : ''}
-      </div>`).join('');
-  }
-}
-
-function addSidebarEvent() {
-  const label = document.getElementById('scal-new-label').value.trim();
-  const cls = document.getElementById('scal-new-color').value;
-  if (!label || !state.selectedDate) return;
-  const {d, m, y} = state.selectedDate;
-  const key = getEventKey(y, m, d);
-  if (!state.calendarEvents[key]) state.calendarEvents[key] = [];
-  state.calendarEvents[key].push({id: state.nextId++, label, cls});
-  document.getElementById('scal-new-label').value = '';
-  renderSidebarCal();
-  renderDashboardCal();
-  renderFullCal();
-  renderDashUpcoming();
-}
-
-function removeSidebarEvent(key, id) {
-  if (state.calendarEvents[key]) {
-    state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
-  }
-  renderSidebarCal();
-  renderDashboardCal();
-  renderFullCal();
-  renderDashUpcoming();
-}
-
-// ===== DASHBOARD CALENDAR (mirror of sidebar state) =====
+// ===== MINI DASHBOARD CALENDAR =====
 function renderDashboardCal() {
-  document.getElementById('dash-cal-month-label').textContent = MONTHS[state.calMonth] + ' ' + state.calYear;
-  const grid = document.getElementById('dash-cal-grid');
-  let html = DAYS_SHORT.map(d => `<div class="dash-scal-dow">${d}</div>`).join('');
-
-  const first = new Date(state.calYear, state.calMonth, 1).getDay();
-  const dim = new Date(state.calYear, state.calMonth + 1, 0).getDate();
-  const dip = new Date(state.calYear, state.calMonth, 0).getDate();
-
-  for (let i = 0; i < first; i++) {
-    html += `<div class="dash-scal-day other-m">${dip - first + 1 + i}</div>`;
+  document.getElementById('dash-cal-month-label').textContent = MONTHS[state.calMonth]+' '+state.calYear;
+  const grid=document.getElementById('dash-cal-grid');
+  let html=DAYS_SHORT.map(d=>`<div class="dash-scal-dow">${d}</div>`).join('');
+  const first=new Date(state.calYear,state.calMonth,1).getDay();
+  const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
+  const dip=new Date(state.calYear,state.calMonth,0).getDate();
+  for(let i=0;i<first;i++) html+=`<div class="dash-scal-day other-m">${dip-first+1+i}</div>`;
+  for(let d=1;d<=dim;d++){
+    const isToday=d===TODAY.getDate()&&state.calMonth===TODAY.getMonth()&&state.calYear===TODAY.getFullYear();
+    const isSel=state.selectedDate&&state.selectedDate.d===d&&state.selectedDate.m===state.calMonth&&state.selectedDate.y===state.calYear;
+    const key=getEventKey(state.calYear,state.calMonth,d);
+    const evs=state.calendarEvents[key]||[];
+    const dotCls=getEventDotClass(evs);
+    let cls='dash-scal-day';
+    if(isToday)cls+=' today-d';
+    if(isSel)cls+=' selected-d';
+    if(dotCls)cls+=' '+(dotCls==='has-event-red'?'has-ev-red':'has-ev');
+    html+=`<div class="${cls}">${d}</div>`;
   }
-  for (let d = 1; d <= dim; d++) {
-    const isToday = d === TODAY.getDate() && state.calMonth === TODAY.getMonth() && state.calYear === TODAY.getFullYear();
-    const isSel = state.selectedDate && state.selectedDate.d === d && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear;
-    const key = getEventKey(state.calYear, state.calMonth, d);
-    const evs = state.calendarEvents[key] || [];
-    const dotCls = getEventDotClass(evs);
-    let cls = 'dash-scal-day';
-    if (isToday) cls += ' today-d';
-    if (isSel) cls += ' selected-d';
-    if (dotCls) cls += ' ' + (dotCls === 'has-event-red' ? 'has-ev-red' : 'has-ev');
-    html += `<div class="${cls}">${d}</div>`;
-  }
-  const rem = (first + dim) % 7 === 0 ? 0 : 7 - (first + dim) % 7;
-  for (let i = 1; i <= rem; i++) {
-    html += `<div class="dash-scal-day other-m">${i}</div>`;
-  }
-  grid.innerHTML = html;
-
-  // Selected day events section in dashboard cal
-  const selSection = document.getElementById('dash-selected-day-section');
-  const selLbl = document.getElementById('dash-sel-date-lbl');
-  const selList = document.getElementById('dash-sel-events-list');
-
-  if (state.selectedDate && state.selectedDate.m === state.calMonth && state.selectedDate.y === state.calYear) {
-    const {d, m, y} = state.selectedDate;
-    const dateStr = new Date(y, m, d).toLocaleDateString('en-PH', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
-    selLbl.textContent = dateStr;
-    const key = getEventKey(y, m, d);
-    const evs = state.calendarEvents[key] || [];
-    if (!evs.length) {
-      selList.innerHTML = `<div class="dash-sel-event-row" style="color:var(--text-tertiary);border:none">No events on this date.</div>`;
-    } else {
-      selList.innerHTML = evs.map(ev => `
-        <div class="dash-sel-event-row">
-          <div style="width:8px;height:8px;border-radius:50%;background:${eventColorDot(ev.cls)};flex-shrink:0"></div>
-          <span style="color:var(--text-primary)">${ev.label}</span>
-        </div>`).join('');
-    }
-    selSection.style.display = 'block';
-  } else {
-    selSection.style.display = 'none';
-  }
-
+  const rem=(first+dim)%7===0?0:7-(first+dim)%7;
+  for(let i=1;i<=rem;i++) html+=`<div class="dash-scal-day other-m">${i}</div>`;
+  grid.innerHTML=html;
+  const selSection=document.getElementById('dash-selected-day-section');
+  const selLbl=document.getElementById('dash-sel-date-lbl');
+  const selList=document.getElementById('dash-sel-events-list');
+  if(state.selectedDate&&state.selectedDate.m===state.calMonth&&state.selectedDate.y===state.calYear){
+    const{d,m,y}=state.selectedDate;
+    selLbl.textContent=new Date(y,m,d).toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    const key=getEventKey(y,m,d);
+    const evs=state.calendarEvents[key]||[];
+    selList.innerHTML=evs.length?evs.map(ev=>`<div class="dash-sel-event-row"><div style="width:8px;height:8px;border-radius:50%;background:${eventColorDot(ev.cls)};flex-shrink:0"></div><span>${ev.label}</span></div>`).join(''):'<div class="dash-sel-event-row" style="color:var(--text-tertiary);border:none">No events on this date.</div>';
+    selSection.style.display='block';
+  } else { selSection.style.display='none'; }
   renderDashUpcoming();
 }
-
-function renderDashUpcoming() {
-  const listEl = document.getElementById('dash-upcoming-list');
-  // Collect all future events, sorted by date
-  const upcoming = [];
-  const now = TODAY;
-  Object.entries(state.calendarEvents).forEach(([key, evs]) => {
-    const [y, m, d] = key.split('-').map(Number);
-    const dt = new Date(y, m, d);
-    if (dt >= now && evs.length) {
-      evs.forEach(ev => upcoming.push({dt, d, m, y, label: ev.label, cls: ev.cls}));
-    }
+function renderDashUpcoming(){
+  const listEl=document.getElementById('dash-upcoming-list');
+  const upcoming=[];
+  Object.entries(state.calendarEvents).forEach(([key,evs])=>{
+    const[y,m,d]=key.split('-').map(Number);
+    const dt=new Date(y,m,d);
+    if(dt>=TODAY&&evs.length) evs.forEach(ev=>upcoming.push({dt,d,m,y,label:ev.label,cls:ev.cls}));
   });
-  upcoming.sort((a, b) => a.dt - b.dt);
-  const shown = upcoming.slice(0, 6);
-  if (!shown.length) {
-    listEl.innerHTML = `<div class="dash-empty-events">No upcoming events.</div>`;
+  upcoming.sort((a,b)=>a.dt-b.dt);
+  const shown=upcoming.slice(0,6);
+  if(!shown.length){listEl.innerHTML=`<div class="dash-empty-events">No upcoming events.</div>`;return;}
+  listEl.innerHTML=shown.map(ev=>`<div class="dash-event-row"><div class="dash-event-date"><div class="dash-event-day">${ev.d}</div><div class="dash-event-mon">${MONTHS_SHORT[ev.m]}</div></div><div class="dash-event-info"><div class="dash-event-label">${ev.label}</div><div class="dash-event-sub" style="color:${eventColorDot(ev.cls)}">${ev.cls==='ev-red'?'Urgent':ev.cls==='ev-amber'?'Upcoming':ev.cls==='ev-green'?'Scheduled':'Event'}</div></div></div>`).join('');
+}
+
+// ===== FULL CALENDAR =====
+function fcNav(dir){
+  state.calMonth+=dir;
+  if(state.calMonth>11){state.calMonth=0;state.calYear++;}
+  if(state.calMonth<0){state.calMonth=11;state.calYear--;}
+  renderFullCal();
+  renderDashboardCal();
+}
+function fcGoToday(){
+  state.calMonth=TODAY.getMonth();
+  state.calYear=TODAY.getFullYear();
+  state.selectedDate={d:TODAY.getDate(),m:TODAY.getMonth(),y:TODAY.getFullYear()};
+  renderFullCal();
+  renderDashboardCal();
+}
+function renderFullCal(){
+  document.getElementById('fc-month-label').textContent=MONTHS[state.calMonth]+' '+state.calYear;
+  const grid=document.getElementById('fc-grid');
+  let html=DAYS_SHORT.map(d=>`<div class="fc-dow">${d}</div>`).join('');
+  const first=new Date(state.calYear,state.calMonth,1).getDay();
+  const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
+  const dip=new Date(state.calYear,state.calMonth,0).getDate();
+  for(let i=0;i<first;i++){
+    const day=dip-first+1+i;
+    const pm=state.calMonth===0?11:state.calMonth-1;
+    const py=state.calMonth===0?state.calYear-1:state.calYear;
+    const key=getEventKey(py,pm,day);
+    html+=`<div class="fc-day other-m" onclick="fcSelectDay(${day},${pm},${py})"><div class="fc-day-num" style="color:var(--text-tertiary);opacity:.4">${day}</div></div>`;
+  }
+  for(let d=1;d<=dim;d++){
+    const isToday=d===TODAY.getDate()&&state.calMonth===TODAY.getMonth()&&state.calYear===TODAY.getFullYear();
+    const isSel=state.selectedDate&&state.selectedDate.d===d&&state.selectedDate.m===state.calMonth&&state.selectedDate.y===state.calYear;
+    const key=getEventKey(state.calYear,state.calMonth,d);
+    const evs=state.calendarEvents[key]||[];
+    const MAX_SHOW=3;
+    const evHtml=evs.slice(0,MAX_SHOW).map(ev=>{
+      const colorCls=ev.cls==='ev-red'?'fc-ev-red':ev.cls==='ev-amber'?'fc-ev-amber':ev.cls==='ev-green'?'fc-ev-green':'fc-ev-blue';
+      return `<div class="fc-event ${colorCls}">${ev.label}</div>`;
+    }).join('');
+    const moreHtml=evs.length>MAX_SHOW?`<div class="fc-more">+${evs.length-MAX_SHOW} more</div>`:'';
+    let cls='fc-day';
+    if(isToday)cls+=' today-fc';
+    if(isSel)cls+=' selected-fc';
+    html+=`<div class="${cls}" onclick="fcSelectDay(${d},${state.calMonth},${state.calYear})"><div class="fc-day-num">${d}</div>${evHtml}${moreHtml}</div>`;
+  }
+  const rem=(first+dim)%7===0?0:7-(first+dim)%7;
+  const nm=state.calMonth===11?0:state.calMonth+1;
+  const ny=state.calMonth===11?state.calYear+1:state.calYear;
+  for(let i=1;i<=rem;i++){
+    html+=`<div class="fc-day other-m" onclick="fcSelectDay(${i},${nm},${ny})"><div class="fc-day-num" style="color:var(--text-tertiary);opacity:.4">${i}</div></div>`;
+  }
+  grid.innerHTML=html;
+  renderCalSidePanel();
+  renderCalUpcoming();
+}
+function fcSelectDay(d,m,y){
+  if(state.selectedDate&&state.selectedDate.d===d&&state.selectedDate.m===m&&state.selectedDate.y===y){
+    state.selectedDate=null;
+  } else {
+    state.selectedDate={d,m,y};
+    // If clicking other month day, navigate
+    if(m!==state.calMonth||y!==state.calYear){
+      state.calMonth=m; state.calYear=y;
+    }
+  }
+  renderFullCal();
+  renderDashboardCal();
+}
+function renderCalSidePanel(){
+  const el=document.getElementById('cal-day-content');
+  if(!state.selectedDate){
+    el.innerHTML=`<div class="no-date-selected"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;opacity:.3"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><div>Click a date to view<br>or add events</div></div>`;
     return;
   }
-  listEl.innerHTML = shown.map(ev => `
-    <div class="dash-event-row">
-      <div class="dash-event-date">
-        <div class="dash-event-day">${ev.d}</div>
-        <div class="dash-event-mon">${MONTHS_SHORT[ev.m]}</div>
+  const{d,m,y}=state.selectedDate;
+  const dateStr=new Date(y,m,d).toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const key=getEventKey(y,m,d);
+  const evs=state.calendarEvents[key]||[];
+  const evHtml=evs.length?evs.map(ev=>`
+    <div class="cal-event-item">
+      <div class="cal-ev-dot" style="background:${eventColorDot(ev.cls)}"></div>
+      <span class="cal-ev-label">${ev.label}</span>
+      ${!ev.isLicense?`<span class="cal-ev-remove" onclick="removeCalEvent('${key}',${ev.id})">✕</span>`:''}
+    </div>`).join(''):'<div style="font-size:12px;color:var(--text-tertiary);padding:4px 0">No events on this day.</div>';
+  el.innerHTML=`
+    <div class="cal-sel-date-label">${dateStr}</div>
+    <div id="cal-events-list">${evHtml}</div>
+    <div class="cal-add-event">
+      <input type="text" id="cal-new-label" placeholder="Add event…">
+      <select id="cal-new-color">
+        <option value="ev-blue">Blue</option>
+        <option value="ev-green">Green</option>
+        <option value="ev-amber">Amber</option>
+        <option value="ev-red">Red (Urgent)</option>
+      </select>
+      <button onclick="addCalEvent()">+ Add Event</button>
+    </div>`;
+}
+function addCalEvent(){
+  const label=(document.getElementById('cal-new-label').value||'').trim();
+  const cls=document.getElementById('cal-new-color').value;
+  if(!label||!state.selectedDate)return;
+  const{d,m,y}=state.selectedDate;
+  const key=getEventKey(y,m,d);
+  if(!state.calendarEvents[key])state.calendarEvents[key]=[];
+  state.calendarEvents[key].push({id:state.nextId++,label,cls});
+  renderFullCal();
+  renderDashboardCal();
+}
+function removeCalEvent(key,id){
+  if(state.calendarEvents[key])
+    state.calendarEvents[key]=state.calendarEvents[key].filter(e=>e.id!==id);
+  renderFullCal();
+  renderDashboardCal();
+}
+function renderCalUpcoming(){
+  const listEl=document.getElementById('cal-upcoming-list');
+  const upcoming=[];
+  Object.entries(state.calendarEvents).forEach(([key,evs])=>{
+    const[y,m,d]=key.split('-').map(Number);
+    const dt=new Date(y,m,d);
+    if(dt>=TODAY&&evs.length) evs.forEach(ev=>upcoming.push({dt,d,m,y,label:ev.label,cls:ev.cls}));
+  });
+  upcoming.sort((a,b)=>a.dt-b.dt);
+  const shown=upcoming.slice(0,8);
+  if(!shown.length){listEl.innerHTML=`<div style="font-size:12px;color:var(--text-tertiary);text-align:center;padding:12px">No upcoming events.</div>`;return;}
+  listEl.innerHTML=shown.map(ev=>`
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="text-align:center;flex-shrink:0;width:30px">
+        <div style="font-size:16px;font-weight:600;color:var(--text-primary);line-height:1">${ev.d}</div>
+        <div style="font-size:9px;color:var(--text-tertiary);text-transform:uppercase">${MONTHS_SHORT[ev.m]}</div>
       </div>
-      <div class="dash-event-info">
-        <div class="dash-event-label">${ev.label}</div>
-        <div class="dash-event-sub" style="color:${eventColorDot(ev.cls)}">${ev.cls === 'ev-red' ? 'Urgent' : ev.cls === 'ev-amber' ? 'Upcoming' : ev.cls === 'ev-green' ? 'Scheduled' : 'Event'}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ev.label}</div>
+        <div style="font-size:10px;color:${eventColorDot(ev.cls)}">${ev.cls==='ev-red'?'Urgent':ev.cls==='ev-amber'?'Upcoming':'Scheduled'}</div>
       </div>
     </div>`).join('');
 }
 
-function removeEvent(key, id) {
-  state.calendarEvents[key] = state.calendarEvents[key].filter(e => e.id !== id);
-  renderSidebarCal();
-  renderDashboardCal();
-}
-
 // ===== PROJECTS =====
-function getProject(id) { return state.projects.find(p => p.id === id); }
-function getAllRequirements() {
-  const all = [];
-  state.projects.forEach(p => {
-    p.technical.forEach(r => all.push({...r, projectName:p.name, type:'technical'}));
-    p.financial.forEach(r => all.push({...r, projectName:p.name, type:'financial'}));
-    (p.other||[]).forEach(r => all.push({...r, projectName:p.name, type:'other'}));
+function getProject(id){return state.projects.find(p=>p.id===id);}
+function getAllRequirements(){
+  const all=[];
+  state.projects.forEach(p=>{
+    p.technical.forEach(r=>all.push({...r,projectName:p.name,type:'technical'}));
+    p.financial.forEach(r=>all.push({...r,projectName:p.name,type:'financial'}));
+    (p.other||[]).forEach(r=>all.push({...r,projectName:p.name,type:'other'}));
   });
   return all;
 }
-function getProjectProgress(proj) {
-  const all = [...proj.technical, ...proj.financial, ...(proj.other||[])];
-  const done = all.filter(r => r.checked).length;
-  return {done, total:all.length};
+function getProjectProgress(proj){
+  const all=[...proj.technical,...proj.financial,...(proj.other||[])];
+  return{done:all.filter(r=>r.checked).length,total:all.length};
 }
-function renderProjectsSidebar() {
-  const sidebar = document.getElementById('projects-sidebar');
-  let html = '';
-  state.projects.forEach(proj => {
-    const {done, total} = getProjectProgress(proj);
-    const pct = total ? Math.round(done/total*100) : 0;
-    const isActive = proj.id === state.activeProjectId;
-    html += `<div class="project-card ${isActive?'active':''}" onclick="selectProject(${proj.id})">
+function renderProjectsSidebar(){
+  const sidebar=document.getElementById('projects-sidebar');
+  let html='';
+  state.projects.forEach(proj=>{
+    const{done,total}=getProjectProgress(proj);
+    const pct=total?Math.round(done/total*100):0;
+    const isActive=proj.id===state.activeProjectId;
+    html+=`<div class="project-card ${isActive?'active':''}" onclick="selectProject(${proj.id})">
       <button class="project-card-del" onclick="event.stopPropagation();promptDeleteProject(${proj.id})" title="Remove">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
       <div class="project-card-name">${proj.name}</div>
       <div class="project-card-meta">${proj.client} · ${total} items</div>
-      <div class="project-card-prog">
-        <div class="proj-pb"><div class="proj-pb-fill" style="width:${pct}%"></div></div>
-        <div style="font-size:10px;color:var(--text-tertiary);margin-top:3px">${done}/${total} complete</div>
-      </div>
+      <div class="project-card-prog"><div class="proj-pb"><div class="proj-pb-fill" style="width:${pct}%"></div></div><div style="font-size:10px;color:var(--text-tertiary);margin-top:3px">${done}/${total} complete</div></div>
     </div>`;
   });
-  html += `<button class="proj-add-btn" onclick="openNewProjectModal()">+ New Project</button>`;
-  sidebar.innerHTML = html;
+  html+=`<button class="proj-add-btn" onclick="openNewProjectModal()">+ New Project</button>`;
+  sidebar.innerHTML=html;
 }
-function selectProject(id) {
-  state.activeProjectId = id;
-  renderProjectsSidebar();
-  renderProjectDetail();
+function selectProject(id){state.activeProjectId=id;renderProjectsSidebar();renderProjectDetail();}
+function renderProjectDetail(){
+  const proj=getProject(state.activeProjectId);
+  const emptyState=document.getElementById('proj-empty-state');
+  const detail=document.getElementById('project-detail');
+  if(!proj){emptyState.style.display='block';detail.classList.add('hidden');return;}
+  emptyState.style.display='none';detail.classList.remove('hidden');
+  document.getElementById('proj-detail-name').textContent=proj.name;
+  document.getElementById('proj-detail-desc').textContent=proj.client+(proj.desc?' · '+proj.desc:'');
+  renderReqList('technical');renderReqList('financial');renderReqList('other');renderProjectProgress();
 }
-function renderProjectDetail() {
-  const proj = getProject(state.activeProjectId);
-  const emptyState = document.getElementById('proj-empty-state');
-  const detail = document.getElementById('project-detail');
-  if (!proj) { emptyState.style.display='block'; detail.classList.add('hidden'); return; }
-  emptyState.style.display = 'none';
-  detail.classList.remove('hidden');
-  document.getElementById('proj-detail-name').textContent = proj.name;
-  document.getElementById('proj-detail-desc').textContent = proj.client + (proj.desc ? ' · '+proj.desc : '');
-  renderReqList('technical');
-  renderReqList('financial');
-  renderReqList('other');
-  renderProjectProgress();
-}
-function renderReqList(type) {
-  const proj = getProject(state.activeProjectId);
-  if (!proj) return;
-  const container = document.getElementById('req-list-'+type);
-  const items = proj[type] || [];
-  if (!items.length) { container.innerHTML=`<div class="empty-state">No ${type} requirements yet.</div>`; return; }
-  container.innerHTML = '';
-  items.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'ci';
-    div.innerHTML = `<div class="ci-header">
+function renderReqList(type){
+  const proj=getProject(state.activeProjectId);
+  if(!proj)return;
+  const container=document.getElementById('req-list-'+type);
+  const items=proj[type]||[];
+  if(!items.length){container.innerHTML=`<div class="empty-state">No ${type} requirements yet.</div>`;return;}
+  container.innerHTML='';
+  items.forEach(item=>{
+    const div=document.createElement('div');div.className='ci';
+    div.innerHTML=`<div class="ci-header">
       <div class="cb ${item.checked?'checked':''}" onclick="toggleReq(${state.activeProjectId},'${type}',${item.id})"></div>
       <span class="cl ${item.checked?'done':''}">${item.label}</span>
       <span class="ccat">${item.category}</span>
       <span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span>
-      <div class="row-actions" style="margin-left:8px">
-        <button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit
-        </button>
-      </div>
+      <div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit</button></div>
     </div>`;
     container.appendChild(div);
   });
   renderProjectProgress();
 }
-function renderProjectProgress() {
-  const proj = getProject(state.activeProjectId);
-  if (!proj) return;
-  const techDone = proj.technical.filter(r=>r.checked).length;
-  const finDone = proj.financial.filter(r=>r.checked).length;
-  const otherDone = (proj.other||[]).filter(r=>r.checked).length;
-  const total = proj.technical.length+proj.financial.length+(proj.other||[]).length;
-  const done = techDone+finDone+otherDone;
-  document.getElementById('proj-progress-summary').innerHTML = `
-    <span class="prog-stat">Technical: <strong>${techDone}/${proj.technical.length}</strong></span>
-    <span class="prog-stat">Financial: <strong>${finDone}/${proj.financial.length}</strong></span>
-    <span class="prog-stat">Other: <strong>${otherDone}/${(proj.other||[]).length}</strong></span>
-    <span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;
+function renderProjectProgress(){
+  const proj=getProject(state.activeProjectId);
+  if(!proj)return;
+  const td=proj.technical.filter(r=>r.checked).length,fd=proj.financial.filter(r=>r.checked).length,od=(proj.other||[]).filter(r=>r.checked).length;
+  const total=proj.technical.length+proj.financial.length+(proj.other||[]).length,done=td+fd+od;
+  document.getElementById('proj-progress-summary').innerHTML=`<span class="prog-stat">Technical: <strong>${td}/${proj.technical.length}</strong></span><span class="prog-stat">Financial: <strong>${fd}/${proj.financial.length}</strong></span><span class="prog-stat">Other: <strong>${od}/${(proj.other||[]).length}</strong></span><span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;
   updateStats();
 }
-function toggleReq(projectId, type, reqId) {
-  const proj = getProject(projectId);
-  if (!proj) return;
-  const item = proj[type].find(r=>r.id===reqId);
-  if (item) item.checked = !item.checked;
-  renderReqList(type);
-  renderProjectsSidebar();
+function toggleReq(projectId,type,reqId){
+  const proj=getProject(projectId);if(!proj)return;
+  const item=proj[type].find(r=>r.id===reqId);if(item)item.checked=!item.checked;
+  renderReqList(type);renderProjectsSidebar();
 }
-function addRequirement(type) {
-  const proj = getProject(state.activeProjectId);
-  if (!proj) return;
-  const inputId = type==='technical'?'new-tech-req':type==='financial'?'new-fin-req':'new-other-req';
-  const catId = type==='technical'?'new-tech-cat':type==='financial'?'new-fin-cat':'new-other-cat';
-  const label = document.getElementById(inputId).value.trim();
-  if (!label) return;
-  if (!proj[type]) proj[type] = [];
+function addRequirement(type){
+  const proj=getProject(state.activeProjectId);if(!proj)return;
+  const inputId=type==='technical'?'new-tech-req':type==='financial'?'new-fin-req':'new-other-req';
+  const catId=type==='technical'?'new-tech-cat':type==='financial'?'new-fin-cat':'new-other-cat';
+  const label=document.getElementById(inputId).value.trim();if(!label)return;
+  if(!proj[type])proj[type]=[];
   proj[type].push({id:state.nextId++,label,category:document.getElementById(catId).value,checked:false});
-  document.getElementById(inputId).value = '';
-  renderReqList(type);
-  renderProjectsSidebar();
+  document.getElementById(inputId).value='';
+  renderReqList(type);renderProjectsSidebar();
 }
-function openEditReq(projectId, type, reqId) {
-  const proj = getProject(projectId);
-  if (!proj) return;
-  const item = proj[type].find(r=>r.id===reqId);
-  if (!item) return;
-  editingReqInfo = {projectId, type, reqId};
-  document.getElementById('edit-req-name').value = item.label;
-  document.getElementById('edit-req-cat').value = item.category;
-  document.getElementById('edit-req-status').value = item.checked?'1':'0';
+function openEditReq(projectId,type,reqId){
+  const proj=getProject(projectId);if(!proj)return;
+  const item=proj[type].find(r=>r.id===reqId);if(!item)return;
+  editingReqInfo={projectId,type,reqId};
+  document.getElementById('edit-req-name').value=item.label;
+  document.getElementById('edit-req-cat').value=item.category;
+  document.getElementById('edit-req-status').value=item.checked?'1':'0';
   openModal('modal-req');
 }
-function saveRequirement() {
-  const {projectId, type, reqId} = editingReqInfo;
-  const proj = getProject(projectId);
-  const item = proj[type].find(r=>r.id===reqId);
-  item.label = document.getElementById('edit-req-name').value.trim()||item.label;
-  item.category = document.getElementById('edit-req-cat').value;
-  item.checked = document.getElementById('edit-req-status').value==='1';
-  closeModal('modal-req');
-  renderReqList(type);
-  renderProjectsSidebar();
+function saveRequirement(){
+  const{projectId,type,reqId}=editingReqInfo;
+  const proj=getProject(projectId);const item=proj[type].find(r=>r.id===reqId);
+  item.label=document.getElementById('edit-req-name').value.trim()||item.label;
+  item.category=document.getElementById('edit-req-cat').value;
+  item.checked=document.getElementById('edit-req-status').value==='1';
+  closeModal('modal-req');renderReqList(type);renderProjectsSidebar();
 }
-function deleteRequirement() {
-  const {projectId, type, reqId} = editingReqInfo;
-  const proj = getProject(projectId);
-  proj[type] = proj[type].filter(r=>r.id!==reqId);
-  closeModal('modal-req');
-  renderReqList(type);
-  renderProjectsSidebar();
+function deleteRequirement(){
+  const{projectId,type,reqId}=editingReqInfo;
+  const proj=getProject(projectId);proj[type]=proj[type].filter(r=>r.id!==reqId);
+  closeModal('modal-req');renderReqList(type);renderProjectsSidebar();
 }
-function switchReqTab(tab) {
-  state.activeReqTab = tab;
+function switchReqTab(tab){
+  state.activeReqTab=tab;
   document.querySelectorAll('.req-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('rtab-'+tab).classList.add('active');
   document.querySelectorAll('.req-pane').forEach(p=>p.classList.remove('active'));
   document.getElementById('rpane-'+tab).classList.add('active');
 }
-function openNewProjectModal() {
-  state.editingProjectId = null;
-  document.getElementById('modal-project-title').textContent = 'New Project';
-  document.getElementById('save-project-btn').textContent = 'Create Project';
+function openNewProjectModal(){
+  state.editingProjectId=null;
+  document.getElementById('modal-project-title').textContent='New Project';
+  document.getElementById('save-project-btn').textContent='Create Project';
   ['proj-name-input','proj-client-input','proj-desc-input'].forEach(id=>document.getElementById(id).value='');
   openModal('modal-new-project');
 }
-function openEditProject() {
-  const proj = getProject(state.activeProjectId);
-  if (!proj) return;
-  state.editingProjectId = proj.id;
-  document.getElementById('modal-project-title').textContent = 'Edit Project';
-  document.getElementById('save-project-btn').textContent = 'Save Changes';
-  document.getElementById('proj-name-input').value = proj.name;
-  document.getElementById('proj-client-input').value = proj.client;
-  document.getElementById('proj-desc-input').value = proj.desc;
+function openEditProject(){
+  const proj=getProject(state.activeProjectId);if(!proj)return;
+  state.editingProjectId=proj.id;
+  document.getElementById('modal-project-title').textContent='Edit Project';
+  document.getElementById('save-project-btn').textContent='Save Changes';
+  document.getElementById('proj-name-input').value=proj.name;
+  document.getElementById('proj-client-input').value=proj.client;
+  document.getElementById('proj-desc-input').value=proj.desc;
   openModal('modal-new-project');
 }
-function saveProject() {
-  const name = document.getElementById('proj-name-input').value.trim();
-  const client = document.getElementById('proj-client-input').value.trim();
-  const desc = document.getElementById('proj-desc-input').value.trim();
-  if (!name) { alert('Please enter a project name.'); return; }
-  if (state.editingProjectId) {
-    const proj = getProject(state.editingProjectId);
-    proj.name=name; proj.client=client; proj.desc=desc;
-  } else {
-    const newProj = {id:state.nextId++,name,client,desc,technical:[],financial:[],other:[]};
-    state.projects.push(newProj);
-    state.activeProjectId = newProj.id;
-  }
-  closeModal('modal-new-project');
-  renderProjectsSidebar();
-  renderProjectDetail();
+function saveProject(){
+  const name=document.getElementById('proj-name-input').value.trim();
+  const client=document.getElementById('proj-client-input').value.trim();
+  const desc=document.getElementById('proj-desc-input').value.trim();
+  if(!name){alert('Please enter a project name.');return;}
+  if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}
+  else{const newProj={id:state.nextId++,name,client,desc,technical:[],financial:[],other:[]};state.projects.push(newProj);state.activeProjectId=newProj.id;}
+  closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();
 }
-function promptDeleteProject(id) {
-  deletingProjectId = id;
-  const proj = getProject(id);
-  document.getElementById('del-proj-name').textContent = proj.name;
+function promptDeleteProject(id){
+  deletingProjectId=id;
+  const proj=getProject(id);
+  document.getElementById('modal-del-title').textContent='Remove Project?';
+  document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${proj.name}</strong> and all its requirements. This cannot be undone.`;
+  const btn=document.getElementById('modal-del-confirm-btn');
+  btn.textContent='Delete Project';
+  btn.onclick=()=>confirmDeleteProject();
   openModal('modal-confirm-delete');
 }
-function confirmDeleteProject() {
-  state.projects = state.projects.filter(p=>p.id!==deletingProjectId);
-  if (state.activeProjectId===deletingProjectId)
-    state.activeProjectId = state.projects.length ? state.projects[0].id : null;
-  deletingProjectId = null;
-  closeModal('modal-confirm-delete');
-  renderProjectsSidebar();
-  renderProjectDetail();
-  updateStats();
+function confirmDeleteProject(){
+  state.projects=state.projects.filter(p=>p.id!==deletingProjectId);
+  if(state.activeProjectId===deletingProjectId) state.activeProjectId=state.projects.length?state.projects[0].id:null;
+  deletingProjectId=null;closeModal('modal-confirm-delete');
+  renderProjectsSidebar();renderProjectDetail();updateStats();
 }
-function renderOverview() {
-  const el = document.getElementById('overview-content');
-  if (!state.projects.length) { el.innerHTML='<div class="empty-state">No projects yet.</div>'; return; }
-  let html = '';
-  state.projects.forEach(proj => {
-    const {done, total} = getProjectProgress(proj);
-    const pct = total ? Math.round(done/total*100) : 0;
-    html += `<div style="margin-bottom:20px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span>
-        <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div>
-        <span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span>
-      </div>`;
-    ['technical','financial','other'].forEach(type => {
-      if (!(proj[type]||[]).length) return;
-      html += `<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p>
-        <div class="checklist-list" style="margin-bottom:10px">`;
-      (proj[type]||[]).forEach(item => {
-        html += `<div class="ci"><div class="ci-header">
-          <div class="cb ${item.checked?'checked':''}"></div>
-          <span class="cl ${item.checked?'done':''}">${item.label}</span>
-          <span class="ccat">${item.category}</span>
-          <span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span>
-        </div></div>`;
-      });
-      html += `</div>`;
+function renderOverview(){
+  const el=document.getElementById('overview-content');
+  if(!state.projects.length){el.innerHTML='<div class="empty-state">No projects yet.</div>';return;}
+  let html='';
+  state.projects.forEach(proj=>{
+    const{done,total}=getProjectProgress(proj);const pct=total?Math.round(done/total*100):0;
+    html+=`<div style="margin-bottom:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span><span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div><span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span></div>`;
+    ['technical','financial','other'].forEach(type=>{
+      if(!(proj[type]||[]).length)return;
+      html+=`<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p><div class="checklist-list" style="margin-bottom:10px">`;
+      (proj[type]||[]).forEach(item=>{html+=`<div class="ci"><div class="ci-header"><div class="cb ${item.checked?'checked':''}"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span></div></div>`;});
+      html+=`</div>`;
     });
-    html += `</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;
+    html+=`</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;
   });
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
-function switchCheckTab(tab) {
-  state.activeCheckTab = tab;
+function switchCheckTab(tab){
+  state.activeCheckTab=tab;
   document.querySelectorAll('#panel-checklist .tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   document.querySelectorAll('#panel-checklist .tab-pane').forEach(p=>p.classList.remove('active'));
   document.getElementById('pane-'+tab).classList.add('active');
-  if (tab==='overview') renderOverview();
+  if(tab==='overview')renderOverview();
 }
 
 // ===== STATS =====
-function updateStats() {
-  const all = getAllRequirements();
-  const done = all.filter(r=>r.checked).length;
-  const total = all.length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-done-count').textContent = done+' completed';
-  const pct = total ? Math.round(done/total*100) : 0;
-  const bar = document.getElementById('progress-bar');
-  if (bar) bar.style.width = pct+'%';
-  const lbl = document.getElementById('progress-label');
-  if (lbl) lbl.textContent = done+' of '+total+' items completed';
+function updateStats(){
+  const all=getAllRequirements();const done=all.filter(r=>r.checked).length;const total=all.length;
+  document.getElementById('stat-total').textContent=total;
+  document.getElementById('stat-done-count').textContent=done+' completed';
+  const pct=total?Math.round(done/total*100):0;
+  const bar=document.getElementById('progress-bar');if(bar)bar.style.width=pct+'%';
+  const lbl=document.getElementById('progress-label');if(lbl)lbl.textContent=done+' of '+total+' items completed';
 }
 
 // ===== LICENSES =====
-function renderLicenses() {
-  const list = document.getElementById('expiry-list');
-  const sorted = [...state.licenses].sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));
-  let expCount = 0;
-  list.innerHTML = sorted.map(lic => {
-    const days = Math.round((new Date(lic.expiry+'T00:00:00') - TODAY) / 86400000);
-    let dotColor='#639922', pillClass='dp-g', label=days+' days left';
-    if (days<0) { dotColor='#E24B4A'; pillClass='dp-r'; label='Expired'; expCount++; }
-    else if (days<=14) { dotColor='#E24B4A'; pillClass='dp-r'; label=days+'d left'; expCount++; }
-    else if (days<=30) { dotColor='#EF9F27'; pillClass='dp-a'; label=days+'d left'; expCount++; }
-    const dateStr = new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
-    return `<div class="ei">
-      <div class="exp-dot" style="background:${dotColor}"></div>
-      <div class="exp-info"><div class="exp-name">${lic.name}</div><div class="exp-date">Expires ${dateStr}</div></div>
-      <span class="days-pill ${pillClass}">${label}</span>
-      <div class="row-actions" style="margin-left:8px">
-        <button class="icon-btn edit-btn" onclick="openEditLicense(${lic.id})">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit
-        </button>
-      </div>
-    </div>`;
+function renderLicenses(){
+  const list=document.getElementById('expiry-list');
+  const sorted=[...state.licenses].sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));
+  let expCount=0;
+  list.innerHTML=sorted.map(lic=>{
+    const days=Math.round((new Date(lic.expiry+'T00:00:00')-TODAY)/86400000);
+    let dotColor='#639922',pillClass='dp-g',label=days+' days left';
+    if(days<0){dotColor='#E24B4A';pillClass='dp-r';label='Expired';expCount++;}
+    else if(days<=14){dotColor='#E24B4A';pillClass='dp-r';label=days+'d left';expCount++;}
+    else if(days<=30){dotColor='#EF9F27';pillClass='dp-a';label=days+'d left';expCount++;}
+    const dateStr=new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+    return `<div class="ei"><div class="exp-dot" style="background:${dotColor}"></div><div class="exp-info"><div class="exp-name">${lic.name}</div><div class="exp-date">Expires ${dateStr}</div></div><span class="days-pill ${pillClass}">${label}</span><div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditLicense(${lic.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></div></div>`;
   }).join('');
-  document.getElementById('expiry-badge').textContent = expCount;
-  document.getElementById('expiry-badge').style.display = expCount ? 'inline' : 'none';
+  document.getElementById('expiry-badge').textContent=expCount;
+  document.getElementById('expiry-badge').style.display=expCount?'inline':'none';
 }
-function openEditLicense(id) {
-  const lic = state.licenses.find(l=>l.id===id);
-  editingId = id;
-  document.getElementById('edit-lic-name').value = lic.name;
-  document.getElementById('edit-lic-date').value = lic.expiry;
+function openEditLicense(id){
+  const lic=state.licenses.find(l=>l.id===id);editingId=id;
+  document.getElementById('edit-lic-name').value=lic.name;
+  document.getElementById('edit-lic-date').value=lic.expiry;
   openModal('modal-license');
 }
-function saveLicense() {
-  const lic = state.licenses.find(l=>l.id===editingId);
-  lic.name = document.getElementById('edit-lic-name').value.trim()||lic.name;
-  lic.expiry = document.getElementById('edit-lic-date').value;
-  closeModal('modal-license');
-  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
+function saveLicense(){
+  const lic=state.licenses.find(l=>l.id===editingId);
+  lic.name=document.getElementById('edit-lic-name').value.trim()||lic.name;
+  lic.expiry=document.getElementById('edit-lic-date').value;
+  closeModal('modal-license');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();
 }
-function deleteLicense() {
-  state.licenses = state.licenses.filter(l=>l.id!==editingId);
-  closeModal('modal-license');
-  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
+function deleteLicense(){
+  state.licenses=state.licenses.filter(l=>l.id!==editingId);
+  closeModal('modal-license');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();
 }
-function addLicense() {
-  const name = document.getElementById('new-lic-name').value.trim();
-  const date = document.getElementById('new-lic-date').value;
-  if (!name||!date) { alert('Please fill in all fields.'); return; }
+function addLicense(){
+  const name=document.getElementById('new-lic-name').value.trim();const date=document.getElementById('new-lic-date').value;
+  if(!name||!date){alert('Please fill in all fields.');return;}
   state.licenses.push({id:state.nextId++,name,expiry:date});
-  document.getElementById('new-lic-name').value='';
-  document.getElementById('new-lic-date').value='';
-  closeForm('add-lic-form');
-  initCalendarEvents(); renderLicenses(); renderSidebarCal(); renderDashboardCal();
+  document.getElementById('new-lic-name').value='';document.getElementById('new-lic-date').value='';
+  closeForm('add-lic-form');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();
 }
 
 // ===== TRANSACTIONS =====
-function renderTransactions() {
-  document.getElementById('tx-body').innerHTML = state.transactions.map(tx => {
-    const cls = tx.status==='Paid'?'b-paid':tx.status==='Pending'?'b-pend':'b-over';
-    return `<tr>
-      <td style="color:var(--text-secondary)">${tx.date}</td>
-      <td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company||''}</div></td>
-      <td style="color:var(--text-secondary)">${tx.desc}</td>
-      <td class="txamt">₱${tx.amount.toLocaleString()}</td>
-      <td><span class="badge ${cls}">${tx.status}</span></td>
-      <td><button class="icon-btn edit-btn" onclick="openEditTransaction(${tx.id})">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit
-      </button></td>
-    </tr>`;
+function renderTransactions(){
+  document.getElementById('tx-body').innerHTML=state.transactions.map(tx=>{
+    const cls=tx.status==='Paid'?'b-paid':tx.status==='Pending'?'b-pend':'b-over';
+    return `<tr><td style="color:var(--text-secondary)">${tx.date}</td><td><div class="tx-client-main">${tx.client}</div><div class="tx-client-sub">${tx.company||''}</div></td><td style="color:var(--text-secondary)">${tx.desc}</td><td class="txamt">₱${tx.amount.toLocaleString()}</td><td><span class="badge ${cls}">${tx.status}</span></td><td><button class="icon-btn edit-btn" onclick="openEditTransaction(${tx.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></td></tr>`;
   }).join('');
 }
-function openEditTransaction(id) {
-  const tx = state.transactions.find(t=>t.id===id);
-  editingId = id;
-  document.getElementById('edit-tx-company').value = tx.company||'';
-  document.getElementById('edit-tx-client').value = tx.client;
-  document.getElementById('edit-tx-amount').value = tx.amount;
-  document.getElementById('edit-tx-desc').value = tx.desc;
-  document.getElementById('edit-tx-status').value = tx.status;
+function openEditTransaction(id){
+  const tx=state.transactions.find(t=>t.id===id);editingId=id;
+  document.getElementById('edit-tx-company').value=tx.company||'';
+  document.getElementById('edit-tx-client').value=tx.client;
+  document.getElementById('edit-tx-amount').value=tx.amount;
+  document.getElementById('edit-tx-desc').value=tx.desc;
+  document.getElementById('edit-tx-status').value=tx.status;
   openModal('modal-transaction');
 }
-function saveTransaction() {
-  const tx = state.transactions.find(t=>t.id===editingId);
-  tx.company = document.getElementById('edit-tx-company').value.trim();
-  tx.client = document.getElementById('edit-tx-client').value.trim()||tx.client;
-  tx.amount = parseFloat(document.getElementById('edit-tx-amount').value)||tx.amount;
-  tx.desc = document.getElementById('edit-tx-desc').value.trim()||tx.desc;
-  tx.status = document.getElementById('edit-tx-status').value;
-  closeModal('modal-transaction'); renderTransactions();
+function saveTransaction(){
+  const tx=state.transactions.find(t=>t.id===editingId);
+  tx.company=document.getElementById('edit-tx-company').value.trim();
+  tx.client=document.getElementById('edit-tx-client').value.trim()||tx.client;
+  tx.amount=parseFloat(document.getElementById('edit-tx-amount').value)||tx.amount;
+  tx.desc=document.getElementById('edit-tx-desc').value.trim()||tx.desc;
+  tx.status=document.getElementById('edit-tx-status').value;
+  closeModal('modal-transaction');renderTransactions();
 }
-function deleteTransaction() {
-  state.transactions = state.transactions.filter(t=>t.id!==editingId);
-  closeModal('modal-transaction'); renderTransactions();
+function deleteTransaction(){
+  state.transactions=state.transactions.filter(t=>t.id!==editingId);
+  closeModal('modal-transaction');renderTransactions();
 }
-function addTransaction() {
-  const company = document.getElementById('new-tx-company').value.trim();
-  const client = document.getElementById('new-tx-client').value.trim();
-  const amount = parseFloat(document.getElementById('new-tx-amount').value);
-  const desc = document.getElementById('new-tx-desc').value.trim();
-  const status = document.getElementById('new-tx-status').value;
-  if (!client||!amount) { alert('Please fill in client name and amount.'); return; }
-  const dateStr = TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+function addTransaction(){
+  const company=document.getElementById('new-tx-company').value.trim();
+  const client=document.getElementById('new-tx-client').value.trim();
+  const amount=parseFloat(document.getElementById('new-tx-amount').value);
+  const desc=document.getElementById('new-tx-desc').value.trim();
+  const status=document.getElementById('new-tx-status').value;
+  if(!client||!amount){alert('Please fill in client name and amount.');return;}
+  const dateStr=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
   state.transactions.unshift({id:state.nextId++,date:dateStr,company,client,desc:desc||'Payment',amount,status});
   ['new-tx-company','new-tx-client','new-tx-amount','new-tx-desc'].forEach(id=>document.getElementById(id).value='');
-  closeForm('add-tx-form'); renderTransactions();
+  closeForm('add-tx-form');renderTransactions();
 }
 
 // ===== MODAL & PANEL HELPERS =====
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); editingId=null; editingReqInfo=null; }
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target===el) closeModal(el.id); });
+function openModal(id){document.getElementById(id).classList.remove('hidden');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;editingReqInfo=null;}
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});
 });
 
-const panelConfig = {
+const panelConfig={
   dashboard:{title:'Dashboard',primary:null,form:null},
   checklist:{title:'Document Checklist',primary:'+ New Project',form:null},
   licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},
+  calendar:{title:'Calendar',primary:null,form:null},
+  documents:{title:'Documents',primary:null,form:null},
   transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},
   admin:{title:'Admin Settings',primary:null,form:null},
 };
-let currentPanel = 'dashboard';
-
-function showPanel(name) {
+let currentPanel='dashboard';
+function showPanel(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
-  document.querySelectorAll('.ni').forEach(n => {
-    n.classList.toggle('active', n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));
+  document.querySelectorAll('.ni').forEach(n=>{
+    n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));
   });
-  const cfg = panelConfig[name];
-  document.getElementById('page-title').textContent = cfg.title;
-  const pa = document.getElementById('primary-action');
-  if (cfg.primary) { pa.style.display=''; pa.textContent=cfg.primary; } else pa.style.display='none';
-  currentPanel = name;
+  const cfg=panelConfig[name];
+  document.getElementById('page-title').textContent=cfg.title;
+  const pa=document.getElementById('primary-action');
+  if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';
+  currentPanel=name;
   document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));
+  if(name==='calendar'){renderFullCal();renderCalUpcoming();}
 }
-function handlePrimaryAction() {
-  if (currentPanel==='checklist') { openNewProjectModal(); return; }
-  const cfg = panelConfig[currentPanel];
-  if (cfg&&cfg.form) document.getElementById(cfg.form).classList.toggle('open');
+function handlePrimaryAction(){
+  if(currentPanel==='checklist'){openNewProjectModal();return;}
+  const cfg=panelConfig[currentPanel];
+  if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');
 }
-function closeForm(id) { document.getElementById(id).classList.remove('open'); }
-function toggleSwitch(el) {
-  const isOn = el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';
-  el.style.background = isOn?'#d1d5db':'#185FA5';
-  el.querySelector('.tog-t').style.left = isOn?'2px':'18px';
+function closeForm(id){document.getElementById(id).classList.remove('open');}
+function toggleSwitch(el){
+  const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';
+  el.style.background=isOn?'#d1d5db':'#185FA5';
+  el.querySelector('.tog-t').style.left=isOn?'2px':'18px';
 }
+
 // ===== INIT =====
 initCalendarEvents();
-renderSidebarCal();
 renderDashboardCal();
+renderFullCal();
 renderProjectsSidebar();
-if (state.projects.length) selectProject(state.projects[0].id);
+if(state.projects.length)selectProject(state.projects[0].id);
 renderLicenses();
 renderTransactions();
 updateStats();
+renderFolderList();
+renderDocsView();
 </script>
 </body>
 </html>
