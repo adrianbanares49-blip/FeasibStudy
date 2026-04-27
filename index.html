@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R.E.S.I</title>
+<title>ComplianceHub — Document Manager</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -295,6 +295,53 @@ nav{padding:8px 0;flex:1}
 .inv-total{font-size:12px;color:var(--text-tertiary);margin-top:1px}
 /* hidden utility */
 .hidden{display:none!important}
+/* ===== WEEKLY SCHEDULE ===== */
+.sched-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.sched-week-nav{display:flex;align-items:center;gap:8px}
+.sched-week-label{font-size:14px;font-weight:600;color:var(--text-primary);min-width:180px;text-align:center}
+.sched-nav-btn{padding:6px 12px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--bg-primary);cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:inherit;transition:all .15s}
+.sched-nav-btn:hover{background:var(--bg-secondary);color:var(--text-primary)}
+.sched-table-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:auto}
+.sched-table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+.sched-table th{background:var(--bg-secondary);border-bottom:2px solid var(--border-strong);padding:0}
+.sched-th-inner{padding:10px 14px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.sched-dow{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-tertiary)}
+.sched-date{font-size:15px;font-weight:600;color:var(--text-primary)}
+.sched-th-inner.today-col .sched-dow{color:var(--blue)}
+.sched-th-inner.today-col .sched-date{background:var(--blue);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sched-table th:first-child,.sched-table td:first-child{width:120px;min-width:100px}
+.sched-table th:not(:first-child),.sched-table td:not(:first-child){width:calc((100% - 120px)/5)}
+.sched-table td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:0;vertical-align:top}
+.sched-table tr:last-child td{border-bottom:none}
+.sched-table td:last-child{border-right:none}
+.sched-person-cell{padding:10px 12px;background:var(--bg-secondary)}
+.sched-person-name{font-size:13px;font-weight:600;color:var(--text-primary)}
+.sched-person-code{font-size:10px;color:var(--text-tertiary);font-weight:500;margin-top:1px}
+.sched-entry{min-height:52px;padding:8px 10px;cursor:pointer;transition:background .12s;position:relative}
+.sched-entry:hover{background:var(--blue-light)}
+.sched-entry.today-col-cell{background:#f0f7ff}
+.sched-entry.today-col-cell:hover{background:var(--blue-light)}
+.sched-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;margin-bottom:3px;white-space:nowrap}
+.sched-tag-office{background:#EEF2FF;color:#3730a3}
+.sched-tag-field{background:var(--green-light);color:var(--green)}
+.sched-tag-travel{background:var(--amber-light);color:var(--amber)}
+.sched-tag-wfh{background:#FDF4FF;color:#7e22ce}
+.sched-tag-leave{background:var(--red-light);color:var(--red)}
+.sched-tag-other{background:var(--bg-tertiary);color:var(--text-secondary)}
+.sched-entry-note{font-size:11px;color:var(--text-tertiary);margin-top:2px;line-height:1.3}
+.sched-add-hint{font-size:11px;color:var(--text-tertiary);opacity:0;transition:opacity .12s}
+.sched-entry:hover .sched-add-hint{opacity:1}
+/* Modal for editing schedule entry */
+.sched-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;display:flex;align-items:center;justify-content:center}
+.sched-modal-overlay.hidden{display:none}
+.sched-modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:380px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,.15)}
+.sched-modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:4px}
+.sched-modal-sub{font-size:12px;color:var(--text-tertiary);margin-bottom:14px}
+.sched-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sched-type-opt{border:1.5px solid var(--border);border-radius:var(--r);padding:8px 6px;text-align:center;cursor:pointer;font-size:12px;font-weight:500;color:var(--text-secondary);transition:all .12s;user-select:none}
+.sched-type-opt:hover{border-color:#B5D4F4;background:var(--blue-light);color:var(--blue)}
+.sched-type-opt.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
+.sched-modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 /* ===== NOTIFICATION BELL ===== */
 .notif-bell-wrap{position:relative;display:inline-flex;align-items:center}
 .notif-bell-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:background .15s,color .15s;position:relative}
@@ -330,7 +377,7 @@ nav{padding:8px 0;flex:1}
 <body>
 <div class="app">
   <aside class="sidebar">
-    <div class="logo"><div class="logo-t">R.E.S.I</div><div class="logo-s">Radium Engineering Supplies Inc. </div></div>
+    <div class="logo"><div class="logo-t">ComplianceHub</div><div class="logo-s">Document Manager</div></div>
     <nav>
       <div class="ni active" onclick="showPanel('dashboard')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/></svg><span>Dashboard</span></div>
       <div class="ni" onclick="showPanel('checklist')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Checklist</span></div>
@@ -340,6 +387,7 @@ nav{padding:8px 0;flex:1}
       <div class="ni" onclick="showPanel('inventory')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 5l6-3 6 3v6l-6 3-6-3V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 2v12M2 5l6 3 6-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Inventory</span><span class="nbadge" id="inv-alert-badge" style="display:none">0</span></div>
       <div class="ni" onclick="showPanel('pos')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4 1v2M12 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Point of Sale</span></div>
       <div class="ni" onclick="showPanel('transactions')"><svg viewBox="0 0 16 16" fill="none"><path d="M1 5h14M1 11h14M4 2v12M12 2v12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Transactions</span></div>
+      <div class="ni" onclick="showPanel('schedule')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 7h14M5 3V1M11 3V1M5 10h2M9 10h2M5 13h2M9 13h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Schedule</span></div>
       <div class="ni" onclick="showPanel('admin')"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Admin</span></div>
     </nav>
     <div class="sf"><div class="nm">Admin User</div><div class="em">admin@company.com</div></div>
@@ -517,6 +565,37 @@ nav{padding:8px 0;flex:1}
         <div class="tx-wrap"><table class="tx-table"><thead><tr><th style="width:100px">Date</th><th style="width:180px">Client</th><th>Description</th><th style="width:110px">Amount</th><th style="width:90px">Status</th><th style="width:90px">Actions</th></tr></thead><tbody id="tx-body"></tbody></table></div>
       </div>
 
+      <!-- Schedule -->
+      <div class="panel" id="panel-schedule">
+        <div class="sched-header">
+          <div class="sched-week-nav">
+            <button class="sched-nav-btn" onclick="schedNav(-1)">‹ Prev</button>
+            <div class="sched-week-label" id="sched-week-label"></div>
+            <button class="sched-nav-btn" onclick="schedNav(1)">Next ›</button>
+            <button class="sched-nav-btn" onclick="schedGoToday()">This Week</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btnp btnsm" onclick="openSchedMemberModal()">+ Add Member</button>
+          </div>
+        </div>
+        <div class="sched-table-wrap">
+          <table class="sched-table" id="sched-table">
+            <thead id="sched-thead"></thead>
+            <tbody id="sched-tbody"></tbody>
+          </table>
+        </div>
+        <!-- Legend -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
+          <span style="font-size:11px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Legend:</span>
+          <span class="sched-tag sched-tag-office">Office</span>
+          <span class="sched-tag sched-tag-field">Field Work (WO)</span>
+          <span class="sched-tag sched-tag-travel">Travel</span>
+          <span class="sched-tag sched-tag-wfh">WFH</span>
+          <span class="sched-tag sched-tag-leave">Leave</span>
+          <span class="sched-tag sched-tag-other">–</span>
+        </div>
+      </div>
+
       <!-- Admin -->
       <div class="panel" id="panel-admin">
         <p class="section-title">System Overview</p>
@@ -540,6 +619,49 @@ nav{padding:8px 0;flex:1}
 <div class="modal-overlay hidden" id="modal-license"><div class="modal"><div class="modal-title">Edit License</div><div class="form-row"><div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div><div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteLicense()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-license')">Cancel</button><button class="btn btnp" onclick="saveLicense()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-transaction"><div class="modal"><div class="modal-title">Edit Transaction</div><div class="form-row-3"><div class="fg"><label>Company Name</label><input type="text" id="edit-tx-company"></div><div class="fg"><label>Client Name</label><input type="text" id="edit-tx-client"></div><div class="fg"><label>Amount (₱)</label><input type="number" id="edit-tx-amount"></div></div><div class="form-row"><div class="fg"><label>Description</label><input type="text" id="edit-tx-desc"></div><div class="fg"><label>Status</label><select id="edit-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteTransaction()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-transaction')">Cancel</button><button class="btn btnp" onclick="saveTransaction()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-inventory"><div class="modal"><div class="modal-title">Edit Inventory Item</div><div class="form-row"><div class="fg"><label>Item Name</label><input type="text" id="edit-inv-name"></div><div class="fg"><label>Status</label><select id="edit-inv-status"><option value="Active">Active</option><option value="Low Stock">Low Stock</option><option value="Out of Stock">Out of Stock</option><option value="Discontinued">Discontinued</option></select></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>No. of Products</label><input type="number" id="edit-inv-qty" min="0"></div><div class="fg"><label>Unit Cost (₱)</label><input type="number" id="edit-inv-cost" min="0" step="0.01"></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>Low Stock Alert at ≤</label><input type="number" id="edit-inv-threshold" min="1"></div><div class="fg"></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteInventoryItem()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-inventory')">Cancel</button><button class="btn btnp" onclick="saveInventoryItem()">Save Changes</button></div></div></div></div>
+
+<!-- Schedule Entry Modal -->
+<div class="sched-modal-overlay hidden" id="sched-entry-modal">
+  <div class="sched-modal">
+    <div class="sched-modal-title" id="sched-entry-title">Set Schedule</div>
+    <div class="sched-modal-sub" id="sched-entry-sub"></div>
+    <div class="sched-type-grid">
+      <div class="sched-type-opt sched-tag-office" data-type="office" onclick="selectSchedType(this)">🏢 Office</div>
+      <div class="sched-type-opt sched-tag-field" data-type="field" onclick="selectSchedType(this)">🔧 Field (WO)</div>
+      <div class="sched-type-opt sched-tag-travel" data-type="travel" onclick="selectSchedType(this)">🚗 Travel</div>
+      <div class="sched-type-opt sched-tag-wfh" data-type="wfh" onclick="selectSchedType(this)">🏠 WFH</div>
+      <div class="sched-type-opt sched-tag-leave" data-type="leave" onclick="selectSchedType(this)">🌴 Leave</div>
+      <div class="sched-type-opt sched-tag-other" data-type="none" onclick="selectSchedType(this)">— None</div>
+    </div>
+    <div class="fg" style="margin-bottom:12px">
+      <label style="display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px">Note / Location (optional)</label>
+      <input type="text" id="sched-entry-note-input" placeholder="e.g. Tuguegarao WO, Trip to Isabela…" style="width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
+    </div>
+    <div class="sched-modal-footer">
+      <button class="btn btndanger btnsm" onclick="clearSchedEntry()">Clear</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btnsm" onclick="closeSchedModal()">Cancel</button>
+        <button class="btn btnp btnsm" onclick="saveSchedEntry()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Add Member Modal -->
+<div class="sched-modal-overlay hidden" id="sched-member-modal">
+  <div class="sched-modal">
+    <div class="sched-modal-title">Add Team Member</div>
+    <div class="sched-modal-sub" style="margin-bottom:12px">Add a person to the weekly schedule.</div>
+    <div class="form-row" style="margin-bottom:10px">
+      <div class="fg"><label style="display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px">Full Name</label><input type="text" id="sched-new-name" placeholder="e.g. Juan Santos" style="width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)"></div>
+      <div class="fg"><label style="display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px">Code (optional)</label><input type="text" id="sched-new-code" placeholder="e.g. PSR" style="width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btnsm" onclick="document.getElementById('sched-member-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btnp btnsm" onclick="addSchedMember()">Add Member</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const TODAY=new Date('2026-04-25');
@@ -790,7 +912,7 @@ function addTransaction(){const company=document.getElementById('new-tx-company'
 function openModal(id){document.getElementById(id).classList.remove('hidden');}
 function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;editingReqInfo=null;state.editingInvId=null;}
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});});
-const panelConfig={dashboard:{title:'Dashboard',primary:null,form:null},checklist:{title:'Document Checklist',primary:'+ New Project',form:null},licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},calendar:{title:'Calendar',primary:null,form:null},documents:{title:'Documents',primary:null,form:null},inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},pos:{title:'Point of Sale',primary:null,form:null},transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},admin:{title:'Admin Settings',primary:null,form:null}};
+const panelConfig={dashboard:{title:'Dashboard',primary:null,form:null},checklist:{title:'Document Checklist',primary:'+ New Project',form:null},licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},calendar:{title:'Calendar',primary:null,form:null},documents:{title:'Documents',primary:null,form:null},inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},pos:{title:'Point of Sale',primary:null,form:null},transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},schedule:{title:'Weekly Schedule',primary:null,form:null},admin:{title:'Admin Settings',primary:null,form:null}};
 let currentPanel='dashboard';
 function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}}
 function handlePrimaryAction(){if(currentPanel==='checklist'){openNewProjectModal();return;}const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
@@ -963,6 +1085,211 @@ if(state.projects.length){
   renderProjectDetail(); // cleanly shows empty state
 }
 renderLicenses();renderTransactions();updateStats();renderFolderList();renderDocsView();renderInventory();updateNotifBadge();
+
+// ===== WEEKLY SCHEDULE =====
+const DAYS = ['MON','TUE','WED','THU','FRI'];
+const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+
+// Seed data from handwritten sheet (week of Feb 23–27 2025)
+const schedMembers = [
+  {id:1, name:'Paolo', code:'PSR'},
+  {id:2, name:'Louie', code:'LDC'},
+  {id:3, name:'Steve', code:'SGT'},
+  {id:4, name:'Bryan', code:'BPB'},
+  {id:5, name:'Dennis', code:'DMS'},
+  {id:6, name:'JP', code:'JGS'},
+  {id:7, name:'Ed', code:'ETS'},
+  {id:8, name:'Mico', code:'MZA'},
+  {id:9, name:'Daenniel', code:'DGP'},
+  {id:10, name:'Macky', code:'DCC'},
+  {id:11, name:'Joseph', code:''},
+];
+
+// schedData: key = "memberId_YYYY-MM-DD", value = {type, note}
+// Types: 'office','field','travel','wfh','leave','none'
+const seedWeek = getMonday(new Date(2025, 1, 23)); // Feb 23 2025
+function dateKey(d){return d.toISOString().slice(0,10);}
+function weekDateKey(mon, dayIdx){
+  const d=new Date(mon); d.setDate(d.getDate()+dayIdx); return dateKey(d);
+}
+const schedData = {};
+function sd(mid, mon, di, type, note=''){
+  schedData[mid+'_'+weekDateKey(mon,di)]={type,note};
+}
+// Paolo
+sd(1,seedWeek,0,'office','Office');
+// Louie
+sd(2,seedWeek,0,'travel','Trip to Ilagan');
+sd(2,seedWeek,1,'field','Tumaini WO');
+// Steve
+sd(3,seedWeek,0,'field','Ramos WO');
+sd(3,seedWeek,1,'field','Ramos WO');
+sd(3,seedWeek,2,'field','Tumaini WO');
+sd(3,seedWeek,3,'field','Tumaini WO');
+sd(3,seedWeek,4,'field','Tumaini WO');
+// Bryan
+sd(4,seedWeek,0,'travel','Trip to Isabela');
+sd(4,seedWeek,1,'field','Tumaini WO');
+sd(4,seedWeek,2,'field','Tumaini WO');
+sd(4,seedWeek,3,'field','Ramos WO');
+sd(4,seedWeek,4,'field','Ramos WO');
+// Dennis
+sd(5,seedWeek,0,'office','Office');
+sd(5,seedWeek,1,'office','Office');
+sd(5,seedWeek,2,'field','Tumaini WO');
+sd(5,seedWeek,3,'field','Tumaini WO');
+sd(5,seedWeek,4,'field','Tumaini WO');
+// JP
+sd(6,seedWeek,0,'field','Ramos WO');
+sd(6,seedWeek,1,'field','Ramos WO');
+// Ed
+sd(7,seedWeek,0,'office','Office');
+sd(7,seedWeek,1,'field','PRWO');
+sd(7,seedWeek,2,'field','Ramos WO');
+sd(7,seedWeek,3,'field','Ramos WO');
+// Mico
+sd(8,seedWeek,0,'field','Ramos WO');
+sd(8,seedWeek,1,'field','Ramos WO');
+sd(8,seedWeek,2,'field','PRWO');
+sd(8,seedWeek,3,'office','Office');
+sd(8,seedWeek,4,'field','Ramos WO');
+// Daenniel
+sd(9,seedWeek,0,'field','Ramos WO');
+sd(9,seedWeek,1,'field','Ramos WO');
+sd(9,seedWeek,2,'field','Ramos WO');
+sd(9,seedWeek,3,'field','Ramos WO');
+sd(9,seedWeek,4,'office','Office');
+// Macky
+sd(10,seedWeek,0,'office','Office');
+sd(10,seedWeek,1,'office','Office');
+sd(10,seedWeek,2,'field','Ramos WO');
+sd(10,seedWeek,3,'field','Ramos WO');
+sd(10,seedWeek,4,'field','Ramos WO');
+// Joseph
+sd(11,seedWeek,0,'travel','Trip to Isabela');
+sd(11,seedWeek,1,'field','Tumaini WO');
+sd(11,seedWeek,2,'field','Tumaini WO');
+sd(11,seedWeek,3,'field','Tumaini WO');
+sd(11,seedWeek,4,'field','Tumaini WO');
+
+let schedCurrentMonday = getMonday(new Date());
+
+function getMonday(d){
+  const dt=new Date(d);
+  const day=dt.getDay();
+  const diff=dt.getDate()-(day===0?6:day-1);
+  dt.setDate(diff);dt.setHours(0,0,0,0);return dt;
+}
+function schedNav(dir){
+  schedCurrentMonday=new Date(schedCurrentMonday);
+  schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);
+  renderSched();
+}
+function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
+
+function schedTypeTag(type,note){
+  if(!type||type==='none')return `<span class="sched-tag sched-tag-other">—</span>`;
+  const map={
+    office:{cls:'sched-tag-office',label:'🏢 Office'},
+    field:{cls:'sched-tag-field',label:'🔧 WO'},
+    travel:{cls:'sched-tag-travel',label:'🚗 Travel'},
+    wfh:{cls:'sched-tag-wfh',label:'🏠 WFH'},
+    leave:{cls:'sched-tag-leave',label:'🌴 Leave'},
+  };
+  const t=map[type]||{cls:'sched-tag-other',label:type};
+  return `<span class="sched-tag ${t.cls}">${t.label}</span>${note?`<div class="sched-entry-note">${escHtml(note)}</div>`:''}`;
+}
+
+function renderSched(){
+  const mon=schedCurrentMonday;
+  // Week label
+  const fri=new Date(mon);fri.setDate(fri.getDate()+4);
+  const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});
+  document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();
+
+  const today=new Date();today.setHours(0,0,0,0);
+
+  // Build header
+  let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;
+  for(let i=0;i<5;i++){
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    const isToday=d.getTime()===today.getTime();
+    thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;
+  }
+  thead+=`</tr>`;
+  document.getElementById('sched-thead').innerHTML=thead;
+
+  // Build body
+  let tbody='';
+  schedMembers.forEach(m=>{
+    tbody+=`<tr>
+      <td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;
+    for(let i=0;i<5;i++){
+      const d=new Date(mon);d.setDate(d.getDate()+i);
+      const key=m.id+'_'+dateKey(d);
+      const entry=schedData[key];
+      const isToday=d.getTime()===today.getTime();
+      const dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+      tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">
+        ${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}
+      </div></td>`;
+    }
+    tbody+=`</tr>`;
+  });
+  document.getElementById('sched-tbody').innerHTML=tbody;
+}
+
+// Modal state
+let _schedEditMid=null, _schedEditDate=null, _schedEditType=null;
+function openSchedEntry(mid,dateStr,name,dayLabel){
+  _schedEditMid=mid;_schedEditDate=dateStr;_schedEditType=null;
+  const entry=schedData[mid+'_'+dateStr];
+  document.getElementById('sched-entry-title').textContent=name;
+  document.getElementById('sched-entry-sub').textContent=dayLabel;
+  document.getElementById('sched-entry-note-input').value=entry?.note||'';
+  document.querySelectorAll('.sched-type-opt').forEach(el=>{
+    el.classList.toggle('selected',entry&&el.dataset.type===entry.type);
+  });
+  if(entry) _schedEditType=entry.type;
+  document.getElementById('sched-entry-modal').classList.remove('hidden');
+}
+function selectSchedType(el){
+  document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  _schedEditType=el.dataset.type;
+}
+function saveSchedEntry(){
+  if(!_schedEditMid||!_schedEditDate)return;
+  const note=document.getElementById('sched-entry-note-input').value.trim();
+  if(_schedEditType&&_schedEditType!=='none'){
+    schedData[_schedEditMid+'_'+_schedEditDate]={type:_schedEditType,note};
+  } else {
+    delete schedData[_schedEditMid+'_'+_schedEditDate];
+  }
+  closeSchedModal();renderSched();
+}
+function clearSchedEntry(){
+  if(_schedEditMid&&_schedEditDate) delete schedData[_schedEditMid+'_'+_schedEditDate];
+  closeSchedModal();renderSched();
+}
+function closeSchedModal(){document.getElementById('sched-entry-modal').classList.add('hidden');}
+
+function openSchedMemberModal(){
+  document.getElementById('sched-new-name').value='';
+  document.getElementById('sched-new-code').value='';
+  document.getElementById('sched-member-modal').classList.remove('hidden');
+}
+function addSchedMember(){
+  const name=document.getElementById('sched-new-name').value.trim();
+  if(!name)return;
+  const code=document.getElementById('sched-new-code').value.trim().toUpperCase();
+  const newId=Math.max(...schedMembers.map(m=>m.id),0)+1;
+  schedMembers.push({id:newId,name,code});
+  document.getElementById('sched-member-modal').classList.add('hidden');
+  renderSched();
+}
+
+renderSched();
 </script>
 </body>
 </html>
