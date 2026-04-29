@@ -294,7 +294,6 @@ nav{padding:8px 0;flex:1}
 .inv-cost{font-weight:600;font-size:13px}
 .inv-total{font-size:12px;color:var(--text-tertiary);margin-top:1px}
 .hidden{display:none!important}
-/* License category group styles */
 .lic-group{margin-bottom:28px}
 .lic-group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);margin-bottom:10px}
 .lic-group-header-core{background:linear-gradient(135deg,#E6F1FB,#f0f7ff);border:1px solid #c3dcf5}
@@ -306,7 +305,6 @@ nav{padding:8px 0;flex:1}
 .lic-summary-bar{display:flex;gap:12px;margin-bottom:20px;padding:12px 16px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl)}
 .lic-sum-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
 .lic-sum-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-/* Notification bell */
 .notif-bell-wrap{position:relative;display:inline-flex;align-items:center}
 .notif-bell-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:background .15s,color .15s;position:relative}
 .notif-bell-btn:hover{background:var(--bg-secondary);color:var(--text-primary)}
@@ -372,7 +370,7 @@ nav{padding:8px 0;flex:1}
 .sched-entry:hover .sched-add-hint{opacity:1}
 .sched-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;display:flex;align-items:center;justify-content:center}
 .sched-modal-overlay.hidden{display:none}
-.sched-modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:380px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,.15)}
+.sched-modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:400px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,.15)}
 .sched-modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:4px}
 .sched-modal-sub{font-size:12px;color:var(--text-tertiary);margin-bottom:14px}
 .sched-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
@@ -380,6 +378,15 @@ nav{padding:8px 0;flex:1}
 .sched-type-opt:hover{border-color:#B5D4F4;background:var(--blue-light);color:var(--blue)}
 .sched-type-opt.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
 .sched-modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+/* Range section */
+.sched-range-section{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:12px}
+.sched-range-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.sched-range-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sched-range-label{display:block;font-size:11px;color:var(--text-secondary);margin-bottom:4px}
+.sched-range-input{width:100%;padding:6px 8px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
+.sched-range-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
+.sched-range-hint{font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.4}
+.sched-range-hint strong{color:var(--amber);font-weight:600}
 </style>
 </head>
 <body>
@@ -625,12 +632,33 @@ nav{padding:8px 0;flex:1}
       <label style="display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px">Note / Location (optional)</label>
       <input type="text" id="sched-entry-note-input" placeholder="e.g. Tuguegarao WO, Trip to Isabela…" style="width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
     </div>
+
+    <!-- ── DATE RANGE SECTION ── -->
+    <div class="sched-range-section">
+      <div class="sched-range-title">📅 Apply to date range (optional)</div>
+      <div class="sched-range-grid">
+        <div>
+          <label class="sched-range-label">From</label>
+          <input type="date" id="sched-range-from" class="sched-range-input">
+        </div>
+        <div>
+          <label class="sched-range-label">To</label>
+          <input type="date" id="sched-range-to" class="sched-range-input">
+        </div>
+      </div>
+      <div class="sched-range-hint">
+        Weekends are skipped automatically. If left blank, only the clicked day is updated.
+        <br><strong>Note:</strong> existing entries within the range will be overwritten.
+      </div>
+    </div>
+
     <div class="sched-modal-footer">
       <button class="btn btndanger btnsm" onclick="clearSchedEntry()">Clear</button>
       <div style="display:flex;gap:8px"><button class="btn btnsm" onclick="closeSchedModal()">Cancel</button><button class="btn btnp btnsm" onclick="saveSchedEntry()">Save</button></div>
     </div>
   </div>
 </div>
+
 <!-- Schedule Add Member Modal -->
 <div class="sched-modal-overlay hidden" id="sched-member-modal">
   <div class="sched-modal">
@@ -879,26 +907,81 @@ sd(11,seedWeek,0,'travel','Trip to Isabela');sd(11,seedWeek,1,'field','Tumaini W
 let schedCurrentMonday=getMonday(new Date());
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
-  function schedTypeTag(type, note) {
-  if(!type || type === 'none') return '<span class="sched-tag sched-tag-other">—</span>';
-  const map = {
-    office:  {cls:'sched-tag-office',  label:'🏢 Office'},
-    field:   {cls:'sched-tag-field',   label:'🔧 WO'},
-    travel:  {cls:'sched-tag-travel',  label:'🚗 Travel'},
-    wfh:     {cls:'sched-tag-wfh',     label:'🏠 WFH'},
-    leave:   {cls:'sched-tag-leave',   label:'🌴 Leave'}
-  };
-  const t = map[type] || {cls:'sched-tag-other', label: type};
-  return '<span class="sched-tag ' + t.cls + '">' + t.label + '</span>' +
-         (note ? '<div class="sched-entry-note">' + escHtml(note) + '</div>' : '');
-}
+function schedTypeTag(type,note){if(!type||type==='none')return '<span class="sched-tag sched-tag-other">—</span>';const map={office:{cls:'sched-tag-office',label:'🏢 Office'},field:{cls:'sched-tag-field',label:'🔧 WO'},travel:{cls:'sched-tag-travel',label:'🚗 Travel'},wfh:{cls:'sched-tag-wfh',label:'🏠 WFH'},leave:{cls:'sched-tag-leave',label:'🌴 Leave'}};const t=map[type]||{cls:'sched-tag-other',label:type};return '<span class="sched-tag '+t.cls+'">'+t.label+'</span>'+(note?'<div class="sched-entry-note">'+escHtml(note)+'</div>':'');}
 function renderSched(){const mon=schedCurrentMonday;const fri=new Date(mon);fri.setDate(fri.getDate()+4);const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();const today=new Date();today.setHours(0,0,0,0);let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const isToday=d.getTime()===today.getTime();thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${SCHED_DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;}thead+=`</tr>`;document.getElementById('sched-thead').innerHTML=thead;let tbody='';schedMembers.forEach(m=>{tbody+=`<tr><td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const key=m.id+'_'+dateKey(d);const entry=schedData[key];const isToday=d.getTime()===today.getTime();const dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}</div></td>`;}tbody+=`</tr>`;});document.getElementById('sched-tbody').innerHTML=tbody;}
+
 let _schedEditMid=null,_schedEditDate=null,_schedEditType=null;
-function openSchedEntry(mid,dateStr,name,dayLabel){_schedEditMid=mid;_schedEditDate=dateStr;_schedEditType=null;const entry=schedData[mid+'_'+dateStr];document.getElementById('sched-entry-title').textContent=name;document.getElementById('sched-entry-sub').textContent=dayLabel;document.getElementById('sched-entry-note-input').value=entry?.note||'';document.querySelectorAll('.sched-type-opt').forEach(el=>{el.classList.toggle('selected',entry&&el.dataset.type===entry.type);});if(entry)_schedEditType=entry.type;document.getElementById('sched-entry-modal').classList.remove('hidden');}
-function selectSchedType(el){document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');_schedEditType=el.dataset.type;}
-function saveSchedEntry(){if(!_schedEditMid||!_schedEditDate)return;const note=document.getElementById('sched-entry-note-input').value.trim();if(_schedEditType&&_schedEditType!=='none'){schedData[_schedEditMid+'_'+_schedEditDate]={type:_schedEditType,note};}else{delete schedData[_schedEditMid+'_'+_schedEditDate];}closeSchedModal();renderSched();}
-function clearSchedEntry(){if(_schedEditMid&&_schedEditDate)delete schedData[_schedEditMid+'_'+_schedEditDate];closeSchedModal();renderSched();}
+
+function openSchedEntry(mid,dateStr,name,dayLabel){
+  _schedEditMid=mid;
+  _schedEditDate=dateStr;
+  _schedEditType=null;
+  const entry=schedData[mid+'_'+dateStr];
+  document.getElementById('sched-entry-title').textContent=name;
+  document.getElementById('sched-entry-sub').textContent=dayLabel;
+  document.getElementById('sched-entry-note-input').value=entry?.note||'';
+  // Pre-fill range: From = clicked date, To = same day by default
+  document.getElementById('sched-range-from').value=dateStr;
+  document.getElementById('sched-range-to').value=dateStr;
+  document.querySelectorAll('.sched-type-opt').forEach(el=>{
+    el.classList.toggle('selected',entry&&el.dataset.type===entry.type);
+  });
+  if(entry)_schedEditType=entry.type;
+  document.getElementById('sched-entry-modal').classList.remove('hidden');
+}
+
+function selectSchedType(el){
+  document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  _schedEditType=el.dataset.type;
+}
+
+function saveSchedEntry(){
+  if(!_schedEditMid||!_schedEditDate)return;
+  const note=document.getElementById('sched-entry-note-input').value.trim();
+  const rangeFrom=document.getElementById('sched-range-from').value;
+  const rangeTo=document.getElementById('sched-range-to').value;
+  const type=_schedEditType;
+
+  // Determine which dates to fill
+  let datesToFill=[];
+  if(rangeFrom && rangeTo && rangeFrom<=rangeTo){
+    // Iterate every day in range, skip weekends (Sat=6, Sun=0)
+    const cur=new Date(rangeFrom+'T00:00:00');
+    const end=new Date(rangeTo+'T00:00:00');
+    while(cur<=end){
+      const dow=cur.getDay();
+      if(dow!==0&&dow!==6){ // skip Sun & Sat
+        datesToFill.push(dateKey(cur));
+      }
+      cur.setDate(cur.getDate()+1);
+    }
+  } else {
+    // Fallback: single day (the originally clicked date)
+    datesToFill=[_schedEditDate];
+  }
+
+  datesToFill.forEach(dk=>{
+    if(type&&type!=='none'){
+      schedData[_schedEditMid+'_'+dk]={type,note};
+    } else {
+      delete schedData[_schedEditMid+'_'+dk];
+    }
+  });
+
+  closeSchedModal();
+  renderSched();
+}
+
+function clearSchedEntry(){
+  // Clear only the originally clicked date (not the full range on a "clear" action)
+  if(_schedEditMid&&_schedEditDate)delete schedData[_schedEditMid+'_'+_schedEditDate];
+  closeSchedModal();
+  renderSched();
+}
+
 function closeSchedModal(){document.getElementById('sched-entry-modal').classList.add('hidden');}
+
 function openSchedMemberModal(){document.getElementById('sched-new-name').value='';document.getElementById('sched-new-code').value='';document.getElementById('sched-member-modal').classList.remove('hidden');}
 function addSchedMember(){const name=document.getElementById('sched-new-name').value.trim();if(!name)return;const code=document.getElementById('sched-new-code').value.trim().toUpperCase();const newId=Math.max(...schedMembers.map(m=>m.id),0)+1;schedMembers.push({id:newId,name,code});document.getElementById('sched-member-modal').classList.add('hidden');renderSched();}
 
