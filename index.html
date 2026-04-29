@@ -766,7 +766,46 @@ function deleteRequirement(){const{projectId,type,reqId}=editingReqInfo,proj=get
 function switchReqTab(tab){state.activeReqTab=tab;document.querySelectorAll('.req-tab').forEach(t=>t.classList.remove('active'));document.getElementById('rtab-'+tab).classList.add('active');document.querySelectorAll('.req-pane').forEach(p=>p.classList.remove('active'));document.getElementById('rpane-'+tab).classList.add('active');}
 function openNewProjectModal(){state.editingProjectId=null;document.getElementById('modal-project-title').textContent='New Project';document.getElementById('save-project-btn').textContent='Create Project';['proj-name-input','proj-client-input','proj-desc-input'].forEach(id=>document.getElementById(id).value='');openModal('modal-new-project');}
 function openEditProject(){const proj=getProject(state.activeProjectId);if(!proj)return;state.editingProjectId=proj.id;document.getElementById('modal-project-title').textContent='Edit Project';document.getElementById('save-project-btn').textContent='Save Changes';document.getElementById('proj-name-input').value=proj.name;document.getElementById('proj-client-input').value=proj.client;document.getElementById('proj-desc-input').value=proj.desc;openModal('modal-new-project');}
-function saveProject(){const name=document.getElementById('proj-name-input').value.trim(),client=document.getElementById('proj-client-input').value.trim(),desc=document.getElementById('proj-desc-input').value.trim();if(!name){alert('Please enter a project name.');return;}if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}else{const newProj={id:state.nextId++,name,client,desc,technical:[],financial:[],other:[]};state.projects.push(newProj);state.activeProjectId=newProj.id;}closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();}
+function saveProject(){
+  const name=document.getElementById('proj-name-input').value.trim(),
+        client=document.getElementById('proj-client-input').value.trim(),
+        desc=document.getElementById('proj-desc-input').value.trim();
+  if(!name){alert('Please enter a project name.');return;}
+  if(state.editingProjectId){
+    const proj=getProject(state.editingProjectId);
+    proj.name=name;proj.client=client;proj.desc=desc;
+  } else {
+    const b=()=>state.nextId++;
+    const defaultTechnical=[
+      {id:b(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership)',category:'Legal',checked:false},
+      {id:b(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA',category:'Legal',checked:false},
+      {id:b(),label:"Certified Copy of valid Mayor's/Business Permit or Equivalent Document",category:'Permits',checked:false},
+      {id:b(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (BIR)',category:'Tax',checked:false},
+      {id:b(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024',category:'Finance',checked:false},
+      {id:b(),label:'Statement of all Ongoing Government and Private Contracts',category:'Legal',checked:false},
+      {id:b(),label:"Statement of Bidder's Single Largest Completed Contract (SLCC)",category:'Legal',checked:false},
+      {id:b(),label:'Original copy of Bid Security (Surety Bond or Notarized Bid Securing Declaration)',category:'Legal',checked:false},
+      {id:b(),label:'Conformity with Technical Specifications (delivery schedule, manpower, after-sales)',category:'Compliance',checked:false},
+      {id:b(),label:"Original duly signed Omnibus Sworn Statement (OSS) with Secretary's Certificate or Special Power of Attorney",category:'Legal',checked:false}
+    ];
+    const defaultFinancial=[
+      {id:b(),label:"Prospective Bidder's NFCC computation or Committed Line of Credit from Universal/Commercial Bank",category:'Finance',checked:false},
+      {id:b(),label:'Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},
+      {id:b(),label:'Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false}
+    ];
+    const defaultOther=[
+      {id:b(),label:'Duly signed Joint Venture Agreement (JVA) or notarized statements from potential JV partners (if applicable)',category:'Legal',checked:false},
+      {id:b(),label:'Certification from relevant government office for foreign bidders claiming reciprocal rights (if applicable)',category:'Compliance',checked:false},
+      {id:b(),label:'Certification from DTI if claiming preference as Domestic Bidder or Domestic Entity (if applicable)',category:'Compliance',checked:false}
+    ];
+    const newProj={id:state.nextId++,name,client,desc,technical:defaultTechnical,financial:defaultFinancial,other:defaultOther};
+    state.projects.push(newProj);
+    state.activeProjectId=newProj.id;
+  }
+  closeModal('modal-new-project');
+  renderProjectsSidebar();
+  renderProjectDetail();
+}
 function promptDeleteProject(id){deletingProjectId=id;const proj=getProject(id);document.getElementById('modal-del-title').textContent='Remove Project?';document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${escHtml(proj.name)}</strong> and all its requirements. This cannot be undone.`;const btn=document.getElementById('modal-del-confirm-btn');btn.textContent='Delete Project';btn.onclick=()=>{state.projects=state.projects.filter(p=>p.id!==deletingProjectId);if(state.activeProjectId===deletingProjectId){state.activeProjectId=state.projects.length?state.projects[0].id:null;}deletingProjectId=null;closeModal('modal-confirm-delete');renderProjectsSidebar();renderProjectDetail();updateStats();};openModal('modal-confirm-delete');}
 function renderOverview(){const el=document.getElementById('overview-content');if(!state.projects.length){el.innerHTML='<div class="empty-state">No projects yet.</div>';return;}let html='';state.projects.forEach(proj=>{const{done,total}=getProjectProgress(proj),pct=total?Math.round(done/total*100):0;html+=`<div style="margin-bottom:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span><span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div><span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span></div>`;['technical','financial','other'].forEach(type=>{if(!(proj[type]||[]).length)return;html+=`<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p><div class="checklist-list" style="margin-bottom:10px">`;(proj[type]||[]).forEach(item=>{html+=`<div class="ci"><div class="ci-header"><div class="cb ${item.checked?'checked':''}"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span></div></div>`;});html+=`</div>`;});html+=`</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;});el.innerHTML=html;}
 function switchCheckTab(tab){state.activeCheckTab=tab;document.querySelectorAll('#panel-checklist .tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');document.querySelectorAll('#panel-checklist .tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById('pane-'+tab).classList.add('active');if(tab==='overview')renderOverview();}
