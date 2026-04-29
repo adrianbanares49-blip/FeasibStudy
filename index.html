@@ -378,7 +378,6 @@ nav{padding:8px 0;flex:1}
 .sched-type-opt:hover{border-color:#B5D4F4;background:var(--blue-light);color:var(--blue)}
 .sched-type-opt.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
 .sched-modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
-/* Range section */
 .sched-range-section{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:12px}
 .sched-range-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .sched-range-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -387,6 +386,59 @@ nav{padding:8px 0;flex:1}
 .sched-range-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
 .sched-range-hint{font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.4}
 .sched-range-hint strong{color:var(--amber);font-weight:600}
+
+/* ===== ACTION PLAN — ACTION ITEM TEMPLATE ===== */
+.ap-template-header{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:16px}
+.ap-template-title{font-size:17px;font-weight:800;color:#1a2332;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #1a2332}
+.ap-template-meta{display:grid;grid-template-columns:1fr 260px;gap:16px}
+.ap-meta-group{display:flex;flex-direction:column;gap:4px}
+.ap-meta-label{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.07em}
+.ap-meta-input{padding:8px 12px;border:1px solid var(--border-strong);border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:var(--bg-secondary);color:var(--text-primary);width:100%}
+.ap-meta-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+.ap-table-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:auto}
+.ap-table{width:100%;border-collapse:collapse;font-size:13px;min-width:800px}
+.ap-table thead tr{background:#1a2332}
+.ap-table th{text-align:center;padding:11px 10px;font-size:10px;font-weight:700;color:#fff;border-right:1px solid rgba(255,255,255,.12);border-bottom:2px solid rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.ap-table th:last-child{border-right:none}
+.ap-table td{padding:8px 10px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;color:var(--text-primary);font-size:13px}
+.ap-table td:last-child{border-right:none}
+.ap-table tr:last-child td{border-bottom:none}
+.ap-table tbody tr:hover td{background:var(--bg-secondary)}
+.ap-table tbody tr.ap-row-done td{background:#f0faf0}
+.ap-table tbody tr.ap-row-done td .ap-action-text{text-decoration:line-through;color:var(--text-tertiary)}
+/* Done checkbox */
+.ap-done-cell{text-align:center;width:52px}
+.ap-done-cb{width:22px;height:22px;border:2px solid #ccc;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;background:#fff;position:relative;flex-shrink:0}
+.ap-done-cb.checked{background:#2d9e2d;border-color:#2d9e2d}
+.ap-done-cb.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:900;line-height:1;position:absolute}
+
+/* Status badges */
+.ap-status{display:inline-block;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;min-width:84px;text-align:center}
+.ap-st-notstarted{background:#e5e7eb;color:#4b5563}
+.ap-st-inprogress{background:#dcfce7;color:#166534}
+.ap-st-complete{background:#2d9e2d;color:#fff}
+.ap-st-onhold{background:#fef9c3;color:#713f12}
+.ap-st-overdue{background:var(--red-light);color:var(--red)}
+/* % complete */
+.ap-pct-wrap{display:flex;align-items:center;gap:6px;min-width:80px}
+.ap-pct-bar{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden}
+.ap-pct-fill{height:100%;border-radius:3px;background:var(--blue);transition:width .3s}
+.ap-pct-label{font-size:11px;font-weight:700;color:var(--text-secondary);width:32px;text-align:right;flex-shrink:0}
+/* Inline editable inputs inside table cells */
+.ap-cell-input{width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--text-primary);outline:none;padding:1px 0}
+.ap-cell-input:focus{outline:1px solid var(--blue);border-radius:3px;padding:2px 6px;background:var(--bg-primary)}
+.ap-cell-select{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-primary);outline:none;cursor:pointer;padding:1px 0}
+.ap-cell-select:focus{outline:1px solid var(--blue);border-radius:3px;background:var(--bg-primary);padding:2px 4px}
+.ap-cell-date{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-secondary);outline:none;cursor:pointer;padding:1px 0}
+.ap-cell-date:focus{outline:1px solid var(--blue);border-radius:3px;background:var(--bg-primary);padding:2px 6px}
+/* Add row */
+.ap-add-trigger{display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--blue);border-top:1px dashed var(--border);background:var(--bg-secondary);border-radius:0 0 var(--rl) var(--rl);transition:background .15s}
+.ap-add-trigger:hover{background:var(--blue-light)}
+.ap-add-trigger svg{flex-shrink:0}
+/* Summary footer */
+.ap-summary-bar{display:flex;gap:20px;padding:10px 16px;background:var(--bg-secondary);border-top:1px solid var(--border);border-radius:0 0 var(--rl) var(--rl);flex-wrap:wrap}
+.ap-sum-item{font-size:12px;color:var(--text-secondary)}
+.ap-sum-item strong{color:var(--text-primary);font-weight:600}
 </style>
 </head>
 <body>
@@ -496,14 +548,40 @@ nav{padding:8px 0;flex:1}
         <div id="expiry-list"></div>
       </div>
 
-      <!-- Action Plan -->
+      <!-- =================== ACTION PLAN =================== -->
       <div class="panel" id="panel-actionplan">
-        <div class="add-form" id="add-ap-form">
-          <div class="form-row-4"><div class="fg"><label>Client / Customer</label><input type="text" id="new-ap-client" placeholder="e.g. Santos Enterprises"></div><div class="fg"><label>Project</label><input type="text" id="new-ap-project" placeholder="e.g. Permit Renewal 2026"></div><div class="fg"><label>Start Date</label><input type="date" id="new-ap-start"></div><div class="fg"><label>End Date</label><input type="date" id="new-ap-end"></div></div>
-          <div class="form-row"><div class="fg" style="grid-column:1/-1"><label>Remarks</label><input type="text" id="new-ap-remarks" placeholder="Notes or remarks…"></div></div>
-          <div class="form-actions"><button class="btn" onclick="closeForm('add-ap-form')">Cancel</button><button class="btn btnp" onclick="addActionPlanEntry()">Add Entry</button></div>
+        <!-- Action Item Table -->
+        <div class="ap-table-wrap">
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th style="width:52px">Done</th>
+                <th style="min-width:200px;text-align:left">Action</th>
+                <th style="width:130px">Assigned To</th>
+                <th style="width:115px">Date Assigned</th>
+                <th style="width:115px">Date Due</th>
+                <th style="width:110px">Status</th>
+                <th style="width:110px">% Complete</th>
+                <th style="min-width:140px;text-align:left">Notes</th>
+                <th style="width:50px"></th>
+              </tr>
+            </thead>
+            <tbody id="ap-body"></tbody>
+          </table>
+          <!-- Add row trigger -->
+          <div class="ap-add-trigger" onclick="addAPRow()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#185FA5" stroke-width="1.4"/><path d="M7 4v6M4 7h6" stroke="#185FA5" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Add action item
+          </div>
+          <!-- Summary footer -->
+          <div class="ap-summary-bar" id="ap-summary-bar">
+            <span class="ap-sum-item">Total: <strong id="ap-sum-total">0</strong></span>
+            <span class="ap-sum-item">Done: <strong id="ap-sum-done" style="color:var(--green)">0</strong></span>
+            <span class="ap-sum-item">In Progress: <strong id="ap-sum-inprogress" style="color:#166534">0</strong></span>
+            <span class="ap-sum-item">Overdue: <strong id="ap-sum-overdue" style="color:var(--red)">0</strong></span>
+            <span class="ap-sum-item">Avg % Complete: <strong id="ap-sum-avg">0%</strong></span>
+          </div>
         </div>
-        <div class="tx-wrap"><table class="tx-table" style="table-layout:fixed"><thead><tr><th style="width:160px">Client / Customer</th><th style="width:180px">Project</th><th>Remarks</th><th style="width:110px">Start Date</th><th style="width:110px">End Date</th><th style="width:80px">Actions</th></tr></thead><tbody id="ap-body"></tbody></table></div>
       </div>
 
       <!-- Calendar -->
@@ -613,7 +691,6 @@ nav{padding:8px 0;flex:1}
 <div class="modal-overlay hidden" id="modal-license"><div class="modal"><div class="modal-title">Edit License</div><div class="form-row"><div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div><div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div></div><div class="fg" style="margin-bottom:12px"><label>Category</label><select id="edit-lic-cat"><option value="Core Legal">Core Legal</option><option value="Industry-Specific">Industry-Specific</option><option value="Safety &amp; Training">Safety &amp; Training</option><option value="Other">Other</option></select></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteLicense()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-license')">Cancel</button><button class="btn btnp" onclick="saveLicense()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-transaction"><div class="modal"><div class="modal-title">Edit Transaction</div><div class="form-row-3"><div class="fg"><label>Company Name</label><input type="text" id="edit-tx-company"></div><div class="fg"><label>Client Name</label><input type="text" id="edit-tx-client"></div><div class="fg"><label>Amount (&#8369;)</label><input type="number" id="edit-tx-amount"></div></div><div class="form-row"><div class="fg"><label>Description</label><input type="text" id="edit-tx-desc"></div><div class="fg"><label>Status</label><select id="edit-tx-status"><option>Paid</option><option>Pending</option><option>Overdue</option></select></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteTransaction()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-transaction')">Cancel</button><button class="btn btnp" onclick="saveTransaction()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-inventory"><div class="modal"><div class="modal-title">Edit Inventory Item</div><div class="form-row"><div class="fg"><label>Item Name</label><input type="text" id="edit-inv-name"></div><div class="fg"><label>Status</label><select id="edit-inv-status"><option value="Active">Active</option><option value="Low Stock">Low Stock</option><option value="Out of Stock">Out of Stock</option><option value="Discontinued">Discontinued</option></select></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>No. of Products</label><input type="number" id="edit-inv-qty" min="0"></div><div class="fg"><label>Unit Cost (&#8369;)</label><input type="number" id="edit-inv-cost" min="0" step="0.01"></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>Low Stock Alert at &#8804;</label><input type="number" id="edit-inv-threshold" min="1"></div><div class="fg"></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteInventoryItem()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-inventory')">Cancel</button><button class="btn btnp" onclick="saveInventoryItem()">Save Changes</button></div></div></div></div>
-<div class="modal-overlay hidden" id="modal-ap"><div class="modal" style="width:540px"><div class="modal-title">Edit Action Plan Entry</div><div class="form-row"><div class="fg"><label>Client / Customer</label><input type="text" id="edit-ap-client"></div><div class="fg"><label>Project</label><input type="text" id="edit-ap-project"></div></div><div class="form-row"><div class="fg"><label>Start Date</label><input type="date" id="edit-ap-start"></div><div class="fg"><label>End Date</label><input type="date" id="edit-ap-end"></div></div><div class="fg" style="margin-bottom:12px"><label>Remarks</label><input type="text" id="edit-ap-remarks" placeholder="Notes or remarks…"></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteAP()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="document.getElementById('modal-ap').classList.add('hidden')">Cancel</button><button class="btn btnp" onclick="saveAP()">Save Changes</button></div></div></div></div>
 
 <!-- Schedule Entry Modal -->
 <div class="sched-modal-overlay hidden" id="sched-entry-modal">
@@ -632,26 +709,14 @@ nav{padding:8px 0;flex:1}
       <label style="display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px">Note / Location (optional)</label>
       <input type="text" id="sched-entry-note-input" placeholder="e.g. Tuguegarao WO, Trip to Isabela…" style="width:100%;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)">
     </div>
-
-    <!-- ── DATE RANGE SECTION ── -->
     <div class="sched-range-section">
       <div class="sched-range-title">📅 Apply to date range (optional)</div>
       <div class="sched-range-grid">
-        <div>
-          <label class="sched-range-label">From</label>
-          <input type="date" id="sched-range-from" class="sched-range-input">
-        </div>
-        <div>
-          <label class="sched-range-label">To</label>
-          <input type="date" id="sched-range-to" class="sched-range-input">
-        </div>
+        <div><label class="sched-range-label">From</label><input type="date" id="sched-range-from" class="sched-range-input"></div>
+        <div><label class="sched-range-label">To</label><input type="date" id="sched-range-to" class="sched-range-input"></div>
       </div>
-      <div class="sched-range-hint">
-        Weekends are skipped automatically. If left blank, only the clicked day is updated.
-        <br><strong>Note:</strong> existing entries within the range will be overwritten.
-      </div>
+      <div class="sched-range-hint">Weekends are skipped automatically. If left blank, only the clicked day is updated.<br><strong>Note:</strong> existing entries within the range will be overwritten.</div>
     </div>
-
     <div class="sched-modal-footer">
       <button class="btn btndanger btnsm" onclick="clearSchedEntry()">Clear</button>
       <div style="display:flex;gap:8px"><button class="btn btnsm" onclick="closeSchedModal()">Cancel</button><button class="btn btnp btnsm" onclick="saveSchedEntry()">Save</button></div>
@@ -718,6 +783,148 @@ const state={
 
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
+// ===== ACTION PLAN =====
+const AP_STATUSES=['Not Started','In Progress','Complete','On Hold','Overdue'];
+
+function apStatusClass(s){
+  if(s==='Not Started')return 'ap-st-notstarted';
+  if(s==='In Progress')return 'ap-st-inprogress';
+  if(s==='Complete')return 'ap-st-complete';
+  if(s==='On Hold')return 'ap-st-onhold';
+  if(s==='Overdue')return 'ap-st-overdue';
+  return '';
+}
+
+function addAPRow(){
+  const dateStr=TODAY.toISOString().slice(0,10);
+  state.actionPlan.push({
+    id:state.nextId++,
+    done:false,
+    action:'',
+    assignedTo:'',
+    dateAssigned:dateStr,
+    dateDue:'',
+    status:'Not Started',
+    pct:0,
+    notes:''
+  });
+  renderActionPlan();
+  setTimeout(()=>{
+    const inputs=document.querySelectorAll('#ap-body .ap-action-input');
+    if(inputs.length)inputs[inputs.length-1].focus();
+  },50);
+}
+
+function toggleAPDone(id){
+  const ap=state.actionPlan.find(a=>a.id===id);
+  if(!ap)return;
+  ap.done=!ap.done;
+  if(ap.done){ap.status='Complete';ap.pct=100;}
+  else{if(ap.status==='Complete'){ap.status='Not Started';ap.pct=0;}}
+  renderActionPlan();
+}
+
+function updateAPField(id,field,value){
+  const ap=state.actionPlan.find(a=>a.id===id);
+  if(!ap)return;
+  if(field==='pct'){value=Math.max(0,Math.min(100,parseInt(value)||0));}
+  ap[field]=value;
+  if(field==='pct'&&value===100){ap.status='Complete';ap.done=true;}
+  if(field==='status'&&value==='Complete'){ap.pct=100;ap.done=true;}
+  if(field==='status'&&value!=='Complete'&&ap.done){ap.done=false;}
+  renderActionPlan();
+}
+
+function deleteAPRow(id){
+  state.actionPlan=state.actionPlan.filter(a=>a.id!==id);
+  renderActionPlan();
+}
+
+function renderActionPlan(){
+  const body=document.getElementById('ap-body');
+  if(!state.actionPlan.length){
+    body.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text-tertiary);font-size:13px">No action items yet. Click "+ Add action item" below to get started.</td></tr>`;
+    updateAPSummary();
+    return;
+  }
+  body.innerHTML=state.actionPlan.map(ap=>{
+    const pct=ap.pct||0;
+    const doneRow=ap.done?'ap-row-done':'';
+    return `<tr class="${doneRow}" data-id="${ap.id}">
+      <td class="ap-done-cell">
+        <div class="ap-done-cb ${ap.done?'checked':''}" onclick="toggleAPDone(${ap.id})" title="${ap.done?'Mark incomplete':'Mark complete'}"></div>
+      </td>
+      <td style="min-width:200px">
+        <input class="ap-cell-input ap-action-input ap-action-text" type="text" value="${escHtml(ap.action)}" placeholder="Describe action item…"
+          onchange="updateAPField(${ap.id},'action',this.value)"
+          onblur="updateAPField(${ap.id},'action',this.value)">
+      </td>
+      <td>
+        <input class="ap-cell-input" type="text" value="${escHtml(ap.assignedTo)}" placeholder="Name…"
+          onchange="updateAPField(${ap.id},'assignedTo',this.value)"
+          onblur="updateAPField(${ap.id},'assignedTo',this.value)">
+      </td>
+      <td>
+        <input class="ap-cell-date" type="date" value="${ap.dateAssigned||''}"
+          onchange="updateAPField(${ap.id},'dateAssigned',this.value)">
+      </td>
+      <td>
+        <input class="ap-cell-date" type="date" value="${ap.dateDue||''}"
+          onchange="updateAPField(${ap.id},'dateDue',this.value)">
+      </td>
+      <td style="text-align:center">
+        <select class="ap-cell-select" onchange="updateAPField(${ap.id},'status',this.value)" style="display:none" id="ap-st-sel-${ap.id}">
+          ${AP_STATUSES.map(s=>`<option ${ap.status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+        <span class="ap-status ${apStatusClass(ap.status)}" onclick="apToggleStSel(${ap.id})" style="cursor:pointer" title="Click to change">${ap.status||'—'}</span>
+      </td>
+      <td>
+        <div class="ap-pct-wrap">
+          <div class="ap-pct-bar"><div class="ap-pct-fill" style="width:${pct}%;background:${pct===100?'#2d9e2d':pct>=60?'var(--blue)':'#EF9F27'}"></div></div>
+          <input class="ap-pct-label" type="number" min="0" max="100" value="${pct}"
+            style="width:38px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--text-secondary);text-align:right;outline:none;cursor:pointer;font-family:inherit"
+            onchange="updateAPField(${ap.id},'pct',parseInt(this.value)||0)"
+            onblur="updateAPField(${ap.id},'pct',parseInt(this.value)||0)"><span style="font-size:11px;color:var(--text-tertiary)">%</span>
+        </div>
+      </td>
+      <td>
+        <input class="ap-cell-input" type="text" value="${escHtml(ap.notes)}" placeholder="Notes…"
+          onchange="updateAPField(${ap.id},'notes',this.value)"
+          onblur="updateAPField(${ap.id},'notes',this.value)">
+      </td>
+      <td style="text-align:center">
+        <button class="icon-btn del-btn" onclick="deleteAPRow(${ap.id})" title="Remove row" style="padding:3px 6px">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 1.5l8 8M9.5 1.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+  updateAPSummary();
+}
+
+function apToggleStSel(id){
+  const sel=document.getElementById('ap-st-sel-'+id);
+  const badge=sel.nextElementSibling;
+  sel.style.display='inline-block';
+  badge.style.display='none';
+  sel.focus();
+  sel.onblur=()=>{sel.style.display='none';badge.style.display='inline-block';};
+  sel.onchange=function(){updateAPField(id,'status',this.value);};
+}
+
+function updateAPSummary(){
+  const total=state.actionPlan.length;
+  const done=state.actionPlan.filter(a=>a.done||a.status==='Complete').length;
+  const inprog=state.actionPlan.filter(a=>a.status==='In Progress').length;
+  const overdue=state.actionPlan.filter(a=>a.status==='Overdue').length;
+  const avgPct=total?Math.round(state.actionPlan.reduce((s,a)=>s+(a.pct||0),0)/total):0;
+  document.getElementById('ap-sum-total').textContent=total;
+  document.getElementById('ap-sum-done').textContent=done;
+  document.getElementById('ap-sum-inprogress').textContent=inprog;
+  document.getElementById('ap-sum-overdue').textContent=overdue;
+  document.getElementById('ap-sum-avg').textContent=avgPct+'%';
+}
+
 // ===== INVENTORY =====
 function autoStatus(item){if(item.status==='Discontinued')return 'Discontinued';if(item.qty===0)return 'Out of Stock';if(item.qty<=(item.lowThreshold||5))return 'Low Stock';return 'Active';}
 function invStatusClass(s){if(s==='Active')return 'is-active badge';if(s==='Low Stock')return 'is-low badge';if(s==='Out of Stock')return 'is-out badge';return 'is-disc badge';}
@@ -769,14 +976,6 @@ function saveLicense(){const lic=state.licenses.find(l=>l.id===editingId);lic.na
 function deleteLicense(){state.licenses=state.licenses.filter(l=>l.id!==editingId);closeModal('modal-license');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();}
 function addLicense(){const name=document.getElementById('new-lic-name').value.trim(),date=document.getElementById('new-lic-date').value,category=document.getElementById('new-lic-cat').value;if(!name||!date){alert('Please fill in all fields.');return;}state.licenses.push({id:state.nextId++,name,expiry:date,category});document.getElementById('new-lic-name').value='';document.getElementById('new-lic-date').value='';closeForm('add-lic-form');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();}
 
-// ===== ACTION PLAN =====
-function renderActionPlan(){const body=document.getElementById('ap-body');if(!state.actionPlan.length){body.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">No action plan entries yet. Click "+ Add Entry" to get started.</td></tr>`;return;}body.innerHTML=state.actionPlan.map(ap=>{const start=ap.start?new Date(ap.start+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}):'—';const end=ap.end?new Date(ap.end+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}):'—';return `<tr><td><div style="font-weight:500">${escHtml(ap.client)}</div></td><td style="color:var(--text-secondary)">${escHtml(ap.project)}</td><td style="color:var(--text-secondary);font-size:12px">${escHtml(ap.remarks||'—')}</td><td style="color:var(--text-secondary)">${start}</td><td style="color:var(--text-secondary)">${end}</td><td><button class="icon-btn edit-btn" onclick="openEditAP(${ap.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></td></tr>`;}).join('');}
-function addActionPlanEntry(){const client=document.getElementById('new-ap-client').value.trim(),project=document.getElementById('new-ap-project').value.trim(),start=document.getElementById('new-ap-start').value,end=document.getElementById('new-ap-end').value,remarks=document.getElementById('new-ap-remarks').value.trim();if(!client||!project){alert('Please fill in Client and Project fields.');return;}state.actionPlan.push({id:state.nextId++,client,project,start,end,remarks});['new-ap-client','new-ap-project','new-ap-start','new-ap-end','new-ap-remarks'].forEach(id=>document.getElementById(id).value='');closeForm('add-ap-form');renderActionPlan();}
-let editingAPId=null;
-function openEditAP(id){const ap=state.actionPlan.find(a=>a.id===id);if(!ap)return;editingAPId=id;document.getElementById('edit-ap-client').value=ap.client;document.getElementById('edit-ap-project').value=ap.project;document.getElementById('edit-ap-start').value=ap.start||'';document.getElementById('edit-ap-end').value=ap.end||'';document.getElementById('edit-ap-remarks').value=ap.remarks||'';document.getElementById('modal-ap').classList.remove('hidden');}
-function saveAP(){const ap=state.actionPlan.find(a=>a.id===editingAPId);if(!ap)return;ap.client=document.getElementById('edit-ap-client').value.trim()||ap.client;ap.project=document.getElementById('edit-ap-project').value.trim()||ap.project;ap.start=document.getElementById('edit-ap-start').value;ap.end=document.getElementById('edit-ap-end').value;ap.remarks=document.getElementById('edit-ap-remarks').value.trim();document.getElementById('modal-ap').classList.add('hidden');editingAPId=null;renderActionPlan();}
-function deleteAP(){state.actionPlan=state.actionPlan.filter(a=>a.id!==editingAPId);document.getElementById('modal-ap').classList.add('hidden');editingAPId=null;renderActionPlan();}
-
 // ===== PROJECTS =====
 function getProject(id){return state.projects.find(p=>p.id===id);}
 function getAllRequirements(){const all=[];state.projects.forEach(p=>{p.technical.forEach(r=>all.push({...r,projectName:p.name,type:'technical'}));p.financial.forEach(r=>all.push({...r,projectName:p.name,type:'financial'}));(p.other||[]).forEach(r=>all.push({...r,projectName:p.name,type:'other'}));});return all;}
@@ -795,44 +994,11 @@ function switchReqTab(tab){state.activeReqTab=tab;document.querySelectorAll('.re
 function openNewProjectModal(){state.editingProjectId=null;document.getElementById('modal-project-title').textContent='New Project';document.getElementById('save-project-btn').textContent='Create Project';['proj-name-input','proj-client-input','proj-desc-input'].forEach(id=>document.getElementById(id).value='');openModal('modal-new-project');}
 function openEditProject(){const proj=getProject(state.activeProjectId);if(!proj)return;state.editingProjectId=proj.id;document.getElementById('modal-project-title').textContent='Edit Project';document.getElementById('save-project-btn').textContent='Save Changes';document.getElementById('proj-name-input').value=proj.name;document.getElementById('proj-client-input').value=proj.client;document.getElementById('proj-desc-input').value=proj.desc;openModal('modal-new-project');}
 function saveProject(){
-  const name=document.getElementById('proj-name-input').value.trim(),
-        client=document.getElementById('proj-client-input').value.trim(),
-        desc=document.getElementById('proj-desc-input').value.trim();
+  const name=document.getElementById('proj-name-input').value.trim(),client=document.getElementById('proj-client-input').value.trim(),desc=document.getElementById('proj-desc-input').value.trim();
   if(!name){alert('Please enter a project name.');return;}
-  if(state.editingProjectId){
-    const proj=getProject(state.editingProjectId);
-    proj.name=name;proj.client=client;proj.desc=desc;
-  } else {
-    const b=()=>state.nextId++;
-    const defaultTechnical=[
-      {id:b(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership)',category:'Legal',checked:false},
-      {id:b(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA',category:'Legal',checked:false},
-      {id:b(),label:"Certified Copy of valid Mayor's/Business Permit or Equivalent Document",category:'Permits',checked:false},
-      {id:b(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (BIR)',category:'Tax',checked:false},
-      {id:b(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024',category:'Finance',checked:false},
-      {id:b(),label:'Statement of all Ongoing Government and Private Contracts',category:'Legal',checked:false},
-      {id:b(),label:"Statement of Bidder's Single Largest Completed Contract (SLCC)",category:'Legal',checked:false},
-      {id:b(),label:'Original copy of Bid Security (Surety Bond or Notarized Bid Securing Declaration)',category:'Legal',checked:false},
-      {id:b(),label:'Conformity with Technical Specifications (delivery schedule, manpower, after-sales)',category:'Compliance',checked:false},
-      {id:b(),label:"Original duly signed Omnibus Sworn Statement (OSS) with Secretary's Certificate or Special Power of Attorney",category:'Legal',checked:false}
-    ];
-    const defaultFinancial=[
-      {id:b(),label:"Prospective Bidder's NFCC computation or Committed Line of Credit from Universal/Commercial Bank",category:'Finance',checked:false},
-      {id:b(),label:'Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},
-      {id:b(),label:'Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false}
-    ];
-    const defaultOther=[
-      {id:b(),label:'Duly signed Joint Venture Agreement (JVA) or notarized statements from potential JV partners (if applicable)',category:'Legal',checked:false},
-      {id:b(),label:'Certification from relevant government office for foreign bidders claiming reciprocal rights (if applicable)',category:'Compliance',checked:false},
-      {id:b(),label:'Certification from DTI if claiming preference as Domestic Bidder or Domestic Entity (if applicable)',category:'Compliance',checked:false}
-    ];
-    const newProj={id:state.nextId++,name,client,desc,technical:defaultTechnical,financial:defaultFinancial,other:defaultOther};
-    state.projects.push(newProj);
-    state.activeProjectId=newProj.id;
-  }
-  closeModal('modal-new-project');
-  renderProjectsSidebar();
-  renderProjectDetail();
+  if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}
+  else{const b=()=>state.nextId++;const defaultTechnical=[{id:b(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership)',category:'Legal',checked:false},{id:b(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA',category:'Legal',checked:false},{id:b(),label:"Certified Copy of valid Mayor's/Business Permit or Equivalent Document",category:'Permits',checked:false},{id:b(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (BIR)',category:'Tax',checked:false},{id:b(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024',category:'Finance',checked:false},{id:b(),label:'Statement of all Ongoing Government and Private Contracts',category:'Legal',checked:false},{id:b(),label:"Statement of Bidder's Single Largest Completed Contract (SLCC)",category:'Legal',checked:false},{id:b(),label:'Original copy of Bid Security (Surety Bond or Notarized Bid Securing Declaration)',category:'Legal',checked:false},{id:b(),label:'Conformity with Technical Specifications (delivery schedule, manpower, after-sales)',category:'Compliance',checked:false},{id:b(),label:"Original duly signed Omnibus Sworn Statement (OSS) with Secretary's Certificate or Special Power of Attorney",category:'Legal',checked:false}];const defaultFinancial=[{id:b(),label:"Prospective Bidder's NFCC computation or Committed Line of Credit from Universal/Commercial Bank",category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false}];const defaultOther=[{id:b(),label:'Duly signed Joint Venture Agreement (JVA) or notarized statements from potential JV partners (if applicable)',category:'Legal',checked:false},{id:b(),label:'Certification from relevant government office for foreign bidders claiming reciprocal rights (if applicable)',category:'Compliance',checked:false},{id:b(),label:'Certification from DTI if claiming preference as Domestic Bidder or Domestic Entity (if applicable)',category:'Compliance',checked:false}];const newProj={id:state.nextId++,name,client,desc,technical:defaultTechnical,financial:defaultFinancial,other:defaultOther};state.projects.push(newProj);state.activeProjectId=newProj.id;}
+  closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();
 }
 function promptDeleteProject(id){deletingProjectId=id;const proj=getProject(id);document.getElementById('modal-del-title').textContent='Remove Project?';document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${escHtml(proj.name)}</strong> and all its requirements. This cannot be undone.`;const btn=document.getElementById('modal-del-confirm-btn');btn.textContent='Delete Project';btn.onclick=()=>{state.projects=state.projects.filter(p=>p.id!==deletingProjectId);if(state.activeProjectId===deletingProjectId){state.activeProjectId=state.projects.length?state.projects[0].id:null;}deletingProjectId=null;closeModal('modal-confirm-delete');renderProjectsSidebar();renderProjectDetail();updateStats();};openModal('modal-confirm-delete');}
 function renderOverview(){const el=document.getElementById('overview-content');if(!state.projects.length){el.innerHTML='<div class="empty-state">No projects yet.</div>';return;}let html='';state.projects.forEach(proj=>{const{done,total}=getProjectProgress(proj),pct=total?Math.round(done/total*100):0;html+=`<div style="margin-bottom:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span><span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div><span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span></div>`;['technical','financial','other'].forEach(type=>{if(!(proj[type]||[]).length)return;html+=`<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p><div class="checklist-list" style="margin-bottom:10px">`;(proj[type]||[]).forEach(item=>{html+=`<div class="ci"><div class="ci-header"><div class="cb ${item.checked?'checked':''}"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span></div></div>`;});html+=`</div>`;});html+=`</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;});el.innerHTML=html;}
@@ -852,7 +1018,7 @@ function addTransaction(){const company=document.getElementById('new-tx-company'
 function openModal(id){document.getElementById(id).classList.remove('hidden');}
 function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;editingReqInfo=null;state.editingInvId=null;}
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});});
-const panelConfig={dashboard:{title:'Dashboard',primary:null,form:null},checklist:{title:'Document Checklist',primary:'+ New Project',form:null},licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},actionplan:{title:'Action Plan',primary:'+ Add Entry',form:'add-ap-form'},calendar:{title:'Calendar',primary:null,form:null},documents:{title:'Documents',primary:null,form:null},inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},pos:{title:'Point of Sale',primary:null,form:null},transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},schedule:{title:'Weekly Schedule',primary:null,form:null},admin:{title:'Admin Settings',primary:null,form:null}};
+const panelConfig={dashboard:{title:'Dashboard',primary:null,form:null},checklist:{title:'Document Checklist',primary:'+ New Project',form:null},licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},actionplan:{title:'Action Plan',primary:null,form:null},calendar:{title:'Calendar',primary:null,form:null},documents:{title:'Documents',primary:null,form:null},inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},pos:{title:'Point of Sale',primary:null,form:null},transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},schedule:{title:'Weekly Schedule',primary:null,form:null},admin:{title:'Admin Settings',primary:null,form:null}};
 let currentPanel='dashboard';
 function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}}
 function handlePrimaryAction(){if(currentPanel==='checklist'){openNewProjectModal();return;}const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
@@ -893,17 +1059,7 @@ function dateKey(d){return d.toISOString().slice(0,10);}
 function weekDateKey(mon,dayIdx){const d=new Date(mon);d.setDate(d.getDate()+dayIdx);return dateKey(d);}
 function sd(mid,mon,di,type,note){schedData[mid+'_'+weekDateKey(mon,di)]={type,note};}
 const seedWeek=getMonday(new Date(2025,1,23));
-sd(1,seedWeek,0,'office','Office');
-sd(2,seedWeek,0,'travel','Trip to Ilagan');sd(2,seedWeek,1,'field','Tumaini WO');
-sd(3,seedWeek,0,'field','Ramos WO');sd(3,seedWeek,1,'field','Ramos WO');sd(3,seedWeek,2,'field','Tumaini WO');sd(3,seedWeek,3,'field','Tumaini WO');sd(3,seedWeek,4,'field','Tumaini WO');
-sd(4,seedWeek,0,'travel','Trip to Isabela');sd(4,seedWeek,1,'field','Tumaini WO');sd(4,seedWeek,2,'field','Tumaini WO');sd(4,seedWeek,3,'field','Ramos WO');sd(4,seedWeek,4,'field','Ramos WO');
-sd(5,seedWeek,0,'office','Office');sd(5,seedWeek,1,'office','Office');sd(5,seedWeek,2,'field','Tumaini WO');sd(5,seedWeek,3,'field','Tumaini WO');sd(5,seedWeek,4,'field','Tumaini WO');
-sd(6,seedWeek,0,'field','Ramos WO');sd(6,seedWeek,1,'field','Ramos WO');
-sd(7,seedWeek,0,'office','Office');sd(7,seedWeek,1,'field','PRWO');sd(7,seedWeek,2,'field','Ramos WO');sd(7,seedWeek,3,'field','Ramos WO');
-sd(8,seedWeek,0,'field','Ramos WO');sd(8,seedWeek,1,'field','Ramos WO');sd(8,seedWeek,2,'field','PRWO');sd(8,seedWeek,3,'office','Office');sd(8,seedWeek,4,'field','Ramos WO');
-sd(9,seedWeek,0,'field','Ramos WO');sd(9,seedWeek,1,'field','Ramos WO');sd(9,seedWeek,2,'field','Ramos WO');sd(9,seedWeek,3,'field','Ramos WO');sd(9,seedWeek,4,'office','Office');
-sd(10,seedWeek,0,'office','Office');sd(10,seedWeek,1,'office','Office');sd(10,seedWeek,2,'field','Ramos WO');sd(10,seedWeek,3,'field','Ramos WO');sd(10,seedWeek,4,'field','Ramos WO');
-sd(11,seedWeek,0,'travel','Trip to Isabela');sd(11,seedWeek,1,'field','Tumaini WO');sd(11,seedWeek,2,'field','Tumaini WO');sd(11,seedWeek,3,'field','Tumaini WO');sd(11,seedWeek,4,'field','Tumaini WO');
+sd(1,seedWeek,0,'office','Office');sd(2,seedWeek,0,'travel','Trip to Ilagan');sd(2,seedWeek,1,'field','Tumaini WO');sd(3,seedWeek,0,'field','Ramos WO');sd(3,seedWeek,1,'field','Ramos WO');sd(3,seedWeek,2,'field','Tumaini WO');sd(3,seedWeek,3,'field','Tumaini WO');sd(3,seedWeek,4,'field','Tumaini WO');sd(4,seedWeek,0,'travel','Trip to Isabela');sd(4,seedWeek,1,'field','Tumaini WO');sd(4,seedWeek,2,'field','Tumaini WO');sd(4,seedWeek,3,'field','Ramos WO');sd(4,seedWeek,4,'field','Ramos WO');sd(5,seedWeek,0,'office','Office');sd(5,seedWeek,1,'office','Office');sd(5,seedWeek,2,'field','Tumaini WO');sd(5,seedWeek,3,'field','Tumaini WO');sd(5,seedWeek,4,'field','Tumaini WO');sd(6,seedWeek,0,'field','Ramos WO');sd(6,seedWeek,1,'field','Ramos WO');sd(7,seedWeek,0,'office','Office');sd(7,seedWeek,1,'field','PRWO');sd(7,seedWeek,2,'field','Ramos WO');sd(7,seedWeek,3,'field','Ramos WO');sd(8,seedWeek,0,'field','Ramos WO');sd(8,seedWeek,1,'field','Ramos WO');sd(8,seedWeek,2,'field','PRWO');sd(8,seedWeek,3,'office','Office');sd(8,seedWeek,4,'field','Ramos WO');sd(9,seedWeek,0,'field','Ramos WO');sd(9,seedWeek,1,'field','Ramos WO');sd(9,seedWeek,2,'field','Ramos WO');sd(9,seedWeek,3,'field','Ramos WO');sd(9,seedWeek,4,'office','Office');sd(10,seedWeek,0,'office','Office');sd(10,seedWeek,1,'office','Office');sd(10,seedWeek,2,'field','Ramos WO');sd(10,seedWeek,3,'field','Ramos WO');sd(10,seedWeek,4,'field','Ramos WO');sd(11,seedWeek,0,'travel','Trip to Isabela');sd(11,seedWeek,1,'field','Tumaini WO');sd(11,seedWeek,2,'field','Tumaini WO');sd(11,seedWeek,3,'field','Tumaini WO');sd(11,seedWeek,4,'field','Tumaini WO');
 let schedCurrentMonday=getMonday(new Date());
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
@@ -911,77 +1067,11 @@ function schedTypeTag(type,note){if(!type||type==='none')return '<span class="sc
 function renderSched(){const mon=schedCurrentMonday;const fri=new Date(mon);fri.setDate(fri.getDate()+4);const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();const today=new Date();today.setHours(0,0,0,0);let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const isToday=d.getTime()===today.getTime();thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${SCHED_DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;}thead+=`</tr>`;document.getElementById('sched-thead').innerHTML=thead;let tbody='';schedMembers.forEach(m=>{tbody+=`<tr><td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const key=m.id+'_'+dateKey(d);const entry=schedData[key];const isToday=d.getTime()===today.getTime();const dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}</div></td>`;}tbody+=`</tr>`;});document.getElementById('sched-tbody').innerHTML=tbody;}
 
 let _schedEditMid=null,_schedEditDate=null,_schedEditType=null;
-
-function openSchedEntry(mid,dateStr,name,dayLabel){
-  _schedEditMid=mid;
-  _schedEditDate=dateStr;
-  _schedEditType=null;
-  const entry=schedData[mid+'_'+dateStr];
-  document.getElementById('sched-entry-title').textContent=name;
-  document.getElementById('sched-entry-sub').textContent=dayLabel;
-  document.getElementById('sched-entry-note-input').value=entry?.note||'';
-  // Pre-fill range: From = clicked date, To = same day by default
-  document.getElementById('sched-range-from').value=dateStr;
-  document.getElementById('sched-range-to').value=dateStr;
-  document.querySelectorAll('.sched-type-opt').forEach(el=>{
-    el.classList.toggle('selected',entry&&el.dataset.type===entry.type);
-  });
-  if(entry)_schedEditType=entry.type;
-  document.getElementById('sched-entry-modal').classList.remove('hidden');
-}
-
-function selectSchedType(el){
-  document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));
-  el.classList.add('selected');
-  _schedEditType=el.dataset.type;
-}
-
-function saveSchedEntry(){
-  if(!_schedEditMid||!_schedEditDate)return;
-  const note=document.getElementById('sched-entry-note-input').value.trim();
-  const rangeFrom=document.getElementById('sched-range-from').value;
-  const rangeTo=document.getElementById('sched-range-to').value;
-  const type=_schedEditType;
-
-  // Determine which dates to fill
-  let datesToFill=[];
-  if(rangeFrom && rangeTo && rangeFrom<=rangeTo){
-    // Iterate every day in range, skip weekends (Sat=6, Sun=0)
-    const cur=new Date(rangeFrom+'T00:00:00');
-    const end=new Date(rangeTo+'T00:00:00');
-    while(cur<=end){
-      const dow=cur.getDay();
-      if(dow!==0&&dow!==6){ // skip Sun & Sat
-        datesToFill.push(dateKey(cur));
-      }
-      cur.setDate(cur.getDate()+1);
-    }
-  } else {
-    // Fallback: single day (the originally clicked date)
-    datesToFill=[_schedEditDate];
-  }
-
-  datesToFill.forEach(dk=>{
-    if(type&&type!=='none'){
-      schedData[_schedEditMid+'_'+dk]={type,note};
-    } else {
-      delete schedData[_schedEditMid+'_'+dk];
-    }
-  });
-
-  closeSchedModal();
-  renderSched();
-}
-
-function clearSchedEntry(){
-  // Clear only the originally clicked date (not the full range on a "clear" action)
-  if(_schedEditMid&&_schedEditDate)delete schedData[_schedEditMid+'_'+_schedEditDate];
-  closeSchedModal();
-  renderSched();
-}
-
+function openSchedEntry(mid,dateStr,name,dayLabel){_schedEditMid=mid;_schedEditDate=dateStr;_schedEditType=null;const entry=schedData[mid+'_'+dateStr];document.getElementById('sched-entry-title').textContent=name;document.getElementById('sched-entry-sub').textContent=dayLabel;document.getElementById('sched-entry-note-input').value=entry?.note||'';document.getElementById('sched-range-from').value=dateStr;document.getElementById('sched-range-to').value=dateStr;document.querySelectorAll('.sched-type-opt').forEach(el=>{el.classList.toggle('selected',entry&&el.dataset.type===entry.type);});if(entry)_schedEditType=entry.type;document.getElementById('sched-entry-modal').classList.remove('hidden');}
+function selectSchedType(el){document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');_schedEditType=el.dataset.type;}
+function saveSchedEntry(){if(!_schedEditMid||!_schedEditDate)return;const note=document.getElementById('sched-entry-note-input').value.trim();const rangeFrom=document.getElementById('sched-range-from').value;const rangeTo=document.getElementById('sched-range-to').value;const type=_schedEditType;let datesToFill=[];if(rangeFrom&&rangeTo&&rangeFrom<=rangeTo){const cur=new Date(rangeFrom+'T00:00:00');const end=new Date(rangeTo+'T00:00:00');while(cur<=end){const dow=cur.getDay();if(dow!==0&&dow!==6){datesToFill.push(dateKey(cur));}cur.setDate(cur.getDate()+1);}}else{datesToFill=[_schedEditDate];}datesToFill.forEach(dk=>{if(type&&type!=='none'){schedData[_schedEditMid+'_'+dk]={type,note};}else{delete schedData[_schedEditMid+'_'+dk];}});closeSchedModal();renderSched();}
+function clearSchedEntry(){if(_schedEditMid&&_schedEditDate)delete schedData[_schedEditMid+'_'+_schedEditDate];closeSchedModal();renderSched();}
 function closeSchedModal(){document.getElementById('sched-entry-modal').classList.add('hidden');}
-
 function openSchedMemberModal(){document.getElementById('sched-new-name').value='';document.getElementById('sched-new-code').value='';document.getElementById('sched-member-modal').classList.remove('hidden');}
 function addSchedMember(){const name=document.getElementById('sched-new-name').value.trim();if(!name)return;const code=document.getElementById('sched-new-code').value.trim().toUpperCase();const newId=Math.max(...schedMembers.map(m=>m.id),0)+1;schedMembers.push({id:newId,name,code});document.getElementById('sched-member-modal').classList.add('hidden');renderSched();}
 
