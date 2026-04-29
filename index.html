@@ -879,6 +879,19 @@ sd(11,seedWeek,0,'travel','Trip to Isabela');sd(11,seedWeek,1,'field','Tumaini W
 let schedCurrentMonday=getMonday(new Date());
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
+  function schedTypeTag(type, note) {
+  if(!type || type === 'none') return '<span class="sched-tag sched-tag-other">—</span>';
+  const map = {
+    office:  {cls:'sched-tag-office',  label:'🏢 Office'},
+    field:   {cls:'sched-tag-field',   label:'🔧 WO'},
+    travel:  {cls:'sched-tag-travel',  label:'🚗 Travel'},
+    wfh:     {cls:'sched-tag-wfh',     label:'🏠 WFH'},
+    leave:   {cls:'sched-tag-leave',   label:'🌴 Leave'}
+  };
+  const t = map[type] || {cls:'sched-tag-other', label: type};
+  return '<span class="sched-tag ' + t.cls + '">' + t.label + '</span>' +
+         (note ? '<div class="sched-entry-note">' + escHtml(note) + '</div>' : '');
+}
 function renderSched(){const mon=schedCurrentMonday;const fri=new Date(mon);fri.setDate(fri.getDate()+4);const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();const today=new Date();today.setHours(0,0,0,0);let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const isToday=d.getTime()===today.getTime();thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${SCHED_DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;}thead+=`</tr>`;document.getElementById('sched-thead').innerHTML=thead;let tbody='';schedMembers.forEach(m=>{tbody+=`<tr><td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const key=m.id+'_'+dateKey(d);const entry=schedData[key];const isToday=d.getTime()===today.getTime();const dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}</div></td>`;}tbody+=`</tr>`;});document.getElementById('sched-tbody').innerHTML=tbody;}
 let _schedEditMid=null,_schedEditDate=null,_schedEditType=null;
 function openSchedEntry(mid,dateStr,name,dayLabel){_schedEditMid=mid;_schedEditDate=dateStr;_schedEditType=null;const entry=schedData[mid+'_'+dateStr];document.getElementById('sched-entry-title').textContent=name;document.getElementById('sched-entry-sub').textContent=dayLabel;document.getElementById('sched-entry-note-input').value=entry?.note||'';document.querySelectorAll('.sched-type-opt').forEach(el=>{el.classList.toggle('selected',entry&&el.dataset.type===entry.type);});if(entry)_schedEditType=entry.type;document.getElementById('sched-entry-modal').classList.remove('hidden');}
