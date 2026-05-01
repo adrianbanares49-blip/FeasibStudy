@@ -118,8 +118,6 @@ nav{padding:8px 0;flex:1}
 .dash-scal-day.has-ev::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#EF9F27;margin:0 auto}
 .dash-scal-day.has-ev-red::after{content:'';display:block;width:4px;height:4px;border-radius:50%;background:#E24B4A;margin:0 auto}
 .dash-scal-day.today-d.has-ev::after,.dash-scal-day.today-d.has-ev-red::after{background:#fff}
-.dash-scal-day.selected-d{outline:2px solid var(--blue);outline-offset:-1px;border-radius:4px}
-.dash-scal-day.today-d.selected-d{outline:2px solid rgba(255,255,255,.6)}
 .dash-event-divider{border-top:1px solid var(--border);margin:0 12px}
 .dash-upcoming{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
 .dash-event-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
@@ -130,10 +128,6 @@ nav{padding:8px 0;flex:1}
 .dash-event-label{font-size:13px;font-weight:500;color:var(--text-primary)}
 .dash-event-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px}
 .dash-empty-events{text-align:center;padding:16px;color:var(--text-tertiary);font-size:13px}
-.dash-selected-events{padding:10px 14px 12px}
-.dash-sel-date-lbl{font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:8px}
-.dash-sel-event-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
-.dash-sel-event-row:last-child{border-bottom:none}
 .cal-panel-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
 .full-cal-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
 .full-cal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
@@ -225,6 +219,193 @@ nav{padding:8px 0;flex:1}
 .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
 .tog{width:38px;height:22px;border-radius:11px;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s}
 .tog-t{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+
+/* ===== DOCUMENTS — ENHANCED ===== */
+
+/* Global search bar (above the docs layout) */
+.docs-global-search-wrap{
+  position:relative;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.docs-global-search-input{
+  flex:1;
+  padding:10px 14px 10px 38px;
+  border:1.5px solid var(--border-strong);
+  border-radius:var(--rl);
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  font-size:13px;
+  font-family:inherit;
+  outline:none;
+  transition:border-color .15s, box-shadow .15s;
+}
+.docs-global-search-input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(24,95,165,0.12);
+}
+.docs-global-search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  color:var(--text-tertiary);
+}
+.docs-global-search-clear{
+  padding:8px 14px;
+  border-radius:var(--r);
+  border:1px solid var(--border-strong);
+  background:var(--bg-primary);
+  color:var(--text-secondary);
+  font-size:12px;
+  cursor:pointer;
+  font-family:inherit;
+  white-space:nowrap;
+  display:none;
+}
+.docs-global-search-clear:hover{background:var(--bg-secondary);}
+.docs-global-search-clear.visible{display:block;}
+
+/* Global search results panel */
+.docs-global-results{
+  display:none;
+  flex-direction:column;
+  flex:1;
+  background:var(--bg-primary);
+  border:1px solid var(--border);
+  border-radius:var(--rl);
+  overflow:hidden;
+  min-height:300px;
+}
+.docs-global-results.visible{display:flex;}
+.docs-global-results-header{
+  padding:12px 18px;
+  border-bottom:1px solid var(--border);
+  background:var(--blue-light);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.docs-global-results-info{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:var(--blue);
+}
+.docs-global-results-info strong{font-weight:700;}
+.docs-global-results-sort{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:var(--text-secondary);
+}
+.docs-global-results-sort select{
+  padding:4px 8px;
+  border:1px solid var(--border-strong);
+  border-radius:6px;
+  font-size:12px;
+  font-family:inherit;
+  outline:none;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  cursor:pointer;
+}
+.docs-global-results-sort select:focus{border-color:var(--blue);}
+.docs-global-results-body{padding:16px 18px;overflow-y:auto;flex:1;}
+.docs-global-folder-group{margin-bottom:20px;}
+.docs-global-folder-group:last-child{margin-bottom:0;}
+.docs-global-folder-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--text-tertiary);
+  margin-bottom:10px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.docs-global-folder-label svg{color:var(--blue);}
+.docs-global-folder-label .folder-doc-count{
+  margin-left:auto;
+  font-size:10px;
+  font-weight:600;
+  background:var(--blue-light);
+  color:var(--blue);
+  padding:2px 7px;
+  border-radius:8px;
+}
+.docs-global-results-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:10px;
+}
+.docs-global-flat-list{display:flex;flex-direction:column;gap:6px;}
+.docs-flat-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:9px 12px;
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  cursor:pointer;
+  transition:all .14s;
+}
+.docs-flat-row:hover{border-color:#B5D4F4;background:var(--blue-light);}
+.docs-flat-row-icon{font-size:22px;flex-shrink:0;}
+.docs-flat-row-info{flex:1;min-width:0;}
+.docs-flat-row-name{font-size:13px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.docs-flat-row-name mark{background:#FFF176;color:inherit;border-radius:2px;padding:0 1px;}
+.docs-flat-row-meta{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.docs-flat-row-folder{
+  font-size:11px;
+  font-weight:500;
+  color:var(--blue);
+  background:var(--blue-light);
+  padding:2px 8px;
+  border-radius:6px;
+  flex-shrink:0;
+  white-space:nowrap;
+}
+.docs-flat-row-del{
+  padding:4px 6px;
+  border-radius:5px;
+  border:1px solid transparent;
+  background:transparent;
+  cursor:pointer;
+  color:var(--text-tertiary);
+  font-size:11px;
+  flex-shrink:0;
+  transition:all .12s;
+}
+.docs-flat-row-del:hover{color:var(--red);border-color:#F09595;background:var(--red-light);}
+.docs-no-results{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:48px 20px;
+  color:var(--text-tertiary);
+  text-align:center;
+}
+.docs-no-results-icon{font-size:36px;margin-bottom:12px;opacity:.35;}
+.docs-no-results-text{font-size:13px;}
+.docs-no-results-sub{font-size:12px;margin-top:6px;color:var(--text-tertiary);}
+
+/* highlight matched text */
+mark.search-hl{background:#FFF59D;color:var(--text-primary);border-radius:2px;padding:0 2px;}
+
+/* Layout wrapper that houses sidebar + main */
 .docs-layout{display:flex;gap:0;min-height:500px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
 .docs-sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--border);background:var(--bg-secondary);display:flex;flex-direction:column}
 .docs-sidebar-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
@@ -243,10 +424,14 @@ nav{padding:8px 0;flex:1}
 .folder-item:hover .folder-del{opacity:1}
 .folder-del:hover{background:var(--red-light);color:var(--red)}
 .docs-main{flex:1;display:flex;flex-direction:column;min-width:0}
-.docs-main-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.docs-main-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:8px}
 .docs-folder-title{font-size:14px;font-weight:500;color:var(--text-primary);display:flex;align-items:center;gap:8px}
 .docs-folder-title svg{color:var(--blue)}
-.docs-actions{display:flex;gap:8px}
+.docs-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.docs-search-input{padding:6px 10px 6px 30px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);width:180px;position:relative}
+.docs-search-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
+.docs-search-wrap{position:relative;display:flex;align-items:center}
+.docs-search-wrap svg{position:absolute;left:8px;pointer-events:none;color:var(--text-tertiary)}
 .docs-body{flex:1;padding:16px 18px;overflow-y:auto}
 .docs-empty{text-align:center;padding:48px 20px}
 .docs-empty-icon{font-size:40px;margin-bottom:12px;opacity:.3}
@@ -260,6 +445,7 @@ nav{padding:8px 0;flex:1}
 .doc-card-del{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);cursor:pointer;border:none;background:transparent;opacity:0}
 .doc-card:hover .doc-card-del{opacity:1}
 .doc-card-del:hover{background:var(--red-light);color:var(--red)}
+.docs-search-results-bar{display:flex;align-items:center;gap:8px;padding:8px 18px;background:var(--blue-light);border-bottom:1px solid #B5D4F4;font-size:12px;color:var(--blue)}
 .docs-no-folder{display:flex;align-items:center;justify-content:center;flex:1;color:var(--text-tertiary);font-size:13px;flex-direction:column;gap:8px;padding:40px}
 .upload-zone{border:2px dashed var(--border-strong);border-radius:var(--rl);padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:var(--blue-light)}
@@ -386,59 +572,48 @@ nav{padding:8px 0;flex:1}
 .sched-range-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
 .sched-range-hint{font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.4}
 .sched-range-hint strong{color:var(--amber);font-weight:600}
-
-/* ===== ACTION PLAN — ACTION ITEM TEMPLATE ===== */
-.ap-template-header{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:16px}
-.ap-template-title{font-size:17px;font-weight:800;color:#1a2332;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #1a2332}
-.ap-template-meta{display:grid;grid-template-columns:1fr 260px;gap:16px}
-.ap-meta-group{display:flex;flex-direction:column;gap:4px}
-.ap-meta-label{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.07em}
-.ap-meta-input{padding:8px 12px;border:1px solid var(--border-strong);border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:var(--bg-secondary);color:var(--text-primary);width:100%}
-.ap-meta-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+/* ===== ACTION PLAN ===== */
 .ap-table-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:auto}
-.ap-table{width:100%;border-collapse:collapse;font-size:13px;min-width:800px}
+.ap-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
 .ap-table thead tr{background:#037103}
 .ap-table th{text-align:center;padding:11px 10px;font-size:10px;font-weight:700;color:#fff;border-right:1px solid rgba(255,255,255,.12);border-bottom:2px solid rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .ap-table th:last-child{border-right:none}
-.ap-table td{padding:8px 10px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;color:var(--text-primary);font-size:13px}
+.ap-table td{padding:6px 8px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:top;color:var(--text-primary);font-size:13px}
 .ap-table td:last-child{border-right:none}
 .ap-table tr:last-child td{border-bottom:none}
 .ap-table tbody tr:hover td{background:var(--bg-secondary)}
 .ap-table tbody tr.ap-row-done td{background:#f0faf0}
-.ap-table tbody tr.ap-row-done td .ap-action-text{text-decoration:line-through;color:var(--text-tertiary)}
-/* Done checkbox */
-.ap-done-cell{text-align:center;width:52px}
+.ap-done-cell{text-align:center;width:52px;vertical-align:middle!important}
 .ap-done-cb{width:22px;height:22px;border:2px solid #ccc;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;background:#fff;position:relative;flex-shrink:0}
 .ap-done-cb.checked{background:#2d9e2d;border-color:#2d9e2d}
 .ap-done-cb.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:900;line-height:1;position:absolute}
-
-/* Status badges */
 .ap-status{display:inline-block;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;min-width:84px;text-align:center}
 .ap-st-notstarted{background:#e5e7eb;color:#4b5563}
 .ap-st-inprogress{background:#dcfce7;color:#166534}
 .ap-st-complete{background:#2d9e2d;color:#fff}
 .ap-st-onhold{background:#fef9c3;color:#713f12}
 .ap-st-overdue{background:var(--red-light);color:var(--red)}
-/* % complete */
 .ap-pct-wrap{display:flex;align-items:center;gap:6px;min-width:80px}
 .ap-pct-bar{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden}
 .ap-pct-fill{height:100%;border-radius:3px;background:var(--blue);transition:width .3s}
-.ap-pct-label{font-size:11px;font-weight:700;color:var(--text-secondary);width:32px;text-align:right;flex-shrink:0}
-/* Inline editable inputs inside table cells */
-.ap-cell-input{width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--text-primary);outline:none;padding:1px 0}
+.ap-action-textarea{width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--text-primary);outline:none;resize:none;overflow:hidden;min-height:36px;line-height:1.5;padding:2px 0;display:block;white-space:pre-wrap;word-break:break-word}
+.ap-action-textarea:focus{outline:1px solid var(--blue);border-radius:3px;padding:4px 6px;background:var(--bg-primary)}
+tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text-tertiary)}
+.ap-cell-input{width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--text-primary);outline:none;padding:2px 0}
 .ap-cell-input:focus{outline:1px solid var(--blue);border-radius:3px;padding:2px 6px;background:var(--bg-primary)}
-.ap-cell-select{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-primary);outline:none;cursor:pointer;padding:1px 0}
+.ap-cell-select{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-primary);outline:none;cursor:pointer;padding:2px 0}
 .ap-cell-select:focus{outline:1px solid var(--blue);border-radius:3px;background:var(--bg-primary);padding:2px 4px}
-.ap-cell-date{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-secondary);outline:none;cursor:pointer;padding:1px 0}
+.ap-cell-date{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--text-secondary);outline:none;cursor:pointer;padding:2px 0}
 .ap-cell-date:focus{outline:1px solid var(--blue);border-radius:3px;background:var(--bg-primary);padding:2px 6px}
-/* Add row */
+.ap-assigned-select{width:100%;border:1px solid var(--border);border-radius:4px;background:var(--bg-primary);color:var(--text-primary);font-size:12px;font-family:inherit;outline:none;cursor:pointer;padding:4px 6px}
+.ap-assigned-select:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
 .ap-add-trigger{display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--blue);border-top:1px dashed var(--border);background:var(--bg-secondary);border-radius:0 0 var(--rl) var(--rl);transition:background .15s}
 .ap-add-trigger:hover{background:var(--blue-light)}
-.ap-add-trigger svg{flex-shrink:0}
-/* Summary footer */
 .ap-summary-bar{display:flex;gap:20px;padding:10px 16px;background:var(--bg-secondary);border-top:1px solid var(--border);border-radius:0 0 var(--rl) var(--rl);flex-wrap:wrap}
 .ap-sum-item{font-size:12px;color:var(--text-secondary)}
 .ap-sum-item strong{color:var(--text-primary);font-weight:600}
+.ap-action-col{min-width:240px;white-space:normal;vertical-align:top}
+.ap-compact-col{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -467,10 +642,7 @@ nav{padding:8px 0;flex:1}
       <div style="display:flex;align-items:center;gap:10px">
         <div class="notif-bell-wrap" id="notif-bell-wrap">
           <button class="notif-bell-btn" id="notif-bell-btn" onclick="toggleNotifDropdown(event)" title="Notifications">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1.5A4.5 4.5 0 003.5 6v2.5L2 10.5h12L12.5 8.5V6A4.5 4.5 0 008 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-              <path d="M6.5 11.5a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5A4.5 4.5 0 003.5 6v2.5L2 10.5h12L12.5 8.5V6A4.5 4.5 0 008 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M6.5 11.5a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
             <span class="notif-badge" id="notif-badge"></span>
           </button>
           <div class="notif-dropdown" id="notif-dropdown">
@@ -548,32 +720,27 @@ nav{padding:8px 0;flex:1}
         <div id="expiry-list"></div>
       </div>
 
-      <!-- =================== ACTION PLAN =================== -->
+      <!-- ACTION PLAN -->
       <div class="panel" id="panel-actionplan">
-        <!-- Action Item Table -->
         <div class="ap-table-wrap">
           <table class="ap-table">
-            <thead>
-              <tr>
-                <th style="width:52px">Done</th>
-                <th style="min-width:200px;text-align:left">Action</th>
-                <th style="width:130px">Assigned To</th>
-                <th style="width:115px">Date Assigned</th>
-                <th style="width:115px">Date Due</th>
-                <th style="width:110px">Status</th>
-                <th style="width:110px">% Complete</th>
-                <th style="min-width:140px;text-align:left">Notes</th>
-                <th style="width:50px"></th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th style="width:52px">Done</th>
+              <th style="min-width:260px;text-align:left">Action</th>
+              <th style="width:160px">Assigned To</th>
+              <th style="width:115px">Date Assigned</th>
+              <th style="width:115px">Date Due</th>
+              <th style="width:110px">Status</th>
+              <th style="width:110px">% Complete</th>
+              <th style="min-width:140px;text-align:left">Notes</th>
+              <th style="width:50px"></th>
+            </tr></thead>
             <tbody id="ap-body"></tbody>
           </table>
-          <!-- Add row trigger -->
           <div class="ap-add-trigger" onclick="addAPRow()">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#185FA5" stroke-width="1.4"/><path d="M7 4v6M4 7h6" stroke="#185FA5" stroke-width="1.4" stroke-linecap="round"/></svg>
             Add action item
           </div>
-          <!-- Summary footer -->
           <div class="ap-summary-bar" id="ap-summary-bar">
             <span class="ap-sum-item">Total: <strong id="ap-sum-total">0</strong></span>
             <span class="ap-sum-item">Done: <strong id="ap-sum-done" style="color:var(--green)">0</strong></span>
@@ -595,15 +762,74 @@ nav{padding:8px 0;flex:1}
         </div>
       </div>
 
-      <!-- Documents -->
+      <!-- Documents — ENHANCED SEARCH -->
       <div class="panel" id="panel-documents">
-        <div class="docs-layout">
-          <div class="docs-sidebar"><div class="docs-sidebar-header"><span class="docs-sidebar-title">Folders</span><button class="folder-add-btn" onclick="startAddFolder()" title="New folder">+</button></div><div class="folder-list" id="folder-list"></div></div>
+        <!-- ① Global search bar — always visible at top -->
+        <div class="docs-global-search-wrap">
+          <svg class="docs-global-search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <input
+            class="docs-global-search-input"
+            type="text"
+            id="docs-global-search"
+            placeholder="Search all documents across every folder…"
+            oninput="handleGlobalSearch()"
+            autocomplete="off"
+          >
+          <button class="docs-global-search-clear" id="docs-global-clear" onclick="clearGlobalSearch()">✕ Clear</button>
+        </div>
+
+        <!-- ② Global search results (shown while searching) -->
+        <div class="docs-global-results" id="docs-global-results">
+          <div class="docs-global-results-header">
+            <div class="docs-global-results-info" id="docs-global-results-info">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span></span>
+            </div>
+            <div class="docs-global-results-sort">
+              <span>Sort by:</span>
+              <select id="docs-global-sort" onchange="handleGlobalSearch()">
+                <option value="name">Name</option>
+                <option value="folder">Folder</option>
+                <option value="date">Date</option>
+              </select>
+              <span style="margin-left:6px">View:</span>
+              <select id="docs-global-view" onchange="handleGlobalSearch()">
+                <option value="list">List</option>
+                <option value="grid">Grid (by folder)</option>
+              </select>
+            </div>
+          </div>
+          <div class="docs-global-results-body" id="docs-global-results-body"></div>
+        </div>
+
+        <!-- ③ Normal docs layout (hidden while searching globally) -->
+        <div class="docs-layout" id="docs-layout-normal">
+          <div class="docs-sidebar">
+            <div class="docs-sidebar-header"><span class="docs-sidebar-title">Folders</span><button class="folder-add-btn" onclick="startAddFolder()" title="New folder">+</button></div>
+            <div class="folder-list" id="folder-list"></div>
+          </div>
           <div class="docs-main">
             <div id="docs-no-folder-msg" class="docs-no-folder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="opacity:.25"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span style="color:var(--text-tertiary);font-size:13px">Select or create a folder to get started</span></div>
             <div id="docs-folder-view" style="display:none;flex-direction:column;flex:1">
-              <div class="docs-main-header"><div class="docs-folder-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="docs-active-folder-name"></span></div><div class="docs-actions"><label class="btn btnsm" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;vertical-align:-1px"><path d="M8 2v8M5 7l3 3 3-3M2 12v1.5A.5.5 0 002.5 14h11a.5.5 0 00.5-.5V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload File<input type="file" id="file-input-hidden" multiple style="display:none" onchange="handleFileUpload(this)"></label><button class="btn btnsm btndanger" onclick="promptDeleteFolder()">Delete Folder</button></div></div>
-              <div class="docs-body"><div class="upload-zone" id="upload-drop-zone" onclick="document.getElementById('file-input-hidden').click()"><div class="upload-zone-icon">📎</div><div class="upload-zone-text">Drop files here or click to upload</div><div class="upload-zone-sub">Supports any file type</div></div><div id="docs-grid-container"><div class="docs-empty" id="docs-empty-msg"><div class="docs-empty-icon">📄</div><div class="docs-empty-text">No documents yet. Upload files to get started.</div></div><div class="docs-grid" id="docs-grid" style="display:none"></div></div></div>
+              <div class="docs-main-header">
+                <div class="docs-folder-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="docs-active-folder-name"></span></div>
+                <div class="docs-actions">
+                  <div class="docs-search-wrap">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <input class="docs-search-input" type="text" id="docs-search" placeholder="Filter in folder…" oninput="renderDocsView()">
+                  </div>
+                  <label class="btn btnsm" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;vertical-align:-1px"><path d="M8 2v8M5 7l3 3 3-3M2 12v1.5A.5.5 0 002.5 14h11a.5.5 0 00.5-.5V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload File<input type="file" id="file-input-hidden" multiple style="display:none" onchange="handleFileUpload(this)"></label>
+                  <button class="btn btnsm btndanger" onclick="promptDeleteFolder()">Delete Folder</button>
+                </div>
+              </div>
+              <div id="docs-search-results-bar" class="docs-search-results-bar" style="display:none"></div>
+              <div class="docs-body">
+                <div class="upload-zone" id="upload-drop-zone" onclick="document.getElementById('file-input-hidden').click()"><div class="upload-zone-icon">📎</div><div class="upload-zone-text">Drop files here or click to upload</div><div class="upload-zone-sub">Supports any file type</div></div>
+                <div id="docs-grid-container"><div class="docs-empty" id="docs-empty-msg"><div class="docs-empty-icon">📄</div><div class="docs-empty-text">No documents yet. Upload files to get started.</div></div><div class="docs-grid" id="docs-grid" style="display:none"></div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -673,9 +899,9 @@ nav{padding:8px 0;flex:1}
         <p class="section-title">System Overview</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px"><div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Checklist Progress</div><div class="pb-wrap"><div class="pb-fill" id="progress-bar" style="width:0%;background:var(--blue)"></div></div><div style="font-size:12px;color:var(--text-tertiary)" id="progress-label">0 of 0 items completed</div></div><div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div><div class="pb-wrap"><div class="pb-fill" style="width:84%;background:#639922"></div></div><div style="font-size:12px;color:var(--text-tertiary)">&#8369;42,500 of &#8369;50,500 collected (84%)</div></div></div>
         <p class="section-title">User Management</p>
-        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Dolly Soriano</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting and HR Manager</div></div><span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span></div>
-        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Beng Cruz</div><div style="font-size:12px;color:var(--text-tertiary)">Logistics Manager</div></div><span class="badge b-paid">Admin</span></div>
-        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">AD</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Jennifer Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting coordinator</div></div><span class="badge b-paid">Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">DS</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Dolly Soriano</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting and HR Manager</div></div><span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">BC</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Beng Cruz</div><div style="font-size:12px;color:var(--text-tertiary)">Logistics Manager</div></div><span class="badge b-paid">Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">JR</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Jennifer Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting coordinator</div></div><span class="badge b-paid">Admin</span></div>
         <p class="section-title" style="margin-top:20px">Notification Settings</p>
         <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:13px;font-weight:500">License expiry alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify 30, 14, and 7 days before expiry</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
         <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:13px;font-weight:500">Payment overdue alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify when payment passes due date</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
@@ -748,6 +974,12 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 const MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const DAYS_SHORT=['Su','Mo','Tu','We','Th','Fr','Sa'];
 
+const CLIENT_OPTIONS=[
+  'Cabanatuan City WD','Roxas (Isabela) WD','Goodhands Garcia Hospital','Ramos WD','Talavera WD',
+  'Cauayan City WD','Bongabon WD','Palayan City WD','Concepcion WD','Santa Rosa WD',
+  'Office-VFD','Moncada WD','Metro-Tuguegarao WD','Pontevedra WD'
+];
+
 const state={
   projects:[
     {id:1,name:'Business Permit Renewal 2026',client:'Santos Enterprises',desc:"Annual renewal of city mayor's permit and related documents",technical:[{id:101,label:'Business Permit',category:'Legal',checked:true},{id:102,label:'Fire Safety Inspection Certificate',category:'Safety',checked:false},{id:103,label:'Zoning Clearance',category:'Legal',checked:true}],financial:[{id:104,label:'BIR Certificate of Registration',category:'Tax',checked:true},{id:105,label:'Audited Financial Statements',category:'Finance',checked:false}],other:[{id:106,label:'Barangay Clearance',category:'Administrative',checked:false}]},
@@ -774,166 +1006,187 @@ const state={
   ],
   transactions:[{id:21,date:'Apr 24, 2026',company:'Santos Enterprises',client:'Juan Santos',desc:'Permit processing fee',amount:12500,status:'Paid'},{id:22,date:'Apr 22, 2026',company:'Cruz & Co.',client:'Maria Cruz',desc:'Document notarization',amount:8000,status:'Paid'},{id:23,date:'Apr 20, 2026',company:'Lim Group',client:'Roberto Lim',desc:'Business registration fee',amount:15000,status:'Paid'},{id:24,date:'Apr 18, 2026',company:'Dela Cruz Corp.',client:'Ana Dela Cruz',desc:'License renewal fee',amount:7000,status:'Paid'},{id:25,date:'Apr 15, 2026',company:'Reyes Trading',client:'Jose Reyes',desc:'Permit processing fee',amount:5000,status:'Pending'},{id:26,date:'Apr 10, 2026',company:'Go Solutions',client:'Linda Go',desc:'Consultation fee',amount:3000,status:'Pending'},{id:27,date:'Apr 5, 2026',company:'Tan Industries',client:'Carlos Tan',desc:'Document filing fee',amount:4500,status:'Overdue'}],
   inventory:[{id:'INV-001',name:'Chlorine Dioxide Powder',status:'Active',qty:50,cost:300,lowThreshold:10},{id:'INV-002',name:'Chlorine Granules',status:'Active',qty:80,cost:150,lowThreshold:15},{id:'INV-003',name:'Sequestration Additives',status:'Active',qty:20,cost:1800,lowThreshold:5},{id:'INV-004',name:'Poly Aluminum Chloride (PAC)',status:'Active',qty:15,cost:2500,lowThreshold:5}],
-  actionPlan:[],
-  sales:[],
-  posCart:[],
-  calendarEvents:{},
+  actionPlan:[
+    {id:5001,done:false,action:'Delivery of 15 Pail Seaquest',assignedTo:'Cabanatuan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:''},
+    {id:5002,done:false,action:'Testing of 15 Hp KNB Pump & Rotex Motor',assignedTo:'Roxas (Isabela) WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'To prepare next week'},
+    {id:5003,done:true,action:'Demo New Colorimeter',assignedTo:'Office-VFD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5004,done:false,action:'Defective Dosing Pump, Request for Assessment for the New Project',assignedTo:'Goodhands Garcia Hospital',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'To sched next week'},
+    {id:5005,done:false,action:'Installation of Solar',assignedTo:'Ramos WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:50,notes:'On going'},
+    {id:5006,done:false,action:'Assy. Sand Separator',assignedTo:'Talavera WD',dateAssigned:'2026-04-25',dateDue:'',status:'On Hold',pct:0,notes:'Waiting'},
+    {id:5007,done:false,action:"Delivery Pump and Motor 10 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:40,notes:'On going'},
+    {id:5008,done:false,action:"Delivery Pump and Motor 15 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:40,notes:'On going'},
+    {id:5009,done:false,action:'San Lazaro Project',assignedTo:'Bongabon WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:60,notes:'On going'},
+    {id:5010,done:false,action:'Delivery of GenSet Accessories',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:30,notes:'On going'},
+    {id:5011,done:false,action:'Re-wiring of Booster Control - Office PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
+    {id:5012,done:false,action:'Additional Repair of Genset for Manacnac PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'On Hold',pct:0,notes:'Waiting for Quotation Approval'},
+    {id:5013,done:false,action:'Installation 30 Hp Sub. Pump & Motor at Singalat PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
+    {id:5014,done:true,action:'For Replacement Backwash Controller and Air Filter of GenSet - Cordero PS Filtration',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5015,done:true,action:'Installation-Cordero Dam-Water Treatment - Busted Hose',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5016,done:true,action:'Service SCADA',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
+    {id:5017,done:true,action:'Requesting for VFD Training',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
+  ],
+  sales:[],posCart:[],calendarEvents:{},
   folders:[{id:'f1',name:'Business Permits',docs:[{id:'d1',name:'Mayors Permit 2025.pdf',type:'pdf',size:'1.2 MB',date:'Apr 10, 2026'},{id:'d2',name:'Zoning Clearance.pdf',type:'pdf',size:'845 KB',date:'Apr 11, 2026'}]},{id:'f2',name:'BIR Documents',docs:[{id:'d3',name:'BIR COR.pdf',type:'pdf',size:'612 KB',date:'Apr 12, 2026'}]},{id:'f3',name:'HR Compliance',docs:[]}],
-  activeFolderId:null,nextId:600,activeProjectId:null,activeReqTab:'technical',activeCheckTab:'projects',calYear:2026,calMonth:3,selectedDate:null,editingProjectId:null,editingInvId:null
+  activeFolderId:null,nextId:6000,activeProjectId:null,activeReqTab:'technical',activeCheckTab:'projects',calYear:2026,calMonth:3,selectedDate:null,editingProjectId:null,editingInvId:null
 };
 
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ===== ACTION PLAN =====
-const AP_STATUSES=['Not Started','In Progress','Complete','On Hold','Overdue'];
-
-function apStatusClass(s){
-  if(s==='Not Started')return 'ap-st-notstarted';
-  if(s==='In Progress')return 'ap-st-inprogress';
-  if(s==='Complete')return 'ap-st-complete';
-  if(s==='On Hold')return 'ap-st-onhold';
-  if(s==='Overdue')return 'ap-st-overdue';
-  return '';
+// ===== HIGHLIGHT helper =====
+function highlightMatch(text, query) {
+  if (!query) return escHtml(text);
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp('(' + escaped + ')', 'gi');
+  return escHtml(text).replace(re, '<mark class="search-hl">$1</mark>');
 }
 
-function addAPRow(){
-  const dateStr=TODAY.toISOString().slice(0,10);
-  state.actionPlan.push({
-    id:state.nextId++,
-    done:false,
-    action:'',
-    assignedTo:'',
-    dateAssigned:dateStr,
-    dateDue:'',
-    status:'Not Started',
-    pct:0,
-    notes:''
-  });
-  renderActionPlan();
-  setTimeout(()=>{
-    const inputs=document.querySelectorAll('#ap-body .ap-action-input');
-    if(inputs.length)inputs[inputs.length-1].focus();
-  },50);
-}
+// ===== GLOBAL DOCUMENT SEARCH =====
+function handleGlobalSearch() {
+  const q = (document.getElementById('docs-global-search').value || '').trim();
+  const clearBtn = document.getElementById('docs-global-clear');
+  const resultsPanel = document.getElementById('docs-global-results');
+  const normalLayout = document.getElementById('docs-layout-normal');
 
-function toggleAPDone(id){
-  const ap=state.actionPlan.find(a=>a.id===id);
-  if(!ap)return;
-  ap.done=!ap.done;
-  if(ap.done){ap.status='Complete';ap.pct=100;}
-  else{if(ap.status==='Complete'){ap.status='Not Started';ap.pct=0;}}
-  renderActionPlan();
-}
-
-function updateAPField(id,field,value){
-  const ap=state.actionPlan.find(a=>a.id===id);
-  if(!ap)return;
-  if(field==='pct'){value=Math.max(0,Math.min(100,parseInt(value)||0));}
-  ap[field]=value;
-  if(field==='pct'&&value===100){ap.status='Complete';ap.done=true;}
-  if(field==='status'&&value==='Complete'){ap.pct=100;ap.done=true;}
-  if(field==='status'&&value!=='Complete'&&ap.done){ap.done=false;}
-  renderActionPlan();
-}
-
-function deleteAPRow(id){
-  state.actionPlan=state.actionPlan.filter(a=>a.id!==id);
-  renderActionPlan();
-}
-
-function renderActionPlan(){
-  const body=document.getElementById('ap-body');
-  if(!state.actionPlan.length){
-    body.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text-tertiary);font-size:13px">No action items yet. Click "+ Add action item" below to get started.</td></tr>`;
-    updateAPSummary();
+  if (q.length === 0) {
+    // Show normal layout, hide results
+    clearBtn.classList.remove('visible');
+    resultsPanel.classList.remove('visible');
+    normalLayout.style.display = '';
     return;
   }
-  body.innerHTML=state.actionPlan.map(ap=>{
-    const pct=ap.pct||0;
-    const doneRow=ap.done?'ap-row-done':'';
-    return `<tr class="${doneRow}" data-id="${ap.id}">
-      <td class="ap-done-cell">
-        <div class="ap-done-cb ${ap.done?'checked':''}" onclick="toggleAPDone(${ap.id})" title="${ap.done?'Mark incomplete':'Mark complete'}"></div>
-      </td>
-      <td style="min-width:200px">
-        <input class="ap-cell-input ap-action-input ap-action-text" type="text" value="${escHtml(ap.action)}" placeholder="Describe action item…"
-          onchange="updateAPField(${ap.id},'action',this.value)"
-          onblur="updateAPField(${ap.id},'action',this.value)">
-      </td>
-      <td>
-        <input class="ap-cell-input" type="text" value="${escHtml(ap.assignedTo)}" placeholder="Name…"
-          onchange="updateAPField(${ap.id},'assignedTo',this.value)"
-          onblur="updateAPField(${ap.id},'assignedTo',this.value)">
-      </td>
-      <td>
-        <input class="ap-cell-date" type="date" value="${ap.dateAssigned||''}"
-          onchange="updateAPField(${ap.id},'dateAssigned',this.value)">
-      </td>
-      <td>
-        <input class="ap-cell-date" type="date" value="${ap.dateDue||''}"
-          onchange="updateAPField(${ap.id},'dateDue',this.value)">
-      </td>
-      <td style="text-align:center">
-        <select class="ap-cell-select" onchange="updateAPField(${ap.id},'status',this.value)" style="display:none" id="ap-st-sel-${ap.id}">
-          ${AP_STATUSES.map(s=>`<option ${ap.status===s?'selected':''}>${s}</option>`).join('')}
-        </select>
-        <span class="ap-status ${apStatusClass(ap.status)}" onclick="apToggleStSel(${ap.id})" style="cursor:pointer" title="Click to change">${ap.status||'—'}</span>
-      </td>
-      <td>
-        <div class="ap-pct-wrap">
-          <div class="ap-pct-bar"><div class="ap-pct-fill" style="width:${pct}%;background:${pct===100?'#2d9e2d':pct>=60?'var(--blue)':'#EF9F27'}"></div></div>
-          <input class="ap-pct-label" type="number" min="0" max="100" value="${pct}"
-            style="width:38px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--text-secondary);text-align:right;outline:none;cursor:pointer;font-family:inherit"
-            onchange="updateAPField(${ap.id},'pct',parseInt(this.value)||0)"
-            onblur="updateAPField(${ap.id},'pct',parseInt(this.value)||0)"><span style="font-size:11px;color:var(--text-tertiary)">%</span>
+
+  // Show clear button and results panel, hide normal layout
+  clearBtn.classList.add('visible');
+  resultsPanel.classList.add('visible');
+  normalLayout.style.display = 'none';
+
+  const qLower = q.toLowerCase();
+  const sortBy = (document.getElementById('docs-global-sort') || {}).value || 'name';
+  const viewMode = (document.getElementById('docs-global-view') || {}).value || 'list';
+
+  // Collect all matching docs with folder info
+  let matches = [];
+  state.folders.forEach(f => {
+    f.docs.forEach(doc => {
+      if (doc.name.toLowerCase().includes(qLower)) {
+        matches.push({ ...doc, _folderId: f.id, _folderName: f.name });
+      }
+    });
+  });
+
+  // Sort
+  if (sortBy === 'name') {
+    matches.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'folder') {
+    matches.sort((a, b) => a._folderName.localeCompare(b._folderName) || a.name.localeCompare(b.name));
+  } else if (sortBy === 'date') {
+    matches.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }
+
+  // Update results info header
+  const infoEl = document.getElementById('docs-global-results-info');
+  if (matches.length === 0) {
+    infoEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>No results for "<strong>${escHtml(q)}</strong>"</span>`;
+  } else {
+    infoEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span><strong>${matches.length}</strong> result${matches.length !== 1 ? 's' : ''} for "<strong>${escHtml(q)}</strong>" across <strong>${[...new Set(matches.map(m => m._folderId))].length}</strong> folder${[...new Set(matches.map(m => m._folderId))].length !== 1 ? 's' : ''}</span>`;
+  }
+
+  const bodyEl = document.getElementById('docs-global-results-body');
+
+  if (matches.length === 0) {
+    bodyEl.innerHTML = `<div class="docs-no-results"><div class="docs-no-results-icon">🔍</div><div class="docs-no-results-text">No documents match "<strong>${escHtml(q)}</strong>"</div><div class="docs-no-results-sub">Try a different keyword or check another folder.</div></div>`;
+    return;
+  }
+
+  if (viewMode === 'grid') {
+    // Group by folder
+    const grouped = {};
+    matches.forEach(doc => {
+      if (!grouped[doc._folderId]) grouped[doc._folderId] = { name: doc._folderName, docs: [] };
+      grouped[doc._folderId].docs.push(doc);
+    });
+    let html = '';
+    Object.values(grouped).forEach(group => {
+      html += `<div class="docs-global-folder-group">
+        <div class="docs-global-folder-label">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          ${escHtml(group.name)}
+          <span class="folder-doc-count">${group.docs.length}</span>
         </div>
-      </td>
-      <td>
-        <input class="ap-cell-input" type="text" value="${escHtml(ap.notes)}" placeholder="Notes…"
-          onchange="updateAPField(${ap.id},'notes',this.value)"
-          onblur="updateAPField(${ap.id},'notes',this.value)">
-      </td>
-      <td style="text-align:center">
-        <button class="icon-btn del-btn" onclick="deleteAPRow(${ap.id})" title="Remove row" style="padding:3px 6px">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 1.5l8 8M9.5 1.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </button>
-      </td>
-    </tr>`;
-  }).join('');
-  updateAPSummary();
+        <div class="docs-global-results-grid">
+          ${group.docs.map(doc => `
+            <div class="doc-card" style="border-color:#B5D4F4;background:var(--blue-light)" title="${escHtml(doc.name)}">
+              <button class="doc-card-del" onclick="deleteDocument('${doc.id}','${doc._folderId}');handleGlobalSearch()">✕</button>
+              <div class="doc-card-icon">${fileIcon(doc.type)}</div>
+              <div class="doc-card-name">${highlightMatch(doc.name, q)}</div>
+              <div class="doc-card-meta">${doc.size} · ${doc.date}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+    });
+    bodyEl.innerHTML = html;
+  } else {
+    // Flat list view
+    let html = '<div class="docs-global-flat-list">';
+    matches.forEach(doc => {
+      html += `
+        <div class="docs-flat-row" onclick="goToDocFolder('${doc._folderId}')">
+          <div class="docs-flat-row-icon">${fileIcon(doc.type)}</div>
+          <div class="docs-flat-row-info">
+            <div class="docs-flat-row-name">${highlightMatch(doc.name, q)}</div>
+            <div class="docs-flat-row-meta">${doc.size} · ${doc.date}</div>
+          </div>
+          <span class="docs-flat-row-folder">📁 ${escHtml(doc._folderName)}</span>
+          <button class="docs-flat-row-del" onclick="event.stopPropagation();deleteDocumentGlobal('${doc.id}','${doc._folderId}')">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 1.5l8 8M9.5 1.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>`;
+    });
+    html += '</div>';
+    bodyEl.innerHTML = html;
+  }
 }
 
-function apToggleStSel(id){
-  const sel=document.getElementById('ap-st-sel-'+id);
-  const badge=sel.nextElementSibling;
-  sel.style.display='inline-block';
-  badge.style.display='none';
-  sel.focus();
-  sel.onblur=()=>{sel.style.display='none';badge.style.display='inline-block';};
-  sel.onchange=function(){updateAPField(id,'status',this.value);};
+function clearGlobalSearch() {
+  document.getElementById('docs-global-search').value = '';
+  handleGlobalSearch();
 }
 
-function updateAPSummary(){
-  const total=state.actionPlan.length;
-  const done=state.actionPlan.filter(a=>a.done||a.status==='Complete').length;
-  const inprog=state.actionPlan.filter(a=>a.status==='In Progress').length;
-  const overdue=state.actionPlan.filter(a=>a.status==='Overdue').length;
-  const avgPct=total?Math.round(state.actionPlan.reduce((s,a)=>s+(a.pct||0),0)/total):0;
-  document.getElementById('ap-sum-total').textContent=total;
-  document.getElementById('ap-sum-done').textContent=done;
-  document.getElementById('ap-sum-inprogress').textContent=inprog;
-  document.getElementById('ap-sum-overdue').textContent=overdue;
-  document.getElementById('ap-sum-avg').textContent=avgPct+'%';
+function goToDocFolder(folderId) {
+  clearGlobalSearch();
+  selectFolder(folderId);
 }
+
+function deleteDocumentGlobal(docId, folderId) {
+  const folder = state.folders.find(f => f.id === folderId);
+  if (!folder) return;
+  folder.docs = folder.docs.filter(d => d.id !== docId);
+  renderFolderList();
+  handleGlobalSearch(); // re-run search to update results
+}
+
+// ===== ACTION PLAN =====
+const AP_STATUSES=['Not Started','In Progress','Complete','On Hold','Overdue'];
+function apStatusClass(s){if(s==='Not Started')return 'ap-st-notstarted';if(s==='In Progress')return 'ap-st-inprogress';if(s==='Complete')return 'ap-st-complete';if(s==='On Hold')return 'ap-st-onhold';if(s==='Overdue')return 'ap-st-overdue';return '';}
+function autoResizeTextarea(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+function addAPRow(){const dateStr=TODAY.toISOString().slice(0,10);state.actionPlan.push({id:state.nextId++,done:false,action:'',assignedTo:'',dateAssigned:dateStr,dateDue:'',status:'Not Started',pct:0,notes:''});renderActionPlan();setTimeout(()=>{const tas=document.querySelectorAll('#ap-body .ap-action-textarea');if(tas.length)tas[tas.length-1].focus();},50);}
+function toggleAPDone(id){const ap=state.actionPlan.find(a=>a.id===id);if(!ap)return;ap.done=!ap.done;if(ap.done){ap.status='Complete';ap.pct=100;}else{if(ap.status==='Complete'){ap.status='Not Started';ap.pct=0;}}renderActionPlan();}
+function updateAPField(id,field,value){const ap=state.actionPlan.find(a=>a.id===id);if(!ap)return;if(field==='pct'){value=Math.max(0,Math.min(100,parseInt(value)||0));}ap[field]=value;if(field==='pct'&&value===100){ap.status='Complete';ap.done=true;}if(field==='status'&&value==='Complete'){ap.pct=100;ap.done=true;}if(field==='status'&&value!=='Complete'&&ap.done){ap.done=false;}renderActionPlan();}
+function deleteAPRow(id){state.actionPlan=state.actionPlan.filter(a=>a.id!==id);renderActionPlan();}
+function buildClientOptions(selected){let opts='<option value="">— Select client —</option>';CLIENT_OPTIONS.forEach(o=>{opts+=`<option value="${escHtml(o)}"${selected===o?' selected':''}>${escHtml(o)}</option>`;});if(selected&&!CLIENT_OPTIONS.includes(selected)){opts+=`<option value="${escHtml(selected)}" selected>${escHtml(selected)}</option>`;}return opts;}
+function renderActionPlan(){const body=document.getElementById('ap-body');if(!state.actionPlan.length){body.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text-tertiary);font-size:13px">No action items yet.</td></tr>`;updateAPSummary();return;}body.innerHTML=state.actionPlan.map(ap=>{const pct=ap.pct||0,doneRow=ap.done?'ap-row-done':'';return `<tr class="${doneRow}" data-id="${ap.id}"><td class="ap-done-cell"><div class="ap-done-cb ${ap.done?'checked':''}" onclick="toggleAPDone(${ap.id})"></div></td><td class="ap-action-col"><textarea class="ap-action-textarea ap-action-text" rows="1" placeholder="Describe action item…" onchange="updateAPField(${ap.id},'action',this.value)" oninput="autoResizeTextarea(this);state.actionPlan.find(a=>a.id===${ap.id}).action=this.value;">${escHtml(ap.action)}</textarea></td><td class="ap-compact-col"><select class="ap-assigned-select" onchange="updateAPField(${ap.id},'assignedTo',this.value)">${buildClientOptions(ap.assignedTo)}</select></td><td class="ap-compact-col"><input class="ap-cell-date" type="date" value="${ap.dateAssigned||''}" onchange="updateAPField(${ap.id},'dateAssigned',this.value)"></td><td class="ap-compact-col"><input class="ap-cell-date" type="date" value="${ap.dateDue||''}" onchange="updateAPField(${ap.id},'dateDue',this.value)"></td><td class="ap-compact-col" style="text-align:center"><select class="ap-cell-select" onchange="updateAPField(${ap.id},'status',this.value)" style="display:none" id="ap-st-sel-${ap.id}">${AP_STATUSES.map(s=>`<option ${ap.status===s?'selected':''}>${s}</option>`).join('')}</select><span class="ap-status ${apStatusClass(ap.status)}" onclick="apToggleStSel(${ap.id})" style="cursor:pointer">${ap.status||'—'}</span></td><td class="ap-compact-col"><div class="ap-pct-wrap"><div class="ap-pct-bar"><div class="ap-pct-fill" style="width:${pct}%;background:${pct===100?'#2d9e2d':pct>=60?'var(--blue)':'#EF9F27'}"></div></div><input class="ap-pct-label" type="number" min="0" max="100" value="${pct}" style="width:38px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--text-secondary);text-align:right;outline:none;cursor:pointer;font-family:inherit" onchange="updateAPField(${ap.id},'pct',parseInt(this.value)||0)" onblur="updateAPField(${ap.id},'pct',parseInt(this.value)||0)"><span style="font-size:11px;color:var(--text-tertiary)">%</span></div></td><td><input class="ap-cell-input" type="text" value="${escHtml(ap.notes)}" placeholder="Notes…" onchange="updateAPField(${ap.id},'notes',this.value)" onblur="updateAPField(${ap.id},'notes',this.value)"></td><td class="ap-compact-col" style="text-align:center;vertical-align:middle"><button class="icon-btn del-btn" onclick="deleteAPRow(${ap.id})" style="padding:3px 6px"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 1.5l8 8M9.5 1.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></td></tr>`;}).join('');document.querySelectorAll('#ap-body .ap-action-textarea').forEach(ta=>autoResizeTextarea(ta));updateAPSummary();}
+function apToggleStSel(id){const sel=document.getElementById('ap-st-sel-'+id),badge=sel.nextElementSibling;sel.style.display='inline-block';badge.style.display='none';sel.focus();sel.onblur=()=>{sel.style.display='none';badge.style.display='inline-block';};sel.onchange=function(){updateAPField(id,'status',this.value);};}
+function updateAPSummary(){const total=state.actionPlan.length,done=state.actionPlan.filter(a=>a.done||a.status==='Complete').length,inprog=state.actionPlan.filter(a=>a.status==='In Progress').length,overdue=state.actionPlan.filter(a=>a.status==='Overdue').length,avgPct=total?Math.round(state.actionPlan.reduce((s,a)=>s+(a.pct||0),0)/total):0;document.getElementById('ap-sum-total').textContent=total;document.getElementById('ap-sum-done').textContent=done;document.getElementById('ap-sum-inprogress').textContent=inprog;document.getElementById('ap-sum-overdue').textContent=overdue;document.getElementById('ap-sum-avg').textContent=avgPct+'%';}
 
 // ===== INVENTORY =====
 function autoStatus(item){if(item.status==='Discontinued')return 'Discontinued';if(item.qty===0)return 'Out of Stock';if(item.qty<=(item.lowThreshold||5))return 'Low Stock';return 'Active';}
 function invStatusClass(s){if(s==='Active')return 'is-active badge';if(s==='Low Stock')return 'is-low badge';if(s==='Out of Stock')return 'is-out badge';return 'is-disc badge';}
 function updateInvBadge(){const alerts=state.inventory.filter(i=>i.status!=='Discontinued'&&(i.qty===0||i.qty<=(i.lowThreshold||5)));const badge=document.getElementById('inv-alert-badge');badge.textContent=alerts.length;badge.style.display=alerts.length?'inline':'none';}
-function renderInvAlertsDash(){const el=document.getElementById('dash-inv-alerts');if(!el)return;const low=state.inventory.filter(i=>i.status!=='Discontinued'&&i.qty>0&&i.qty<=(i.lowThreshold||5));const out=state.inventory.filter(i=>i.qty===0&&i.status!=='Discontinued');let html='';out.forEach(i=>{html+=`<div class="notif notif-d"><div class="ndot dot-r"></div><strong>${escHtml(i.name)}</strong>&nbsp;is <strong>out of stock</strong>. Restock needed.</div>`;});low.forEach(i=>{html+=`<div class="notif notif-w"><div class="ndot dot-a"></div><strong>${escHtml(i.name)}</strong>&nbsp;is low — only <strong>${i.qty}</strong> unit(s) remaining.</div>`;});el.innerHTML=html;}
-function renderInvStats(){const el=document.getElementById('inv-stats');const total=state.inventory.length,active=state.inventory.filter(i=>i.status==='Active').length,low=state.inventory.filter(i=>i.status==='Low Stock').length,outOf=state.inventory.filter(i=>i.status==='Out of Stock').length,totalVal=state.inventory.reduce((s,i)=>s+i.qty*i.cost,0);el.innerHTML=`<div class="stat-card"><div class="stat-label">Total Items</div><div class="stat-value">${total}</div><div class="stat-sub" style="color:var(--text-tertiary)">${active} active</div></div><div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value c-amber">${low}</div><div class="stat-sub c-amber">needs restocking</div></div><div class="stat-card"><div class="stat-label">Out of Stock</div><div class="stat-value c-red">${outOf}</div><div class="stat-sub c-red">unavailable</div></div><div class="stat-card"><div class="stat-label">Total Value</div><div class="stat-value" style="font-size:18px">&#8369;${totalVal.toLocaleString()}</div><div class="stat-sub" style="color:var(--text-tertiary)">across all items</div></div>`;}
+function renderInvAlertsDash(){const el=document.getElementById('dash-inv-alerts');if(!el)return;const low=state.inventory.filter(i=>i.status!=='Discontinued'&&i.qty>0&&i.qty<=(i.lowThreshold||5)),out=state.inventory.filter(i=>i.qty===0&&i.status!=='Discontinued');let html='';out.forEach(i=>{html+=`<div class="notif notif-d"><div class="ndot dot-r"></div><strong>${escHtml(i.name)}</strong>&nbsp;is <strong>out of stock</strong>.</div>`;});low.forEach(i=>{html+=`<div class="notif notif-w"><div class="ndot dot-a"></div><strong>${escHtml(i.name)}</strong>&nbsp;is low — only <strong>${i.qty}</strong> unit(s) remaining.</div>`;});el.innerHTML=html;}
+function renderInvStats(){const el=document.getElementById('inv-stats'),total=state.inventory.length,active=state.inventory.filter(i=>i.status==='Active').length,low=state.inventory.filter(i=>i.status==='Low Stock').length,outOf=state.inventory.filter(i=>i.status==='Out of Stock').length,totalVal=state.inventory.reduce((s,i)=>s+i.qty*i.cost,0);el.innerHTML=`<div class="stat-card"><div class="stat-label">Total Items</div><div class="stat-value">${total}</div><div class="stat-sub" style="color:var(--text-tertiary)">${active} active</div></div><div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value c-amber">${low}</div><div class="stat-sub c-amber">needs restocking</div></div><div class="stat-card"><div class="stat-label">Out of Stock</div><div class="stat-value c-red">${outOf}</div><div class="stat-sub c-red">unavailable</div></div><div class="stat-card"><div class="stat-label">Total Value</div><div class="stat-value" style="font-size:18px">&#8369;${totalVal.toLocaleString()}</div><div class="stat-sub" style="color:var(--text-tertiary)">across all items</div></div>`;}
 function renderInventory(){const q=(document.getElementById('inv-search').value||'').toLowerCase(),sf=document.getElementById('inv-filter-status').value;state.inventory.forEach(i=>{if(i.status!=='Discontinued')i.status=autoStatus(i);});updateInvBadge();renderInvAlertsDash();const items=state.inventory.filter(i=>(!q||i.name.toLowerCase().includes(q)||i.id.toLowerCase().includes(q))&&(!sf||i.status===sf));const body=document.getElementById('inv-body');if(!items.length){body.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--text-tertiary);font-size:13px">No items found.</td></tr>`;renderInvStats();return;}body.innerHTML=items.map(item=>`<tr><td><div class="inv-name-main">${escHtml(item.name)}</div><div class="inv-id">${escHtml(item.id)}</div></td><td><span class="${invStatusClass(item.status)}">${item.status}</span></td><td><span class="inv-qty">${item.qty.toLocaleString()}</span><div style="font-size:11px;color:var(--text-tertiary);margin-top:1px">units · alert at ≤${item.lowThreshold||5}</div></td><td><span class="inv-cost">&#8369;${item.cost.toLocaleString()}</span><div class="inv-total">Total: &#8369;${(item.qty*item.cost).toLocaleString()}</div></td><td><button class="icon-btn edit-btn" onclick="openEditInventory('${item.id}')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></td></tr>`).join('');renderInvStats();updateNotifBadge();}
-function addInventoryItem(){const name=document.getElementById('new-inv-name').value.trim();if(!name){alert('Please enter an item name.');return;}const n=state.nextId++,id='INV-'+String(n).padStart(3,'0');const qty=parseInt(document.getElementById('new-inv-qty').value)||0;const thresh=parseInt(document.getElementById('new-inv-threshold').value)||5;const item={id,name,status:'Active',qty,cost:parseFloat(document.getElementById('new-inv-cost').value)||0,lowThreshold:thresh};item.status=autoStatus(item);state.inventory.push(item);document.getElementById('new-inv-name').value='';document.getElementById('new-inv-qty').value='';document.getElementById('new-inv-cost').value='';document.getElementById('new-inv-threshold').value='';closeForm('add-inv-form');renderInventory();}
+function addInventoryItem(){const name=document.getElementById('new-inv-name').value.trim();if(!name){alert('Please enter an item name.');return;}const n=state.nextId++,id='INV-'+String(n).padStart(3,'0'),qty=parseInt(document.getElementById('new-inv-qty').value)||0,thresh=parseInt(document.getElementById('new-inv-threshold').value)||5,item={id,name,status:'Active',qty,cost:parseFloat(document.getElementById('new-inv-cost').value)||0,lowThreshold:thresh};item.status=autoStatus(item);state.inventory.push(item);document.getElementById('new-inv-name').value='';document.getElementById('new-inv-qty').value='';document.getElementById('new-inv-cost').value='';document.getElementById('new-inv-threshold').value='';closeForm('add-inv-form');renderInventory();}
 function openEditInventory(id){const item=state.inventory.find(i=>i.id===id);if(!item)return;state.editingInvId=id;document.getElementById('edit-inv-name').value=item.name;document.getElementById('edit-inv-status').value=item.status;document.getElementById('edit-inv-qty').value=item.qty;document.getElementById('edit-inv-cost').value=item.cost;document.getElementById('edit-inv-threshold').value=item.lowThreshold||5;openModal('modal-inventory');}
 function saveInventoryItem(){const item=state.inventory.find(i=>i.id===state.editingInvId);if(!item)return;item.name=document.getElementById('edit-inv-name').value.trim()||item.name;item.status=document.getElementById('edit-inv-status').value;item.qty=parseInt(document.getElementById('edit-inv-qty').value)||0;item.cost=parseFloat(document.getElementById('edit-inv-cost').value)||0;item.lowThreshold=parseInt(document.getElementById('edit-inv-threshold').value)||5;if(item.status!=='Discontinued')item.status=autoStatus(item);closeModal('modal-inventory');renderInventory();}
 function deleteInventoryItem(){state.inventory=state.inventory.filter(i=>i.id!==state.editingInvId);closeModal('modal-inventory');renderInventory();}
@@ -943,14 +1196,66 @@ function fileIcon(type){const t=(type||'').toLowerCase();if(t==='pdf')return '�
 function getFileExt(name){const p=name.split('.');return p.length>1?p[p.length-1].toLowerCase():'file';}
 function formatBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
 function getActiveFolder(){return state.folders.find(f=>f.id===state.activeFolderId);}
-function renderFolderList(){const list=document.getElementById('folder-list');if(!state.folders.length){list.innerHTML='<div class="empty-state" style="padding:20px 14px;font-size:12px">No folders yet.<br>Click + to create one.</div>';return;}list.innerHTML=state.folders.map(f=>`<div class="folder-item ${f.id===state.activeFolderId?'active':''}" onclick="selectFolder('${f.id}')"><svg viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="${f.id===state.activeFolderId?'rgba(24,95,165,0.12)':'none'}"/></svg><span class="folder-item-name">${escHtml(f.name)}</span><span class="folder-item-count">${f.docs.length}</span><span class="folder-del" onclick="event.stopPropagation();promptDeleteFolder('${f.id}')">✕</span></div>`).join('');}
-function selectFolder(id){state.activeFolderId=id;renderFolderList();renderDocsView();}
-function renderDocsView(){const folder=getActiveFolder();document.getElementById('docs-no-folder-msg').style.display=folder?'none':'flex';const view=document.getElementById('docs-folder-view');if(!folder){view.style.display='none';return;}view.style.display='flex';document.getElementById('docs-active-folder-name').textContent=folder.name;const grid=document.getElementById('docs-grid'),emptyMsg=document.getElementById('docs-empty-msg');if(!folder.docs.length){emptyMsg.style.display='block';grid.style.display='none';return;}emptyMsg.style.display='none';grid.style.display='grid';grid.innerHTML=folder.docs.map(doc=>`<div class="doc-card" title="${escHtml(doc.name)}"><button class="doc-card-del" onclick="deleteDocument('${doc.id}')">✕</button><div class="doc-card-icon">${fileIcon(doc.type)}</div><div class="doc-card-name">${escHtml(doc.name)}</div><div class="doc-card-meta">${doc.size} · ${doc.date}</div></div>`).join('');}
+
+function renderFolderList(){
+  const list=document.getElementById('folder-list');
+  if(!state.folders.length){list.innerHTML='<div class="empty-state" style="padding:20px 14px;font-size:12px">No folders yet.<br>Click + to create one.</div>';return;}
+  list.innerHTML=state.folders.map(f=>`<div class="folder-item ${f.id===state.activeFolderId?'active':''}" onclick="selectFolder('${f.id}')"><svg viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="${f.id===state.activeFolderId?'rgba(24,95,165,0.12)':'none'}"/></svg><span class="folder-item-name">${escHtml(f.name)}</span><span class="folder-item-count">${f.docs.length}</span><span class="folder-del" onclick="event.stopPropagation();promptDeleteFolder('${f.id}')">✕</span></div>`).join('');
+}
+
+function selectFolder(id){
+  state.activeFolderId=id;
+  const searchEl=document.getElementById('docs-search');
+  if(searchEl)searchEl.value='';
+  renderFolderList();
+  renderDocsView();
+}
+
+function renderDocsView(){
+  const folder=getActiveFolder();
+  document.getElementById('docs-no-folder-msg').style.display=folder?'none':'flex';
+  const view=document.getElementById('docs-folder-view');
+  if(!folder){view.style.display='none';return;}
+  view.style.display='flex';
+  document.getElementById('docs-active-folder-name').textContent=folder.name;
+
+  const searchEl=document.getElementById('docs-search');
+  const q=(searchEl?searchEl.value:'').trim().toLowerCase();
+  const grid=document.getElementById('docs-grid'),emptyMsg=document.getElementById('docs-empty-msg');
+  const resultsBar=document.getElementById('docs-search-results-bar');
+
+  let docsToShow = folder.docs.map(d => ({...d, _folderId: folder.id}));
+
+  if (q.length >= 1) {
+    docsToShow = docsToShow.filter(d => d.name.toLowerCase().includes(q));
+    resultsBar.style.display = 'flex';
+    resultsBar.innerHTML = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> ${docsToShow.length} result${docsToShow.length!==1?'s':''} for "<strong>${escHtml(q)}</strong>" in this folder &nbsp;<span style="color:var(--text-secondary);cursor:pointer;text-decoration:underline" onclick="document.getElementById('docs-search').value='';renderDocsView()">Clear</span>`;
+  } else {
+    resultsBar.style.display = 'none';
+  }
+
+  if(!docsToShow.length){
+    emptyMsg.style.display='block';
+    emptyMsg.querySelector('.docs-empty-text').textContent=q.length>=1?'No documents match your search.':'No documents yet. Upload files to get started.';
+    grid.style.display='none';
+    return;
+  }
+  emptyMsg.style.display='none';
+  grid.style.display='grid';
+  grid.innerHTML=docsToShow.map(doc=>`
+    <div class="doc-card" title="${escHtml(doc.name)}">
+      <button class="doc-card-del" onclick="deleteDocument('${doc.id}','${doc._folderId}')">✕</button>
+      <div class="doc-card-icon">${fileIcon(doc.type)}</div>
+      <div class="doc-card-name">${q ? highlightMatch(doc.name, q) : escHtml(doc.name)}</div>
+      <div class="doc-card-meta">${doc.size} · ${doc.date}</div>
+    </div>`).join('');
+}
+
 function startAddFolder(){const list=document.getElementById('folder-list'),inputRow=document.createElement('div');inputRow.className='folder-item';inputRow.style.padding='6px 10px';inputRow.innerHTML=`<svg viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><input class="folder-name-input" id="new-folder-input" type="text" placeholder="Folder name" maxlength="50">`;list.appendChild(inputRow);const inp=document.getElementById('new-folder-input');inp.focus();inp.addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddFolder(inp.value);if(e.key==='Escape')inputRow.remove();});inp.addEventListener('blur',()=>{setTimeout(()=>{if(document.getElementById('new-folder-input'))inputRow.remove();},150);});}
 function confirmAddFolder(name){name=(name||'').trim();if(!name)return;const id='f'+state.nextId++;state.folders.push({id,name,docs:[]});renderFolderList();selectFolder(id);}
 function promptDeleteFolder(id){const folder=id?state.folders.find(f=>f.id===id):getActiveFolder();if(!folder)return;document.getElementById('modal-del-title').textContent='Delete Folder?';document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${escHtml(folder.name)}</strong> and all its ${folder.docs.length} document(s). This cannot be undone.`;const btn=document.getElementById('modal-del-confirm-btn');btn.textContent='Delete Folder';btn.onclick=()=>{state.folders=state.folders.filter(f=>f.id!==folder.id);if(state.activeFolderId===folder.id)state.activeFolderId=null;closeModal('modal-confirm-delete');renderFolderList();renderDocsView();};openModal('modal-confirm-delete');}
-function handleFileUpload(input){const folder=getActiveFolder();if(!folder||!input.files.length)return;const today=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});Array.from(input.files).forEach(file=>{folder.docs.push({id:'d'+state.nextId++,name:file.name,type:getFileExt(file.name),size:formatBytes(file.size),date:today});});input.value='';renderDocsView();}
-function deleteDocument(docId){const folder=getActiveFolder();if(!folder)return;folder.docs=folder.docs.filter(d=>d.id!==docId);renderFolderList();renderDocsView();}
+function handleFileUpload(input){const folder=getActiveFolder();if(!folder||!input.files.length)return;const today=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});Array.from(input.files).forEach(file=>{folder.docs.push({id:'d'+state.nextId++,name:file.name,type:getFileExt(file.name),size:formatBytes(file.size),date:today});});input.value='';renderFolderList();renderDocsView();}
+function deleteDocument(docId,folderId){const folder=state.folders.find(f=>f.id===folderId);if(!folder)return;folder.docs=folder.docs.filter(d=>d.id!==docId);renderFolderList();renderDocsView();}
 document.addEventListener('DOMContentLoaded',()=>{const zone=document.getElementById('upload-drop-zone');if(!zone)return;zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');const folder=getActiveFolder();if(!folder)return;const today=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});Array.from(e.dataTransfer.files).forEach(file=>{folder.docs.push({id:'d'+state.nextId++,name:file.name,type:getFileExt(file.name),size:formatBytes(file.size),date:today});});renderDocsView();renderFolderList();});});
 
 // ===== CALENDAR =====
@@ -971,7 +1276,7 @@ function renderCalUpcoming(){const listEl=document.getElementById('cal-upcoming-
 // ===== LICENSES =====
 function getLicenseCategory(lic){if(lic.category)return lic.category;const n=lic.name.toLowerCase();if(n.includes('sec ')||n.includes('mayor')||n.includes('bir ')||n.includes('fire safety')||n.includes('fsic')||n.includes('dole')||n.includes('barangay')||n.includes('sss ')||n.includes('social security')||n.includes('philhealth')||n.includes('pag-ibig'))return 'Core Legal';if(n.includes('philgeps')||n.includes('pcab')||n.includes('contractor')||n.includes('sanitation')||n.includes('health certificate')||n.includes('denr')||n.includes('ecc')||n.includes('chemical')||n.includes('water permit'))return 'Industry-Specific';if(n.includes('occupational')||n.includes('safety cert')||n.includes('training'))return 'Safety & Training';return 'Other';}
 const CAT_CONFIG={'Core Legal':{icon:'🏛️',headerClass:'lic-group-header-core',labelColor:'#0C447C',countBg:'#c3dcf5',countColor:'#0C447C'},'Industry-Specific':{icon:'🏭',headerClass:'lic-group-header-industry',labelColor:'#3B6D11',countBg:'#bcd99a',countColor:'#3B6D11'},'Safety & Training':{icon:'🛡️',headerClass:'lic-group-header-safety',labelColor:'#854F0B',countBg:'#f5cc85',countColor:'#854F0B'},'Other':{icon:'📋',headerClass:'',labelColor:'var(--text-secondary)',countBg:'var(--bg-tertiary)',countColor:'var(--text-secondary)'}};
-function renderLicenses(){const list=document.getElementById('expiry-list');const sorted=[...state.licenses].sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));const catOrder=['Core Legal','Industry-Specific','Safety & Training','Other'];const groups={};catOrder.forEach(c=>groups[c]=[]);sorted.forEach(lic=>{const cat=getLicenseCategory(lic);if(!groups[cat])groups[cat]=[];groups[cat].push(lic);});let totalExpCount=0,urgentCount=0,upcomingCount=0,okCount=0,html='';catOrder.forEach(catName=>{const items=groups[catName];if(!items.length)return;const cfg=CAT_CONFIG[catName]||CAT_CONFIG['Other'];let catHtml='';items.forEach(lic=>{const days=Math.round((new Date(lic.expiry+'T00:00:00')-TODAY)/86400000);let dotColor='#639922',pillClass='dp-g',label=days+' days left';if(days<0){dotColor='#E24B4A';pillClass='dp-r';label='Expired';totalExpCount++;urgentCount++;}else if(days<=14){dotColor='#E24B4A';pillClass='dp-r';label=days+'d left';totalExpCount++;urgentCount++;}else if(days<=30){dotColor='#EF9F27';pillClass='dp-a';label=days+'d left';totalExpCount++;upcomingCount++;}else{okCount++;}const dateStr=new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});catHtml+=`<div class="ei"><div class="exp-dot" style="background:${dotColor}"></div><div class="exp-info"><div class="exp-name">${escHtml(lic.name)}</div><div class="exp-date">Expires ${dateStr}</div></div><span class="days-pill ${pillClass}">${label}</span><div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditLicense(${lic.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></div></div>`;});html+=`<div class="lic-group"><div class="lic-group-header ${cfg.headerClass}" style="margin-bottom:10px"><span class="lic-group-icon">${cfg.icon}</span><span class="lic-group-label" style="color:${cfg.labelColor};font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">${catName}</span><span class="lic-group-count" style="background:${cfg.countBg};color:${cfg.countColor}">${items.length} license${items.length!==1?'s':''}</span></div><div class="expiry-list" style="gap:8px;display:flex;flex-direction:column">${catHtml}</div></div>`;});list.innerHTML=html;const bar=document.getElementById('lic-summary-bar');const total=state.licenses.length;bar.style.display=total?'flex':'none';bar.innerHTML=`<span style="font-size:11px;font-weight:600;color:var(--text-secondary)">📊 ${total} Total Licenses</span><span style="width:1px;height:14px;background:var(--border);display:block"></span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#E24B4A"></span>${urgentCount} urgent</span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#EF9F27"></span>${upcomingCount} upcoming</span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#639922"></span>${okCount} valid</span>`;document.getElementById('expiry-badge').textContent=totalExpCount;document.getElementById('expiry-badge').style.display=totalExpCount?'inline':'none';if(typeof updateNotifBadge==='function')updateNotifBadge();}
+function renderLicenses(){const list=document.getElementById('expiry-list');const sorted=[...state.licenses].sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));const catOrder=['Core Legal','Industry-Specific','Safety & Training','Other'];const groups={};catOrder.forEach(c=>groups[c]=[]);sorted.forEach(lic=>{const cat=getLicenseCategory(lic);if(!groups[cat])groups[cat]=[];groups[cat].push(lic);});let totalExpCount=0,urgentCount=0,upcomingCount=0,okCount=0,html='';catOrder.forEach(catName=>{const items=groups[catName];if(!items.length)return;const cfg=CAT_CONFIG[catName]||CAT_CONFIG['Other'];let catHtml='';items.forEach(lic=>{const days=Math.round((new Date(lic.expiry+'T00:00:00')-TODAY)/86400000);let dotColor='#639922',pillClass='dp-g',label=days+' days left';if(days<0){dotColor='#E24B4A';pillClass='dp-r';label='Expired';totalExpCount++;urgentCount++;}else if(days<=14){dotColor='#E24B4A';pillClass='dp-r';label=days+'d left';totalExpCount++;urgentCount++;}else if(days<=30){dotColor='#EF9F27';pillClass='dp-a';label=days+'d left';totalExpCount++;upcomingCount++;}else{okCount++;}const dateStr=new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});catHtml+=`<div class="ei"><div class="exp-dot" style="background:${dotColor}"></div><div class="exp-info"><div class="exp-name">${escHtml(lic.name)}</div><div class="exp-date">Expires ${dateStr}</div></div><span class="days-pill ${pillClass}">${label}</span><div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditLicense(${lic.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></div></div>`;});html+=`<div class="lic-group"><div class="lic-group-header ${cfg.headerClass}" style="margin-bottom:10px"><span class="lic-group-icon">${cfg.icon}</span><span class="lic-group-label" style="color:${cfg.labelColor};font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">${catName}</span><span class="lic-group-count" style="background:${cfg.countBg};color:${cfg.countColor}">${items.length} license${items.length!==1?'s':''}</span></div><div class="expiry-list" style="gap:8px;display:flex;flex-direction:column">${catHtml}</div></div>`;});list.innerHTML=html;const bar=document.getElementById('lic-summary-bar'),total=state.licenses.length;bar.style.display=total?'flex':'none';bar.innerHTML=`<span style="font-size:11px;font-weight:600;color:var(--text-secondary)">📊 ${total} Total Licenses</span><span style="width:1px;height:14px;background:var(--border);display:block"></span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#E24B4A"></span>${urgentCount} urgent</span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#EF9F27"></span>${upcomingCount} upcoming</span><span class="lic-sum-item"><span class="lic-sum-dot" style="background:#639922"></span>${okCount} valid</span>`;document.getElementById('expiry-badge').textContent=totalExpCount;document.getElementById('expiry-badge').style.display=totalExpCount?'inline':'none';if(typeof updateNotifBadge==='function')updateNotifBadge();}
 function openEditLicense(id){const lic=state.licenses.find(l=>l.id===id);if(!lic)return;editingId=id;document.getElementById('edit-lic-name').value=lic.name;document.getElementById('edit-lic-date').value=lic.expiry;document.getElementById('edit-lic-cat').value=getLicenseCategory(lic);openModal('modal-license');}
 function saveLicense(){const lic=state.licenses.find(l=>l.id===editingId);lic.name=document.getElementById('edit-lic-name').value.trim()||lic.name;lic.expiry=document.getElementById('edit-lic-date').value;lic.category=document.getElementById('edit-lic-cat').value;closeModal('modal-license');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();}
 function deleteLicense(){state.licenses=state.licenses.filter(l=>l.id!==editingId);closeModal('modal-license');initCalendarEvents();renderLicenses();renderFullCal();renderDashboardCal();}
@@ -983,8 +1288,8 @@ function getAllRequirements(){const all=[];state.projects.forEach(p=>{p.technica
 function getProjectProgress(proj){const all=[...proj.technical,...proj.financial,...(proj.other||[])];return{done:all.filter(r=>r.checked).length,total:all.length};}
 function renderProjectsSidebar(){const sidebar=document.getElementById('projects-sidebar');let html='';state.projects.forEach(proj=>{const{done,total}=getProjectProgress(proj),pct=total?Math.round(done/total*100):0,isActive=proj.id===state.activeProjectId;html+=`<div class="project-card ${isActive?'active':''}" onclick="selectProject(${proj.id})"><button class="project-card-del" onclick="event.stopPropagation();promptDeleteProject(${proj.id})"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="project-card-name">${proj.name}</div><div class="project-card-meta">${proj.client} · ${total} items</div><div class="project-card-prog"><div class="proj-pb"><div class="proj-pb-fill" style="width:${pct}%"></div></div><div style="font-size:10px;color:var(--text-tertiary);margin-top:3px">${done}/${total} complete</div></div></div>`;});html+=`<button class="proj-add-btn" onclick="openNewProjectModal()">+ New Project</button>`;sidebar.innerHTML=html;}
 function selectProject(id){state.activeProjectId=id;renderProjectsSidebar();renderProjectDetail();}
-function renderProjectDetail(){const proj=getProject(state.activeProjectId);const emptyState=document.getElementById('proj-empty-state');const detail=document.getElementById('project-detail');if(!proj){emptyState.classList.remove('hidden');detail.classList.add('hidden');return;}emptyState.classList.add('hidden');detail.classList.remove('hidden');document.getElementById('proj-detail-name').textContent=proj.name;document.getElementById('proj-detail-desc').textContent=proj.client+(proj.desc?' · '+proj.desc:'');renderReqList('technical');renderReqList('financial');renderReqList('other');renderProjectProgress();}
-function renderReqList(type){const proj=getProject(state.activeProjectId);if(!proj)return;const container=document.getElementById('req-list-'+type),items=proj[type]||[];if(!items.length){container.innerHTML=`<div class="empty-state">No ${type} requirements yet.</div>`;return;}container.innerHTML='';items.forEach(item=>{const div=document.createElement('div');div.className='ci';div.innerHTML=`<div class="ci-header"><div class="cb ${item.checked?'checked':''}" onclick="toggleReq(${state.activeProjectId},'${type}',${item.id})"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span><div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit</button></div></div>`;container.appendChild(div);});renderProjectProgress();}
+function renderProjectDetail(){const proj=getProject(state.activeProjectId),emptyState=document.getElementById('proj-empty-state'),detail=document.getElementById('project-detail');if(!proj){emptyState.classList.remove('hidden');detail.classList.add('hidden');return;}emptyState.classList.add('hidden');detail.classList.remove('hidden');document.getElementById('proj-detail-name').textContent=proj.name;document.getElementById('proj-detail-desc').textContent=proj.client+(proj.desc?' · '+proj.desc:'');renderReqList('technical');renderReqList('financial');renderReqList('other');renderProjectProgress();}
+function renderReqList(type){const proj=getProject(state.activeProjectId);if(!proj)return;const container=document.getElementById('req-list-'+type),items=proj[type]||[];if(!items.length){container.innerHTML=`<div class="empty-state">No ${type} requirements yet.</div>`;return;}container.innerHTML='';items.forEach(item=>{const div=document.createElement('div');div.className='ci';div.innerHTML=`<div class="ci-header"><div class="cb ${item.checked?'checked':''}"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span><div class="row-actions" style="margin-left:8px"><button class="icon-btn edit-btn" onclick="openEditReq(${state.activeProjectId},'${type}',${item.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Edit</button></div></div>`;const cb=div.querySelector('.cb');cb.onclick=()=>toggleReq(state.activeProjectId,type,item.id);container.appendChild(div);});renderProjectProgress();}
 function renderProjectProgress(){const proj=getProject(state.activeProjectId);if(!proj)return;const td=proj.technical.filter(r=>r.checked).length,fd=proj.financial.filter(r=>r.checked).length,od=(proj.other||[]).filter(r=>r.checked).length,total=proj.technical.length+proj.financial.length+(proj.other||[]).length,done=td+fd+od;document.getElementById('proj-progress-summary').innerHTML=`<span class="prog-stat">Technical: <strong>${td}/${proj.technical.length}</strong></span><span class="prog-stat">Financial: <strong>${fd}/${proj.financial.length}</strong></span><span class="prog-stat">Other: <strong>${od}/${(proj.other||[]).length}</strong></span><span class="prog-stat">Overall: <strong>${done}/${total}</strong> complete</span>`;updateStats();}
 function toggleReq(projectId,type,reqId){const proj=getProject(projectId);if(!proj)return;const item=proj[type].find(r=>r.id===reqId);if(item)item.checked=!item.checked;renderReqList(type);renderProjectsSidebar();}
 function addRequirement(type){const proj=getProject(state.activeProjectId);if(!proj)return;const inputId=type==='technical'?'new-tech-req':type==='financial'?'new-fin-req':'new-other-req',catId=type==='technical'?'new-tech-cat':type==='financial'?'new-fin-cat':'new-other-cat',label=document.getElementById(inputId).value.trim();if(!label)return;if(!proj[type])proj[type]=[];proj[type].push({id:state.nextId++,label,category:document.getElementById(catId).value,checked:false});document.getElementById(inputId).value='';renderReqList(type);renderProjectsSidebar();}
@@ -994,18 +1299,10 @@ function deleteRequirement(){const{projectId,type,reqId}=editingReqInfo,proj=get
 function switchReqTab(tab){state.activeReqTab=tab;document.querySelectorAll('.req-tab').forEach(t=>t.classList.remove('active'));document.getElementById('rtab-'+tab).classList.add('active');document.querySelectorAll('.req-pane').forEach(p=>p.classList.remove('active'));document.getElementById('rpane-'+tab).classList.add('active');}
 function openNewProjectModal(){state.editingProjectId=null;document.getElementById('modal-project-title').textContent='New Project';document.getElementById('save-project-btn').textContent='Create Project';['proj-name-input','proj-client-input','proj-desc-input'].forEach(id=>document.getElementById(id).value='');openModal('modal-new-project');}
 function openEditProject(){const proj=getProject(state.activeProjectId);if(!proj)return;state.editingProjectId=proj.id;document.getElementById('modal-project-title').textContent='Edit Project';document.getElementById('save-project-btn').textContent='Save Changes';document.getElementById('proj-name-input').value=proj.name;document.getElementById('proj-client-input').value=proj.client;document.getElementById('proj-desc-input').value=proj.desc;openModal('modal-new-project');}
-function saveProject(){
-  const name=document.getElementById('proj-name-input').value.trim(),client=document.getElementById('proj-client-input').value.trim(),desc=document.getElementById('proj-desc-input').value.trim();
-  if(!name){alert('Please enter a project name.');return;}
-  if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}
-  else{const b=()=>state.nextId++;const defaultTechnical=[{id:b(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership)',category:'Legal',checked:false},{id:b(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA',category:'Legal',checked:false},{id:b(),label:"Certified Copy of valid Mayor's/Business Permit or Equivalent Document",category:'Permits',checked:false},{id:b(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (BIR)',category:'Tax',checked:false},{id:b(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024',category:'Finance',checked:false},{id:b(),label:'Statement of all Ongoing Government and Private Contracts',category:'Legal',checked:false},{id:b(),label:"Statement of Bidder's Single Largest Completed Contract (SLCC)",category:'Legal',checked:false},{id:b(),label:'Original copy of Bid Security (Surety Bond or Notarized Bid Securing Declaration)',category:'Legal',checked:false},{id:b(),label:'Conformity with Technical Specifications (delivery schedule, manpower, after-sales)',category:'Compliance',checked:false},{id:b(),label:"Original duly signed Omnibus Sworn Statement (OSS) with Secretary's Certificate or Special Power of Attorney",category:'Legal',checked:false}];const defaultFinancial=[{id:b(),label:"Prospective Bidder's NFCC computation or Committed Line of Credit from Universal/Commercial Bank",category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false}];const defaultOther=[{id:b(),label:'Duly signed Joint Venture Agreement (JVA) or notarized statements from potential JV partners (if applicable)',category:'Legal',checked:false},{id:b(),label:'Certification from relevant government office for foreign bidders claiming reciprocal rights (if applicable)',category:'Compliance',checked:false},{id:b(),label:'Certification from DTI if claiming preference as Domestic Bidder or Domestic Entity (if applicable)',category:'Compliance',checked:false}];const newProj={id:state.nextId++,name,client,desc,technical:defaultTechnical,financial:defaultFinancial,other:defaultOther};state.projects.push(newProj);state.activeProjectId=newProj.id;}
-  closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();
-}
+function saveProject(){const name=document.getElementById('proj-name-input').value.trim(),client=document.getElementById('proj-client-input').value.trim(),desc=document.getElementById('proj-desc-input').value.trim();if(!name){alert('Please enter a project name.');return;}if(state.editingProjectId){const proj=getProject(state.editingProjectId);proj.name=name;proj.client=client;proj.desc=desc;}else{const b=()=>state.nextId++;const defaultTechnical=[{id:b(),label:'Valid PhilGEPS Registration Certificate (Platinum Membership)',category:'Legal',checked:false},{id:b(),label:'Certified Copy of Registration Certificate from SEC, DTI, or CDA',category:'Legal',checked:false},{id:b(),label:"Certified Copy of valid Mayor's/Business Permit or Equivalent Document",category:'Permits',checked:false},{id:b(),label:'Certified Copy of valid Tax Clearance Certificate for FY 2025 (BIR)',category:'Tax',checked:false},{id:b(),label:'Certified Copy of Audited Financial Statements (AFS) for FY 2023 and FY 2024',category:'Finance',checked:false},{id:b(),label:'Statement of all Ongoing Government and Private Contracts',category:'Legal',checked:false},{id:b(),label:"Statement of Bidder's Single Largest Completed Contract (SLCC)",category:'Legal',checked:false},{id:b(),label:'Original copy of Bid Security (Surety Bond or Notarized Bid Securing Declaration)',category:'Legal',checked:false},{id:b(),label:'Conformity with Technical Specifications (delivery schedule, manpower, after-sales)',category:'Compliance',checked:false},{id:b(),label:"Original duly signed Omnibus Sworn Statement (OSS) with Secretary's Certificate or Special Power of Attorney",category:'Legal',checked:false}];const defaultFinancial=[{id:b(),label:"Prospective Bidder's NFCC computation or Committed Line of Credit from Universal/Commercial Bank",category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Financial Bid Form',category:'Finance',checked:false},{id:b(),label:'Original of duly signed and accomplished Price Schedule(s)',category:'Finance',checked:false}];const defaultOther=[{id:b(),label:'Duly signed Joint Venture Agreement (JVA) or notarized statements from potential JV partners (if applicable)',category:'Legal',checked:false},{id:b(),label:'Certification from relevant government office for foreign bidders claiming reciprocal rights (if applicable)',category:'Compliance',checked:false},{id:b(),label:'Certification from DTI if claiming preference as Domestic Bidder or Domestic Entity (if applicable)',category:'Compliance',checked:false}];const newProj={id:state.nextId++,name,client,desc,technical:defaultTechnical,financial:defaultFinancial,other:defaultOther};state.projects.push(newProj);state.activeProjectId=newProj.id;}closeModal('modal-new-project');renderProjectsSidebar();renderProjectDetail();}
 function promptDeleteProject(id){deletingProjectId=id;const proj=getProject(id);document.getElementById('modal-del-title').textContent='Remove Project?';document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${escHtml(proj.name)}</strong> and all its requirements. This cannot be undone.`;const btn=document.getElementById('modal-del-confirm-btn');btn.textContent='Delete Project';btn.onclick=()=>{state.projects=state.projects.filter(p=>p.id!==deletingProjectId);if(state.activeProjectId===deletingProjectId){state.activeProjectId=state.projects.length?state.projects[0].id:null;}deletingProjectId=null;closeModal('modal-confirm-delete');renderProjectsSidebar();renderProjectDetail();updateStats();};openModal('modal-confirm-delete');}
 function renderOverview(){const el=document.getElementById('overview-content');if(!state.projects.length){el.innerHTML='<div class="empty-state">No projects yet.</div>';return;}let html='';state.projects.forEach(proj=>{const{done,total}=getProjectProgress(proj),pct=total?Math.round(done/total*100):0;html+=`<div style="margin-bottom:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><span style="font-size:13px;font-weight:500;color:var(--text-primary)">${proj.name}</span><span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${proj.client}</span></div><span style="font-size:12px;color:var(--text-secondary)">${done}/${total} complete (${pct}%)</span></div>`;['technical','financial','other'].forEach(type=>{if(!(proj[type]||[]).length)return;html+=`<p class="section-title" style="margin-bottom:8px">${type.charAt(0).toUpperCase()+type.slice(1)}</p><div class="checklist-list" style="margin-bottom:10px">`;(proj[type]||[]).forEach(item=>{html+=`<div class="ci"><div class="ci-header"><div class="cb ${item.checked?'checked':''}"></div><span class="cl ${item.checked?'done':''}">${item.label}</span><span class="ccat">${item.category}</span><span class="sbadge ${item.checked?'s-done':'s-missing'}">${item.checked?'Complete':'Pending'}</span></div></div>`;});html+=`</div>`;});html+=`</div><hr style="border:none;border-top:1px solid var(--border);margin-bottom:20px">`;});el.innerHTML=html;}
 function switchCheckTab(tab){state.activeCheckTab=tab;document.querySelectorAll('#panel-checklist .tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');document.querySelectorAll('#panel-checklist .tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById('pane-'+tab).classList.add('active');if(tab==='overview')renderOverview();}
-
-// ===== STATS =====
 function updateStats(){const all=getAllRequirements(),done=all.filter(r=>r.checked).length,total=all.length;document.getElementById('stat-total').textContent=total;document.getElementById('stat-done-count').textContent=done+' completed';const pct=total?Math.round(done/total*100):0;const bar=document.getElementById('progress-bar');if(bar)bar.style.width=pct+'%';const lbl=document.getElementById('progress-label');if(lbl)lbl.textContent=done+' of '+total+' items completed';}
 
 // ===== TRANSACTIONS =====
@@ -1021,29 +1318,29 @@ function closeModal(id){document.getElementById(id).classList.add('hidden');edit
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});});
 const panelConfig={dashboard:{title:'Dashboard',primary:null,form:null},checklist:{title:'Document Checklist',primary:'+ New Project',form:null},licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},actionplan:{title:'Action Plan',primary:null,form:null},calendar:{title:'Calendar',primary:null,form:null},documents:{title:'Documents',primary:null,form:null},inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},pos:{title:'Point of Sale',primary:null,form:null},transactions:{title:'Transactions',primary:'+ Add Transaction',form:'add-tx-form'},schedule:{title:'Weekly Schedule',primary:null,form:null},admin:{title:'Admin Settings',primary:null,form:null}};
 let currentPanel='dashboard';
-function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}}
+function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}if(name==='documents'){clearGlobalSearch();}}
 function handlePrimaryAction(){if(currentPanel==='checklist'){openNewProjectModal();return;}const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
 function closeForm(id){document.getElementById(id).classList.remove('open');}
 function toggleSwitch(el){const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';el.style.background=isOn?'#d1d5db':'#185FA5';el.querySelector('.tog-t').style.left=isOn?'2px':'18px';}
 
 // ===== POINT OF SALE =====
-function renderPosProducts(){const q=(document.getElementById('pos-search').value||'').toLowerCase();const avail=state.inventory.filter(i=>i.status!=='Discontinued'&&i.status!=='Out of Stock'&&(!q||i.name.toLowerCase().includes(q)));const body=document.getElementById('pos-product-body');if(!avail.length){body.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">No available products found.</td></tr>`;return;}body.innerHTML=avail.map(item=>{const cartItem=state.posCart.find(c=>c.id===item.id);const inCart=cartItem?cartItem.qty:0;return `<tr><td><div class="inv-name-main">${escHtml(item.name)}</div><div class="inv-id">${item.id}</div></td><td><span class="${invStatusClass(item.status)}">${item.qty} left</span></td><td><span class="inv-cost">&#8369;${item.cost.toLocaleString()}</span></td><td><div style="display:flex;align-items:center;gap:6px"><button class="icon-btn" onclick="posCartAdj('${item.id}',-1)" ${inCart===0?'disabled':''} style="width:26px;height:26px;justify-content:center;padding:0;font-size:15px">−</button><span style="min-width:20px;text-align:center;font-size:13px;font-weight:600">${inCart}</span><button class="icon-btn edit-btn" onclick="posCartAdj('${item.id}',1)" ${inCart>=item.qty?'disabled':''} style="width:26px;height:26px;justify-content:center;padding:0;font-size:15px">+</button></div></td></tr>`;}).join('');}
+function renderPosProducts(){const q=(document.getElementById('pos-search').value||'').toLowerCase(),avail=state.inventory.filter(i=>i.status!=='Discontinued'&&i.status!=='Out of Stock'&&(!q||i.name.toLowerCase().includes(q))),body=document.getElementById('pos-product-body');if(!avail.length){body.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">No available products found.</td></tr>`;return;}body.innerHTML=avail.map(item=>{const cartItem=state.posCart.find(c=>c.id===item.id),inCart=cartItem?cartItem.qty:0;return `<tr><td><div class="inv-name-main">${escHtml(item.name)}</div><div class="inv-id">${item.id}</div></td><td><span class="${invStatusClass(item.status)}">${item.qty} left</span></td><td><span class="inv-cost">&#8369;${item.cost.toLocaleString()}</span></td><td><div style="display:flex;align-items:center;gap:6px"><button class="icon-btn" onclick="posCartAdj('${item.id}',-1)" ${inCart===0?'disabled':''} style="width:26px;height:26px;justify-content:center;padding:0;font-size:15px">−</button><span style="min-width:20px;text-align:center;font-size:13px;font-weight:600">${inCart}</span><button class="icon-btn edit-btn" onclick="posCartAdj('${item.id}',1)" ${inCart>=item.qty?'disabled':''} style="width:26px;height:26px;justify-content:center;padding:0;font-size:15px">+</button></div></td></tr>`;}).join('');}
 function posCartAdj(id,delta){const item=state.inventory.find(i=>i.id===id);if(!item)return;let ci=state.posCart.find(c=>c.id===id);if(!ci){if(delta<1)return;ci={id,name:item.name,qty:0,price:item.cost};state.posCart.push(ci);}ci.qty=Math.max(0,Math.min(ci.qty+delta,item.qty));if(ci.qty===0)state.posCart=state.posCart.filter(c=>c.id!==id);renderPosProducts();renderCart();}
 function renderCart(){const el=document.getElementById('pos-cart-items');if(!state.posCart.length){el.innerHTML=`<div style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">Cart is empty</div>`;document.getElementById('pos-subtotal').textContent='&#8369;0';document.getElementById('pos-total').textContent='&#8369;0';return;}const total=state.posCart.reduce((s,c)=>s+c.qty*c.price,0);el.innerHTML=state.posCart.map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--border);font-size:13px"><div style="flex:1"><div style="font-weight:500;color:var(--text-primary)">${escHtml(c.name)}</div><div style="font-size:11px;color:var(--text-tertiary)">${c.qty} × &#8369;${c.price.toLocaleString()}</div></div><div style="font-weight:600;color:var(--text-primary)">&#8369;${(c.qty*c.price).toLocaleString()}</div></div>`).join('');document.getElementById('pos-subtotal').textContent='&#8369;'+total.toLocaleString();document.getElementById('pos-total').textContent='&#8369;'+total.toLocaleString();}
 function clearCart(){state.posCart=[];renderPosProducts();renderCart();}
-function checkoutPos(){if(!state.posCart.length){alert('Cart is empty.');return;}const customer=(document.getElementById('pos-customer').value||'').trim()||'Walk-in Customer';const total=state.posCart.reduce((s,c)=>s+c.qty*c.price,0);const dateStr=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});const items=state.posCart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price}));items.forEach(c=>{const inv=state.inventory.find(i=>i.id===c.id);if(inv){inv.qty=Math.max(0,inv.qty-c.qty);inv.status=autoStatus(inv);}});state.sales.unshift({id:'SALE-'+state.nextId++,date:dateStr,customer,items,total});state.transactions.unshift({id:state.nextId++,date:dateStr,company:'',client:customer,desc:'POS Sale — '+items.map(i=>i.name).join(', ').substring(0,60),amount:total,status:'Paid'});state.posCart=[];document.getElementById('pos-customer').value='';renderInventory();renderCart();renderPosProducts();renderPosSales();renderTransactions();alert('Sale recorded! Inventory updated.');}
+function checkoutPos(){if(!state.posCart.length){alert('Cart is empty.');return;}const customer=(document.getElementById('pos-customer').value||'').trim()||'Walk-in Customer',total=state.posCart.reduce((s,c)=>s+c.qty*c.price,0),dateStr=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}),items=state.posCart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price}));items.forEach(c=>{const inv=state.inventory.find(i=>i.id===c.id);if(inv){inv.qty=Math.max(0,inv.qty-c.qty);inv.status=autoStatus(inv);}});state.sales.unshift({id:'SALE-'+state.nextId++,date:dateStr,customer,items,total});state.transactions.unshift({id:state.nextId++,date:dateStr,company:'',client:customer,desc:'POS Sale — '+items.map(i=>i.name).join(', ').substring(0,60),amount:total,status:'Paid'});state.posCart=[];document.getElementById('pos-customer').value='';renderInventory();renderCart();renderPosProducts();renderPosSales();renderTransactions();alert('Sale recorded! Inventory updated.');}
 function renderPosSales(){const body=document.getElementById('pos-sales-body');if(!state.sales.length){body.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">No sales yet.</td></tr>`;return;}body.innerHTML=state.sales.map(s=>`<tr><td style="color:var(--text-secondary)">${s.date}</td><td>${escHtml(s.customer)}</td><td style="color:var(--text-secondary);font-size:12px">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td><td class="txamt">&#8369;${s.total.toLocaleString()}</td><td><span class="badge b-paid">Paid</span></td></tr>`).join('');}
 function renderPos(){renderPosProducts();renderCart();renderPosSales();}
 
 // ===== NOTIFICATION SYSTEM =====
 let notifReadIds=new Set();
-function gatherNotifications(){const notifs=[];state.licenses.forEach(lic=>{const days=Math.round((new Date(lic.expiry+'T00:00:00')-TODAY)/86400000);const dateStr=new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});if(days<0){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-red',severity:'red',title:lic.name+' has expired',sub:'Expired on '+dateStr,panel:'licenses'});}else if(days<=14){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-red',severity:'red',title:lic.name+' expires in '+days+' day'+(days===1?'':'s'),sub:'Expiry: '+dateStr,panel:'licenses'});}else if(days<=30){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-amber',severity:'amber',title:lic.name+' expiring soon',sub:days+' days left — '+dateStr,panel:'licenses'});}});const overdue=state.transactions.filter(t=>t.status==='Overdue');const pending=state.transactions.filter(t=>t.status==='Pending');overdue.forEach(t=>{notifs.push({id:'tx-'+t.id,group:'Transactions',icon:'💳',iconClass:'ni-red',severity:'red',title:'Overdue payment from '+t.client,sub:'&#8369;'+t.amount.toLocaleString()+' — '+t.desc,panel:'transactions'});});if(pending.length){notifs.push({id:'tx-pending-'+pending.length,group:'Transactions',icon:'💳',iconClass:'ni-amber',severity:'amber',title:pending.length+' payment'+(pending.length>1?'s':'')+' pending',sub:'Total: &#8369;'+pending.reduce((s,t)=>s+t.amount,0).toLocaleString(),panel:'transactions'});}state.inventory.forEach(i=>{if(i.status==='Discontinued')return;if(i.qty===0){notifs.push({id:'inv-out-'+i.id,group:'Inventory',icon:'📦',iconClass:'ni-red',severity:'red',title:i.name+' is out of stock',sub:'Restock required immediately',panel:'inventory'});}else if(i.qty<=(i.lowThreshold||5)){notifs.push({id:'inv-low-'+i.id,group:'Inventory',icon:'📦',iconClass:'ni-amber',severity:'amber',title:i.name+' is running low',sub:i.qty+' units remaining (threshold: '+(i.lowThreshold||5)+')',panel:'inventory'});}});const pendingReqs=getAllRequirements().filter(r=>!r.checked);if(pendingReqs.length){notifs.push({id:'chk-pending',group:'Checklist',icon:'✅',iconClass:'ni-blue',severity:'blue',title:pendingReqs.length+' compliance item'+(pendingReqs.length>1?'s':'')+' pending',sub:'Across '+[...new Set(pendingReqs.map(r=>r.projectName))].length+' project(s)',panel:'checklist'});}return notifs;}
-function renderNotifDropdown(){const all=gatherNotifications();const unread=all.filter(n=>!notifReadIds.has(n.id));const badge=document.getElementById('notif-badge');const btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}const body=document.getElementById('notif-drop-body');if(!all.length){body.innerHTML=`<div class="notif-drop-empty">🎉 All clear! No active notifications.</div>`;return;}const groups={};all.forEach(n=>{if(!groups[n.group])groups[n.group]=[];groups[n.group].push(n);});let html='';Object.entries(groups).forEach(([grp,items])=>{html+=`<div class="notif-group-label">${grp}</div>`;items.forEach(n=>{const isUnread=!notifReadIds.has(n.id);html+=`<div class="notif-row ${isUnread?'unread':''}" onclick="notifRowClick('${n.id}','${n.panel}')"><div class="notif-row-icon ${n.iconClass}">${n.icon}</div><div class="notif-row-body"><div class="notif-row-title">${escHtml(n.title)}</div><div class="notif-row-sub">${escHtml(n.sub)}</div></div>${isUnread?`<div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0;margin-top:6px"></div>`:''}</div>`;});});body.innerHTML=html;}
-function toggleNotifDropdown(e){e.stopPropagation();const dd=document.getElementById('notif-dropdown');const isOpen=dd.classList.contains('open');if(isOpen){dd.classList.remove('open');}else{renderNotifDropdown();dd.classList.add('open');}}
+function gatherNotifications(){const notifs=[];state.licenses.forEach(lic=>{const days=Math.round((new Date(lic.expiry+'T00:00:00')-TODAY)/86400000),dateStr=new Date(lic.expiry+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});if(days<0){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-red',severity:'red',title:lic.name+' has expired',sub:'Expired on '+dateStr,panel:'licenses'});}else if(days<=14){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-red',severity:'red',title:lic.name+' expires in '+days+' day'+(days===1?'':'s'),sub:'Expiry: '+dateStr,panel:'licenses'});}else if(days<=30){notifs.push({id:'lic-'+lic.id,group:'Licenses',icon:'📋',iconClass:'ni-amber',severity:'amber',title:lic.name+' expiring soon',sub:days+' days left — '+dateStr,panel:'licenses'});}});const overdue=state.transactions.filter(t=>t.status==='Overdue'),pending=state.transactions.filter(t=>t.status==='Pending');overdue.forEach(t=>{notifs.push({id:'tx-'+t.id,group:'Transactions',icon:'💳',iconClass:'ni-red',severity:'red',title:'Overdue payment from '+t.client,sub:'₱'+t.amount.toLocaleString()+' — '+t.desc,panel:'transactions'});});if(pending.length){notifs.push({id:'tx-pending-'+pending.length,group:'Transactions',icon:'💳',iconClass:'ni-amber',severity:'amber',title:pending.length+' payment'+(pending.length>1?'s':'')+' pending',sub:'Total: ₱'+pending.reduce((s,t)=>s+t.amount,0).toLocaleString(),panel:'transactions'});}state.inventory.forEach(i=>{if(i.status==='Discontinued')return;if(i.qty===0){notifs.push({id:'inv-out-'+i.id,group:'Inventory',icon:'📦',iconClass:'ni-red',severity:'red',title:i.name+' is out of stock',sub:'Restock required immediately',panel:'inventory'});}else if(i.qty<=(i.lowThreshold||5)){notifs.push({id:'inv-low-'+i.id,group:'Inventory',icon:'📦',iconClass:'ni-amber',severity:'amber',title:i.name+' is running low',sub:i.qty+' units remaining',panel:'inventory'});}});const pendingReqs=getAllRequirements().filter(r=>!r.checked);if(pendingReqs.length){notifs.push({id:'chk-pending',group:'Checklist',icon:'✅',iconClass:'ni-blue',severity:'blue',title:pendingReqs.length+' compliance item'+(pendingReqs.length>1?'s':'')+' pending',sub:'Across '+[...new Set(pendingReqs.map(r=>r.projectName))].length+' project(s)',panel:'checklist'});}return notifs;}
+function renderNotifDropdown(){const all=gatherNotifications(),unread=all.filter(n=>!notifReadIds.has(n.id)),badge=document.getElementById('notif-badge'),btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}const body=document.getElementById('notif-drop-body');if(!all.length){body.innerHTML=`<div class="notif-drop-empty">🎉 All clear! No active notifications.</div>`;return;}const groups={};all.forEach(n=>{if(!groups[n.group])groups[n.group]=[];groups[n.group].push(n);});let html='';Object.entries(groups).forEach(([grp,items])=>{html+=`<div class="notif-group-label">${grp}</div>`;items.forEach(n=>{const isUnread=!notifReadIds.has(n.id);html+=`<div class="notif-row ${isUnread?'unread':''}" onclick="notifRowClick('${n.id}','${n.panel}')"><div class="notif-row-icon ${n.iconClass}">${n.icon}</div><div class="notif-row-body"><div class="notif-row-title">${escHtml(n.title)}</div><div class="notif-row-sub">${n.sub}</div></div>${isUnread?`<div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0;margin-top:6px"></div>`:''}</div>`;});});body.innerHTML=html;}
+function toggleNotifDropdown(e){e.stopPropagation();const dd=document.getElementById('notif-dropdown'),isOpen=dd.classList.contains('open');if(isOpen){dd.classList.remove('open');}else{renderNotifDropdown();dd.classList.add('open');}}
 function closeNotifDropdown(){document.getElementById('notif-dropdown').classList.remove('open');}
 function notifRowClick(id,panel){notifReadIds.add(id);closeNotifDropdown();showPanel(panel);renderNotifDropdown();}
 function markAllRead(){const all=gatherNotifications();all.forEach(n=>notifReadIds.add(n.id));renderNotifDropdown();}
-function updateNotifBadge(){const all=gatherNotifications();const unread=all.filter(n=>!notifReadIds.has(n.id));const badge=document.getElementById('notif-badge');const btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}}
+function updateNotifBadge(){const all=gatherNotifications(),unread=all.filter(n=>!notifReadIds.has(n.id)),badge=document.getElementById('notif-badge'),btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}}
 document.addEventListener('click',e=>{const wrap=document.getElementById('notif-bell-wrap');if(wrap&&!wrap.contains(e.target))closeNotifDropdown();});
 
 // ===== WEEKLY SCHEDULE =====
@@ -1059,22 +1356,31 @@ function getMonday(d){const dt=new Date(d);const day=dt.getDay();const diff=dt.g
 function dateKey(d){return d.toISOString().slice(0,10);}
 function weekDateKey(mon,dayIdx){const d=new Date(mon);d.setDate(d.getDate()+dayIdx);return dateKey(d);}
 function sd(mid,mon,di,type,note){schedData[mid+'_'+weekDateKey(mon,di)]={type,note};}
-const seedWeek=getMonday(new Date(2025,1,23));
-sd(1,seedWeek,0,'office','Office');sd(2,seedWeek,0,'travel','Trip to Ilagan');sd(2,seedWeek,1,'field','Tumaini WO');sd(3,seedWeek,0,'field','Ramos WO');sd(3,seedWeek,1,'field','Ramos WO');sd(3,seedWeek,2,'field','Tumaini WO');sd(3,seedWeek,3,'field','Tumaini WO');sd(3,seedWeek,4,'field','Tumaini WO');sd(4,seedWeek,0,'travel','Trip to Isabela');sd(4,seedWeek,1,'field','Tumaini WO');sd(4,seedWeek,2,'field','Tumaini WO');sd(4,seedWeek,3,'field','Ramos WO');sd(4,seedWeek,4,'field','Ramos WO');sd(5,seedWeek,0,'office','Office');sd(5,seedWeek,1,'office','Office');sd(5,seedWeek,2,'field','Tumaini WO');sd(5,seedWeek,3,'field','Tumaini WO');sd(5,seedWeek,4,'field','Tumaini WO');sd(6,seedWeek,0,'field','Ramos WO');sd(6,seedWeek,1,'field','Ramos WO');sd(7,seedWeek,0,'office','Office');sd(7,seedWeek,1,'field','PRWO');sd(7,seedWeek,2,'field','Ramos WO');sd(7,seedWeek,3,'field','Ramos WO');sd(8,seedWeek,0,'field','Ramos WO');sd(8,seedWeek,1,'field','Ramos WO');sd(8,seedWeek,2,'field','PRWO');sd(8,seedWeek,3,'office','Office');sd(8,seedWeek,4,'field','Ramos WO');sd(9,seedWeek,0,'field','Ramos WO');sd(9,seedWeek,1,'field','Ramos WO');sd(9,seedWeek,2,'field','Ramos WO');sd(9,seedWeek,3,'field','Ramos WO');sd(9,seedWeek,4,'office','Office');sd(10,seedWeek,0,'office','Office');sd(10,seedWeek,1,'office','Office');sd(10,seedWeek,2,'field','Ramos WO');sd(10,seedWeek,3,'field','Ramos WO');sd(10,seedWeek,4,'field','Ramos WO');sd(11,seedWeek,0,'travel','Trip to Isabela');sd(11,seedWeek,1,'field','Tumaini WO');sd(11,seedWeek,2,'field','Tumaini WO');sd(11,seedWeek,3,'field','Tumaini WO');sd(11,seedWeek,4,'field','Tumaini WO');
+const staticWeek=new Date(2026,3,27);
+sd(1,staticWeek,0,'office','Office');sd(1,staticWeek,1,'office','Office');sd(1,staticWeek,2,'office','Office');sd(1,staticWeek,3,'office','Office');sd(1,staticWeek,4,'office','Office');
+sd(2,staticWeek,0,'field','Trip to Isabela');sd(2,staticWeek,1,'field','Trip to Isabela');sd(2,staticWeek,2,'field','Trip to Isabela');sd(2,staticWeek,3,'field','Trip to Isabela');sd(2,staticWeek,4,'field','Trip to Isabela');
+sd(3,staticWeek,0,'field','Ramos WD');sd(3,staticWeek,1,'field','Ramos WD');sd(3,staticWeek,2,'field','Ramos WD');sd(3,staticWeek,3,'field','Ramos WD');sd(3,staticWeek,4,'field','Ramos WD');
+sd(4,staticWeek,0,'field','Trip to Isabela');sd(4,staticWeek,1,'field','Trip to Isabela');sd(4,staticWeek,2,'field','Trip to Isabela');sd(4,staticWeek,3,'field','Trip to Isabela');sd(4,staticWeek,4,'field','Trip to Isabela');
+sd(5,staticWeek,0,'office','Office');sd(5,staticWeek,1,'office','Office');sd(5,staticWeek,2,'office','Office');sd(5,staticWeek,3,'office','Office');sd(5,staticWeek,4,'office','Office');
+sd(6,staticWeek,0,'field','Ramos WD');sd(6,staticWeek,1,'field','Ramos WD');sd(6,staticWeek,2,'field','Ramos WD');sd(6,staticWeek,3,'field','Ramos WD');sd(6,staticWeek,4,'field','Ramos WD');
+sd(7,staticWeek,0,'office','Office');sd(7,staticWeek,1,'travel','PAWD');sd(7,staticWeek,2,'office','Office');sd(7,staticWeek,3,'office','Office');sd(7,staticWeek,4,'office','Office');
+sd(8,staticWeek,0,'field','Ramos WD');sd(8,staticWeek,1,'field','Ramos WD');sd(8,staticWeek,2,'field','Ramos WD');sd(8,staticWeek,3,'field','Ramos WD');sd(8,staticWeek,4,'field','Ramos WD');
+sd(9,staticWeek,0,'field','Ramos WD');sd(9,staticWeek,1,'field','Ramos WD');sd(9,staticWeek,2,'field','Ramos WD');sd(9,staticWeek,3,'field','Ramos WD');sd(9,staticWeek,4,'field','Ramos WD');
+sd(10,staticWeek,0,'office','Office');
+sd(11,staticWeek,0,'field','Trip to Isabela');sd(11,staticWeek,1,'field','Tumaini WD');sd(11,staticWeek,2,'field','Tumaini WD');sd(11,staticWeek,3,'field','Tumaini WD');sd(11,staticWeek,4,'field','Tumaini WD');
 let schedCurrentMonday=getMonday(new Date());
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
 function schedTypeTag(type,note){if(!type||type==='none')return '<span class="sched-tag sched-tag-other">—</span>';const map={office:{cls:'sched-tag-office',label:'🏢 Office'},field:{cls:'sched-tag-field',label:'🔧 WO'},travel:{cls:'sched-tag-travel',label:'🚗 Travel'},wfh:{cls:'sched-tag-wfh',label:'🏠 WFH'},leave:{cls:'sched-tag-leave',label:'🌴 Leave'}};const t=map[type]||{cls:'sched-tag-other',label:type};return '<span class="sched-tag '+t.cls+'">'+t.label+'</span>'+(note?'<div class="sched-entry-note">'+escHtml(note)+'</div>':'');}
-function renderSched(){const mon=schedCurrentMonday;const fri=new Date(mon);fri.setDate(fri.getDate()+4);const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();const today=new Date();today.setHours(0,0,0,0);let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const isToday=d.getTime()===today.getTime();thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${SCHED_DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;}thead+=`</tr>`;document.getElementById('sched-thead').innerHTML=thead;let tbody='';schedMembers.forEach(m=>{tbody+=`<tr><td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const key=m.id+'_'+dateKey(d);const entry=schedData[key];const isToday=d.getTime()===today.getTime();const dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}</div></td>`;}tbody+=`</tr>`;});document.getElementById('sched-tbody').innerHTML=tbody;}
-
+function renderSched(){const mon=schedCurrentMonday,fri=new Date(mon);fri.setDate(fri.getDate()+4);const fmt=d=>d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});document.getElementById('sched-week-label').textContent=fmt(mon)+' – '+fmt(fri)+', '+fri.getFullYear();const today=new Date();today.setHours(0,0,0,0);let thead=`<tr><th><div class="sched-th-inner"><span class="sched-dow">Member</span></div></th>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const isToday=d.getTime()===today.getTime();thead+=`<th><div class="sched-th-inner${isToday?' today-col':''}"><span class="sched-dow">${SCHED_DAYS[i]}</span><span class="sched-date">${d.getDate()}</span><span style="font-size:10px;color:var(--text-tertiary)">${d.toLocaleDateString('en-PH',{month:'short'})}</span></div></th>`;}thead+=`</tr>`;document.getElementById('sched-thead').innerHTML=thead;let tbody='';schedMembers.forEach(m=>{tbody+=`<tr><td><div class="sched-person-cell"><div class="sched-person-name">${escHtml(m.name)}</div>${m.code?`<div class="sched-person-code">(${escHtml(m.code)})</div>`:''}</div></td>`;for(let i=0;i<5;i++){const d=new Date(mon);d.setDate(d.getDate()+i);const key=m.id+'_'+dateKey(d),entry=schedData[key],isToday=d.getTime()===today.getTime(),dayStr=d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});tbody+=`<td><div class="sched-entry${isToday?' today-col-cell':''}" onclick="openSchedEntry(${m.id},'${dateKey(d)}','${escHtml(m.name).replace(/'/g,"\\'")}','${dayStr}')">${entry?schedTypeTag(entry.type,entry.note):'<span class="sched-add-hint">+ add</span>'}</div></td>`;}tbody+=`</tr>`;});document.getElementById('sched-tbody').innerHTML=tbody;}
 let _schedEditMid=null,_schedEditDate=null,_schedEditType=null;
 function openSchedEntry(mid,dateStr,name,dayLabel){_schedEditMid=mid;_schedEditDate=dateStr;_schedEditType=null;const entry=schedData[mid+'_'+dateStr];document.getElementById('sched-entry-title').textContent=name;document.getElementById('sched-entry-sub').textContent=dayLabel;document.getElementById('sched-entry-note-input').value=entry?.note||'';document.getElementById('sched-range-from').value=dateStr;document.getElementById('sched-range-to').value=dateStr;document.querySelectorAll('.sched-type-opt').forEach(el=>{el.classList.toggle('selected',entry&&el.dataset.type===entry.type);});if(entry)_schedEditType=entry.type;document.getElementById('sched-entry-modal').classList.remove('hidden');}
 function selectSchedType(el){document.querySelectorAll('.sched-type-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');_schedEditType=el.dataset.type;}
-function saveSchedEntry(){if(!_schedEditMid||!_schedEditDate)return;const note=document.getElementById('sched-entry-note-input').value.trim();const rangeFrom=document.getElementById('sched-range-from').value;const rangeTo=document.getElementById('sched-range-to').value;const type=_schedEditType;let datesToFill=[];if(rangeFrom&&rangeTo&&rangeFrom<=rangeTo){const cur=new Date(rangeFrom+'T00:00:00');const end=new Date(rangeTo+'T00:00:00');while(cur<=end){const dow=cur.getDay();if(dow!==0&&dow!==6){datesToFill.push(dateKey(cur));}cur.setDate(cur.getDate()+1);}}else{datesToFill=[_schedEditDate];}datesToFill.forEach(dk=>{if(type&&type!=='none'){schedData[_schedEditMid+'_'+dk]={type,note};}else{delete schedData[_schedEditMid+'_'+dk];}});closeSchedModal();renderSched();}
+function saveSchedEntry(){if(!_schedEditMid||!_schedEditDate)return;const note=document.getElementById('sched-entry-note-input').value.trim(),rangeFrom=document.getElementById('sched-range-from').value,rangeTo=document.getElementById('sched-range-to').value,type=_schedEditType;let datesToFill=[];if(rangeFrom&&rangeTo&&rangeFrom<=rangeTo){const cur=new Date(rangeFrom+'T00:00:00'),end=new Date(rangeTo+'T00:00:00');while(cur<=end){const dow=cur.getDay();if(dow!==0&&dow!==6){datesToFill.push(dateKey(cur));}cur.setDate(cur.getDate()+1);}}else{datesToFill=[_schedEditDate];}datesToFill.forEach(dk=>{if(type&&type!=='none'){schedData[_schedEditMid+'_'+dk]={type,note};}else{delete schedData[_schedEditMid+'_'+dk];}});closeSchedModal();renderSched();}
 function clearSchedEntry(){if(_schedEditMid&&_schedEditDate)delete schedData[_schedEditMid+'_'+_schedEditDate];closeSchedModal();renderSched();}
 function closeSchedModal(){document.getElementById('sched-entry-modal').classList.add('hidden');}
 function openSchedMemberModal(){document.getElementById('sched-new-name').value='';document.getElementById('sched-new-code').value='';document.getElementById('sched-member-modal').classList.remove('hidden');}
-function addSchedMember(){const name=document.getElementById('sched-new-name').value.trim();if(!name)return;const code=document.getElementById('sched-new-code').value.trim().toUpperCase();const newId=Math.max(...schedMembers.map(m=>m.id),0)+1;schedMembers.push({id:newId,name,code});document.getElementById('sched-member-modal').classList.add('hidden');renderSched();}
+function addSchedMember(){const name=document.getElementById('sched-new-name').value.trim();if(!name)return;const code=document.getElementById('sched-new-code').value.trim().toUpperCase(),newId=Math.max(...schedMembers.map(m=>m.id),0)+1;schedMembers.push({id:newId,name,code});document.getElementById('sched-member-modal').classList.add('hidden');renderSched();}
 
 // ===== INIT =====
 initCalendarEvents();renderDashboardCal();renderFullCal();renderProjectsSidebar();
