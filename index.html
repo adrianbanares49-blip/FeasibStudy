@@ -151,157 +151,6 @@ nav{padding:8px 0;flex:1}
 .cal-add-event button:hover{background:var(--blue-dark)}
 .no-date-selected{text-align:center;padding:20px;color:var(--text-tertiary);font-size:12px}
 
-/* ===== DOCUMENTS ===== */
-.docs-global-search-wrap{position:relative;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.docs-global-search-input{flex:1;padding:10px 14px 10px 38px;border:1.5px solid var(--border-strong);border-radius:var(--rl);background:var(--bg-primary);color:var(--text-primary);font-size:13px;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
-.docs-global-search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.12)}
-.docs-global-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-tertiary)}
-.docs-global-search-clear{padding:8px 14px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--bg-primary);color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap;display:none}
-.docs-global-search-clear:hover{background:var(--bg-secondary)}
-.docs-global-search-clear.visible{display:block}
-.docs-global-results{display:none;flex-direction:column;flex:1;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;min-height:300px}
-.docs-global-results.visible{display:flex}
-.docs-global-results-header{padding:12px 18px;border-bottom:1px solid var(--border);background:var(--blue-light);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.docs-global-results-info{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--blue)}
-.docs-global-results-info strong{font-weight:700}
-.docs-global-results-sort{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
-.docs-global-results-sort select{padding:4px 8px;border:1px solid var(--border-strong);border-radius:6px;font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);cursor:pointer}
-.docs-global-results-sort select:focus{border-color:var(--blue)}
-.docs-global-results-body{padding:16px 18px;overflow-y:auto;flex:1}
-.docs-global-folder-group{margin-bottom:20px}
-.docs-global-folder-group:last-child{margin-bottom:0}
-.docs-global-folder-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.docs-global-folder-label svg{color:var(--blue)}
-.docs-global-folder-label .folder-doc-count{margin-left:auto;font-size:10px;font-weight:600;background:var(--blue-light);color:var(--blue);padding:2px 7px;border-radius:8px}
-.docs-global-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.docs-global-flat-list{display:flex;flex-direction:column;gap:6px}
-.docs-flat-row{display:flex;align-items:center;gap:12px;padding:9px 12px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .14s}
-.docs-flat-row:hover{border-color:#B5D4F4;background:var(--blue-light)}
-.docs-flat-row-icon{font-size:22px;flex-shrink:0}
-.docs-flat-row-info{flex:1;min-width:0}
-.docs-flat-row-name{font-size:13px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.docs-flat-row-name mark{background:#FFF176;color:inherit;border-radius:2px;padding:0 1px}
-.docs-flat-row-meta{font-size:11px;color:var(--text-tertiary);margin-top:2px}
-.docs-flat-row-folder{font-size:11px;font-weight:500;color:var(--blue);background:var(--blue-light);padding:2px 8px;border-radius:6px;flex-shrink:0;white-space:nowrap}
-.docs-flat-row-del{padding:4px 6px;border-radius:5px;border:1px solid transparent;background:transparent;cursor:pointer;color:var(--text-tertiary);font-size:11px;flex-shrink:0;transition:all .12s}
-.docs-flat-row-del:hover{color:var(--red);border-color:#F09595;background:var(--red-light)}
-.docs-no-results{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px;color:var(--text-tertiary);text-align:center}
-.docs-no-results-icon{font-size:36px;margin-bottom:12px;opacity:.35}
-.docs-no-results-text{font-size:13px}
-.docs-no-results-sub{font-size:12px;margin-top:6px;color:var(--text-tertiary)}
-mark.search-hl{background:#FFF59D;color:var(--text-primary);border-radius:2px;padding:0 2px}
-.docs-layout{display:flex;gap:0;min-height:500px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.docs-sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--border);background:var(--bg-secondary);display:flex;flex-direction:column}
-.docs-sidebar-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.docs-sidebar-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em}
-.folder-add-btn{width:22px;height:22px;border-radius:5px;border:1px solid var(--border-strong);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:14px;line-height:1}
-.folder-add-btn:hover{background:var(--blue-light);border-color:#B5D4F4;color:var(--blue)}
-.folder-list{flex:1;padding:8px 0;overflow-y:auto}
-.folder-item{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--text-secondary);user-select:none;position:relative}
-.folder-item:hover{background:rgba(0,0,0,0.04);color:var(--text-primary)}
-.folder-item.active{background:var(--blue-light);color:var(--blue);font-weight:500}
-.folder-item svg{flex-shrink:0;width:15px;height:15px}
-.folder-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.folder-item-count{font-size:10px;color:var(--text-tertiary);background:var(--bg-tertiary);padding:1px 5px;border-radius:8px;flex-shrink:0}
-.folder-item.active .folder-item-count{background:rgba(24,95,165,0.15);color:var(--blue)}
-.folder-del{opacity:0;width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);flex-shrink:0}
-.folder-item:hover .folder-del{opacity:1}
-.folder-del:hover{background:var(--red-light);color:var(--red)}
-.docs-main{flex:1;display:flex;flex-direction:column;min-width:0}
-.docs-main-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:8px}
-.docs-folder-title{font-size:14px;font-weight:500;color:var(--text-primary);display:flex;align-items:center;gap:8px}
-.docs-folder-title svg{color:var(--blue)}
-.docs-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.docs-search-input{padding:6px 10px 6px 30px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);width:180px;position:relative}
-.docs-search-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(24,95,165,0.1)}
-.docs-search-wrap{position:relative;display:flex;align-items:center}
-.docs-search-wrap svg{position:absolute;left:8px;pointer-events:none;color:var(--text-tertiary)}
-.docs-body{flex:1;padding:16px 18px;overflow-y:auto}
-.docs-empty{text-align:center;padding:48px 20px}
-.docs-empty-icon{font-size:40px;margin-bottom:12px;opacity:.3}
-.docs-empty-text{font-size:13px;color:var(--text-tertiary);margin-bottom:16px}
-.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.doc-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;transition:all .15s;position:relative}
-.doc-card:hover{border-color:#B5D4F4;background:var(--blue-light)}
-.doc-card-icon{font-size:28px;margin-bottom:8px}
-.doc-card-name{font-size:12px;font-weight:500;color:var(--text-primary);word-break:break-word;margin-bottom:4px}
-.doc-card-meta{font-size:10px;color:var(--text-tertiary)}
-.doc-card-del{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);cursor:pointer;border:none;background:transparent;opacity:0}
-.doc-card:hover .doc-card-del{opacity:1}
-.doc-card-del:hover{background:var(--red-light);color:var(--red)}
-.docs-search-results-bar{display:flex;align-items:center;gap:8px;padding:8px 18px;background:var(--blue-light);border-bottom:1px solid #B5D4F4;font-size:12px;color:var(--blue)}
-.docs-no-folder{display:flex;align-items:center;justify-content:center;flex:1;color:var(--text-tertiary);font-size:13px;flex-direction:column;gap:8px;padding:40px}
-.upload-zone{border:2px dashed var(--border-strong);border-radius:var(--rl);padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
-.upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:var(--blue-light)}
-.upload-zone-icon{font-size:28px;margin-bottom:8px;opacity:.5}
-.upload-zone-text{font-size:13px;color:var(--text-secondary)}
-.upload-zone-sub{font-size:11px;color:var(--text-tertiary);margin-top:4px}
-.folder-name-input{flex:1;padding:3px 6px;border:1px solid var(--blue);border-radius:4px;font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary);min-width:0}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
-.modal-overlay.hidden{display:none}
-.modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
-.modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
-.modal-footer-right{display:flex;gap:8px}
-.inv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.inv-search-bar{display:flex;gap:8px;margin-bottom:16px;align-items:center}
-.inv-search-bar input{flex:1;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
-.inv-search-bar input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.1)}
-.inv-search-bar select{padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
-.inv-table-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.inv-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
-.inv-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
-.inv-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
-.inv-table tr:last-child td{border-bottom:none}
-.inv-table tr:hover td{background:var(--bg-secondary)}
-.inv-name-main{font-weight:500;font-size:13px;color:var(--text-primary)}
-.inv-id{font-size:11px;color:var(--text-tertiary);margin-top:1px;font-family:monospace}
-.is-active{background:var(--green-light);color:var(--green)}
-.is-low{background:var(--amber-light);color:var(--amber)}
-.is-out{background:var(--red-light);color:var(--red)}
-.is-disc{background:var(--bg-tertiary);color:var(--text-secondary)}
-.inv-qty{font-weight:600;font-size:13px}
-.inv-cost{font-weight:600;font-size:13px}
-.inv-total{font-size:12px;color:var(--text-tertiary);margin-top:1px}
-.hidden{display:none!important}
-.lic-group{margin-bottom:28px}
-.lic-group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);margin-bottom:10px}
-.lic-group-header-core{background:linear-gradient(135deg,#E6F1FB,#f0f7ff);border:1px solid #c3dcf5}
-.lic-group-header-industry{background:linear-gradient(135deg,#EAF3DE,#f3f9ec);border:1px solid #bcd99a}
-.lic-group-header-safety{background:linear-gradient(135deg,#FAEEDA,#fdf5e8);border:1px solid #f5cc85}
-.lic-group-icon{font-size:18px;flex-shrink:0}
-.lic-group-label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
-.lic-group-count{margin-left:auto;font-size:11px;font-weight:600;padding:2px 8px;border-radius:8px}
-.lic-summary-bar{display:flex;gap:12px;margin-bottom:20px;padding:12px 16px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl)}
-.lic-sum-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
-.lic-sum-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.notif-bell-wrap{position:relative;display:inline-flex;align-items:center}
-.notif-bell-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:background .15s,color .15s;position:relative}
-.notif-bell-btn:hover{background:var(--bg-secondary);color:var(--text-primary)}
-.notif-bell-btn.has-unread{color:var(--blue)}
-.notif-badge{position:absolute;top:-5px;right:-5px;min-width:16px;height:16px;border-radius:8px;background:#E24B4A;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--bg-primary);display:none}
-.notif-badge.visible{display:flex}
-.notif-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:340px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);box-shadow:0 8px 32px rgba(0,0,0,0.13);z-index:200;display:none;overflow:hidden}
-.notif-dropdown.open{display:block}
-.notif-drop-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 10px;border-bottom:1px solid var(--border)}
-.notif-drop-title{font-size:13px;font-weight:600;color:var(--text-primary)}
-.notif-drop-clear{font-size:11px;color:var(--blue);cursor:pointer;padding:2px 4px;border-radius:4px}
-.notif-drop-clear:hover{background:var(--blue-light)}
-.notif-drop-body{max-height:360px;overflow-y:auto}
-.notif-group-label{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.07em;padding:10px 16px 4px}
-.notif-row{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
-.notif-row:last-child{border-bottom:none}
-.notif-row:hover{background:var(--bg-secondary)}
-.notif-row.unread{background:var(--blue-light)}
-.notif-row.unread:hover{background:#d4e8f8}
-.notif-row-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;margin-top:1px}
-.ni-red{background:var(--red-light)}.ni-amber{background:var(--amber-light)}.ni-blue{background:var(--blue-light)}.ni-green{background:var(--green-light)}
-.notif-row-body{flex:1;min-width:0}
-.notif-row-title{font-size:12px;font-weight:500;color:var(--text-primary);line-height:1.35}
-.notif-row-sub{font-size:11px;color:var(--text-tertiary);margin-top:2px}
-.notif-drop-empty{text-align:center;padding:28px 16px;color:var(--text-tertiary);font-size:13px}
-.notif-drop-footer{border-top:1px solid var(--border);padding:10px 16px;text-align:center;font-size:12px;color:var(--blue);cursor:pointer}
-.notif-drop-footer:hover{background:var(--bg-secondary)}
 /* ===== WEEKLY SCHEDULE ===== */
 .sched-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
 .sched-week-nav{display:flex;align-items:center;gap:8px}
@@ -421,7 +270,6 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <div class="ni" onclick="showPanel('licenses')"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Licenses</span><span class="nbadge" id="expiry-badge">2</span></div>
       <div class="ni" onclick="showPanel('actionplan')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 3h12M2 6h8M2 9h10M2 12h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="13" cy="11" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M12.2 11l.6.6 1.2-1.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Action Plan</span></div>
       <div class="ni" onclick="showPanel('calendar')"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Calendar</span></div>
-      <div class="ni" onclick="showPanel('documents')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 3.5A1.5 1.5 0 013.5 2h4l2 2h3A1.5 1.5 0 0114 5.5v7A1.5 1.5 0 0112.5 14h-9A1.5 1.5 0 012 12.5v-9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>Documents</span></div>
       <div class="ni" onclick="showPanel('inventory')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 5l6-3 6 3v6l-6 3-6-3V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 2v12M2 5l6 3 6-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Inventory</span><span class="nbadge" id="inv-alert-badge" style="display:none">0</span></div>
       <div class="ni" onclick="showPanel('pos')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4 1v2M12 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Point of Sale</span></div>
       <div class="ni" onclick="showPanel('schedule')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 7h14M5 3V1M11 3V1M5 10h2M9 10h2M5 13h2M9 13h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Schedule</span></div>
@@ -521,46 +369,6 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
           <div class="cal-side-panel">
             <div class="cal-side-card"><div id="cal-day-content"><div class="no-date-selected"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;opacity:.3"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><div>Click a date to view<br>or add events</div></div></div></div>
             <div class="cal-side-card"><div class="cal-side-title">Upcoming Events</div><div id="cal-upcoming-list"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Documents -->
-      <div class="panel" id="panel-documents">
-        <div class="docs-global-search-wrap">
-          <svg class="docs-global-search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <input class="docs-global-search-input" type="text" id="docs-global-search" placeholder="Search all documents across every folder…" oninput="handleGlobalSearch()" autocomplete="off">
-          <button class="docs-global-search-clear" id="docs-global-clear" onclick="clearGlobalSearch()">✕ Clear</button>
-        </div>
-        <div class="docs-global-results" id="docs-global-results">
-          <div class="docs-global-results-header">
-            <div class="docs-global-results-info" id="docs-global-results-info"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></div>
-            <div class="docs-global-results-sort"><span>Sort by:</span><select id="docs-global-sort" onchange="handleGlobalSearch()"><option value="name">Name</option><option value="folder">Folder</option><option value="date">Date</option></select><span style="margin-left:6px">View:</span><select id="docs-global-view" onchange="handleGlobalSearch()"><option value="list">List</option><option value="grid">Grid (by folder)</option></select></div>
-          </div>
-          <div class="docs-global-results-body" id="docs-global-results-body"></div>
-        </div>
-        <div class="docs-layout" id="docs-layout-normal">
-          <div class="docs-sidebar">
-            <div class="docs-sidebar-header"><span class="docs-sidebar-title">Folders</span><button class="folder-add-btn" onclick="startAddFolder()" title="New folder">+</button></div>
-            <div class="folder-list" id="folder-list"></div>
-          </div>
-          <div class="docs-main">
-            <div id="docs-no-folder-msg" class="docs-no-folder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="opacity:.25"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span style="color:var(--text-tertiary);font-size:13px">Select or create a folder to get started</span></div>
-            <div id="docs-folder-view" style="display:none;flex-direction:column;flex:1">
-              <div class="docs-main-header">
-                <div class="docs-folder-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2h9A1.5 1.5 0 0121 9.5v9A1.5 1.5 0 0119.5 20h-15A1.5 1.5 0 013 18.5v-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="docs-active-folder-name"></span></div>
-                <div class="docs-actions">
-                  <div class="docs-search-wrap"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><input class="docs-search-input" type="text" id="docs-search" placeholder="Filter in folder…" oninput="renderDocsView()"></div>
-                  <label class="btn btnsm" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="margin-right:4px;vertical-align:-1px"><path d="M8 2v8M5 7l3 3 3-3M2 12v1.5A.5.5 0 002.5 14h11a.5.5 0 00.5-.5V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload File<input type="file" id="file-input-hidden" multiple style="display:none" onchange="handleFileUpload(this)"></label>
-                  <button class="btn btnsm btndanger" onclick="promptDeleteFolder()">Delete Folder</button>
-                </div>
-              </div>
-              <div id="docs-search-results-bar" class="docs-search-results-bar" style="display:none"></div>
-              <div class="docs-body">
-                <div class="upload-zone" id="upload-drop-zone" onclick="document.getElementById('file-input-hidden').click()"><div class="upload-zone-icon">📎</div><div class="upload-zone-text">Drop files here or click to upload</div><div class="upload-zone-sub">Supports any file type</div></div>
-                <div id="docs-grid-container"><div class="docs-empty" id="docs-empty-msg"><div class="docs-empty-icon">📄</div><div class="docs-empty-text">No documents yet. Upload files to get started.</div></div><div class="docs-grid" id="docs-grid" style="display:none"></div></div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -750,11 +558,6 @@ const state={
     {id:5017,done:true,action:'Requesting for VFD Training',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
   ],
   sales:[],posCart:[],calendarEvents:{},
-  folders:[
-    {id:'f1',name:'Business Permits',docs:[{id:'d1',name:'Mayors Permit 2025.pdf',type:'pdf',size:'1.2 MB',date:'Apr 10, 2026'},{id:'d2',name:'Zoning Clearance.pdf',type:'pdf',size:'845 KB',date:'Apr 11, 2026'}]},
-    {id:'f2',name:'BIR Documents',docs:[{id:'d3',name:'BIR COR.pdf',type:'pdf',size:'612 KB',date:'Apr 12, 2026'}]},
-    {id:'f3',name:'HR Compliance',docs:[]}
-  ],
   activeFolderId:null,nextId:6000,calYear:2026,calMonth:3,selectedDate:null,editingInvId:null
 };
 
