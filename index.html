@@ -150,7 +150,71 @@ nav{padding:8px 0;flex:1}
 .cal-add-event button{padding:7px;border-radius:var(--r);border:none;background:var(--blue);color:#fff;font-size:12px;cursor:pointer;font-family:inherit}
 .cal-add-event button:hover{background:var(--blue-dark)}
 .no-date-selected{text-align:center;padding:20px;color:var(--text-tertiary);font-size:12px}
-
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
+.modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
+.modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.modal-footer-right{display:flex;gap:8px}
+.inv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.inv-search-bar{display:flex;gap:8px;margin-bottom:16px;align-items:center}
+.inv-search-bar input{flex:1;padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
+.inv-search-bar input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.1)}
+.inv-search-bar select{padding:8px 12px;border:1px solid var(--border-strong);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--bg-primary);color:var(--text-primary)}
+.inv-table-wrap{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.inv-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.inv-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
+.inv-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.inv-table tr:last-child td{border-bottom:none}
+.inv-table tr:hover td{background:var(--bg-secondary)}
+.inv-name-main{font-weight:500;font-size:13px;color:var(--text-primary)}
+.inv-id{font-size:11px;color:var(--text-tertiary);margin-top:1px;font-family:monospace}
+.is-active{background:var(--green-light);color:var(--green)}
+.is-low{background:var(--amber-light);color:var(--amber)}
+.is-out{background:var(--red-light);color:var(--red)}
+.is-disc{background:var(--bg-tertiary);color:var(--text-secondary)}
+.inv-qty{font-weight:600;font-size:13px}
+.inv-cost{font-weight:600;font-size:13px}
+.inv-total{font-size:12px;color:var(--text-tertiary);margin-top:1px}
+.hidden{display:none!important}
+.lic-group{margin-bottom:28px}
+.lic-group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);margin-bottom:10px}
+.lic-group-header-core{background:linear-gradient(135deg,#E6F1FB,#f0f7ff);border:1px solid #c3dcf5}
+.lic-group-header-industry{background:linear-gradient(135deg,#EAF3DE,#f3f9ec);border:1px solid #bcd99a}
+.lic-group-header-safety{background:linear-gradient(135deg,#FAEEDA,#fdf5e8);border:1px solid #f5cc85}
+.lic-group-icon{font-size:18px;flex-shrink:0}
+.lic-group-label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.lic-group-count{margin-left:auto;font-size:11px;font-weight:600;padding:2px 8px;border-radius:8px}
+.lic-summary-bar{display:flex;gap:12px;margin-bottom:20px;padding:12px 16px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--rl)}
+.lic-sum-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
+.lic-sum-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.notif-bell-wrap{position:relative;display:inline-flex;align-items:center}
+.notif-bell-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:background .15s,color .15s;position:relative}
+.notif-bell-btn:hover{background:var(--bg-secondary);color:var(--text-primary)}
+.notif-bell-btn.has-unread{color:var(--blue)}
+.notif-badge{position:absolute;top:-5px;right:-5px;min-width:16px;height:16px;border-radius:8px;background:#E24B4A;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--bg-primary);display:none}
+.notif-badge.visible{display:flex}
+.notif-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:340px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);box-shadow:0 8px 32px rgba(0,0,0,0.13);z-index:200;display:none;overflow:hidden}
+.notif-dropdown.open{display:block}
+.notif-drop-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 10px;border-bottom:1px solid var(--border)}
+.notif-drop-title{font-size:13px;font-weight:600;color:var(--text-primary)}
+.notif-drop-clear{font-size:11px;color:var(--blue);cursor:pointer;padding:2px 4px;border-radius:4px}
+.notif-drop-clear:hover{background:var(--blue-light)}
+.notif-drop-body{max-height:360px;overflow-y:auto}
+.notif-group-label{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.07em;padding:10px 16px 4px}
+.notif-row{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.notif-row:last-child{border-bottom:none}
+.notif-row:hover{background:var(--bg-secondary)}
+.notif-row.unread{background:var(--blue-light)}
+.notif-row.unread:hover{background:#d4e8f8}
+.notif-row-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;margin-top:1px}
+.ni-red{background:var(--red-light)}.ni-amber{background:var(--amber-light)}.ni-blue{background:var(--blue-light)}.ni-green{background:var(--green-light)}
+.notif-row-body{flex:1;min-width:0}
+.notif-row-title{font-size:12px;font-weight:500;color:var(--text-primary);line-height:1.35}
+.notif-row-sub{font-size:11px;color:var(--text-tertiary);margin-top:2px}
+.notif-drop-empty{text-align:center;padding:28px 16px;color:var(--text-tertiary);font-size:13px}
+.notif-drop-footer{border-top:1px solid var(--border);padding:10px 16px;text-align:center;font-size:12px;color:var(--blue);cursor:pointer}
+.notif-drop-footer:hover{background:var(--bg-secondary)}
 /* ===== WEEKLY SCHEDULE ===== */
 .sched-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
 .sched-week-nav{display:flex;align-items:center;gap:8px}
@@ -429,8 +493,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <!-- Admin -->
       <div class="panel" id="panel-admin">
         <p class="section-title">System Overview</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-          <div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Collection Rate</div><div class="pb-wrap"><div class="pb-fill" style="width:84%;background:#639922"></div></div><div style="font-size:12px;color:var(--text-tertiary)">&#8369;42,500 of &#8369;50,500 collected (84%)</div></div>
+        <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px">
           <div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">License Status</div><div class="pb-wrap"><div class="pb-fill" id="lic-progress-bar" style="width:0%;background:var(--blue)"></div></div><div style="font-size:12px;color:var(--text-tertiary)" id="lic-progress-label">Loading…</div></div>
         </div>
         <p class="section-title">User Management</p>
@@ -562,7 +625,6 @@ const state={
 };
 
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function highlightMatch(text,query){if(!query)return escHtml(text);const escaped=query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const re=new RegExp('('+escaped+')','gi');return escHtml(text).replace(re,'<mark class="search-hl">$1</mark>');}
 
 // ===== ACTION PLAN =====
 const AP_STATUSES=['Not Started','In Progress','Complete','On Hold','Overdue'];
@@ -588,25 +650,6 @@ function addInventoryItem(){const name=document.getElementById('new-inv-name').v
 function openEditInventory(id){const item=state.inventory.find(i=>i.id===id);if(!item)return;state.editingInvId=id;document.getElementById('edit-inv-name').value=item.name;document.getElementById('edit-inv-status').value=item.status;document.getElementById('edit-inv-qty').value=item.qty;document.getElementById('edit-inv-cost').value=item.cost;document.getElementById('edit-inv-threshold').value=item.lowThreshold||5;openModal('modal-inventory');}
 function saveInventoryItem(){const item=state.inventory.find(i=>i.id===state.editingInvId);if(!item)return;item.name=document.getElementById('edit-inv-name').value.trim()||item.name;item.status=document.getElementById('edit-inv-status').value;item.qty=parseInt(document.getElementById('edit-inv-qty').value)||0;item.cost=parseFloat(document.getElementById('edit-inv-cost').value)||0;item.lowThreshold=parseInt(document.getElementById('edit-inv-threshold').value)||5;if(item.status!=='Discontinued')item.status=autoStatus(item);closeModal('modal-inventory');renderInventory();}
 function deleteInventoryItem(){state.inventory=state.inventory.filter(i=>i.id!==state.editingInvId);closeModal('modal-inventory');renderInventory();}
-
-// ===== DOCUMENTS =====
-function fileIcon(type){const t=(type||'').toLowerCase();if(t==='pdf')return '📄';if(['doc','docx'].includes(t))return '📝';if(['xls','xlsx'].includes(t))return '📊';if(['jpg','jpeg','png','gif','webp','svg'].includes(t))return '🖼️';if(['zip','rar','7z'].includes(t))return '🗜️';if(['ppt','pptx'].includes(t))return '📑';return '📎';}
-function getFileExt(name){const p=name.split('.');return p.length>1?p[p.length-1].toLowerCase():'file';}
-function formatBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
-function getActiveFolder(){return state.folders.find(f=>f.id===state.activeFolderId);}
-function renderFolderList(){const list=document.getElementById('folder-list');if(!state.folders.length){list.innerHTML='<div class="empty-state" style="padding:20px 14px;font-size:12px">No folders yet.<br>Click + to create one.</div>';return;}list.innerHTML=state.folders.map(f=>`<div class="folder-item ${f.id===state.activeFolderId?'active':''}" onclick="selectFolder('${f.id}')"><svg viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="${f.id===state.activeFolderId?'rgba(24,95,165,0.12)':'none'}"/></svg><span class="folder-item-name">${escHtml(f.name)}</span><span class="folder-item-count">${f.docs.length}</span><span class="folder-del" onclick="event.stopPropagation();promptDeleteFolder('${f.id}')">✕</span></div>`).join('');}
-function selectFolder(id){state.activeFolderId=id;const searchEl=document.getElementById('docs-search');if(searchEl)searchEl.value='';renderFolderList();renderDocsView();}
-function renderDocsView(){const folder=getActiveFolder();document.getElementById('docs-no-folder-msg').style.display=folder?'none':'flex';const view=document.getElementById('docs-folder-view');if(!folder){view.style.display='none';return;}view.style.display='flex';document.getElementById('docs-active-folder-name').textContent=folder.name;const searchEl=document.getElementById('docs-search');const q=(searchEl?searchEl.value:'').trim().toLowerCase();const grid=document.getElementById('docs-grid'),emptyMsg=document.getElementById('docs-empty-msg');const resultsBar=document.getElementById('docs-search-results-bar');let docsToShow=folder.docs.map(d=>({...d,_folderId:folder.id}));if(q.length>=1){docsToShow=docsToShow.filter(d=>d.name.toLowerCase().includes(q));resultsBar.style.display='flex';resultsBar.innerHTML=`<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> ${docsToShow.length} result${docsToShow.length!==1?'s':''} for "<strong>${escHtml(q)}</strong>" in this folder &nbsp;<span style="color:var(--text-secondary);cursor:pointer;text-decoration:underline" onclick="document.getElementById('docs-search').value='';renderDocsView()">Clear</span>`;}else{resultsBar.style.display='none';}if(!docsToShow.length){emptyMsg.style.display='block';emptyMsg.querySelector('.docs-empty-text').textContent=q.length>=1?'No documents match your search.':'No documents yet. Upload files to get started.';grid.style.display='none';return;}emptyMsg.style.display='none';grid.style.display='grid';grid.innerHTML=docsToShow.map(doc=>`<div class="doc-card" title="${escHtml(doc.name)}"><button class="doc-card-del" onclick="deleteDocument('${doc.id}','${doc._folderId}')">✕</button><div class="doc-card-icon">${fileIcon(doc.type)}</div><div class="doc-card-name">${q?highlightMatch(doc.name,q):escHtml(doc.name)}</div><div class="doc-card-meta">${doc.size} · ${doc.date}</div></div>`).join('');}
-function handleGlobalSearch(){const q=(document.getElementById('docs-global-search').value||'').trim();const clearBtn=document.getElementById('docs-global-clear');const resultsPanel=document.getElementById('docs-global-results');const normalLayout=document.getElementById('docs-layout-normal');if(q.length===0){clearBtn.classList.remove('visible');resultsPanel.classList.remove('visible');normalLayout.style.display='';return;}clearBtn.classList.add('visible');resultsPanel.classList.add('visible');normalLayout.style.display='none';const qLower=q.toLowerCase();const sortBy=(document.getElementById('docs-global-sort')||{}).value||'name';const viewMode=(document.getElementById('docs-global-view')||{}).value||'list';let matches=[];state.folders.forEach(f=>{f.docs.forEach(doc=>{if(doc.name.toLowerCase().includes(qLower)){matches.push({...doc,_folderId:f.id,_folderName:f.name});}});});if(sortBy==='name'){matches.sort((a,b)=>a.name.localeCompare(b.name));}else if(sortBy==='folder'){matches.sort((a,b)=>a._folderName.localeCompare(b._folderName)||a.name.localeCompare(b.name));}else if(sortBy==='date'){matches.sort((a,b)=>(b.date||'').localeCompare(a.date||''));}const infoEl=document.getElementById('docs-global-results-info');if(matches.length===0){infoEl.innerHTML=`<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>No results for "<strong>${escHtml(q)}</strong>"</span>`;}else{infoEl.innerHTML=`<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span><strong>${matches.length}</strong> result${matches.length!==1?'s':''} for "<strong>${escHtml(q)}</strong>" across <strong>${[...new Set(matches.map(m=>m._folderId))].length}</strong> folder${[...new Set(matches.map(m=>m._folderId))].length!==1?'s':''}</span>`;}const bodyEl=document.getElementById('docs-global-results-body');if(matches.length===0){bodyEl.innerHTML=`<div class="docs-no-results"><div class="docs-no-results-icon">🔍</div><div class="docs-no-results-text">No documents match "<strong>${escHtml(q)}</strong>"</div><div class="docs-no-results-sub">Try a different keyword or check another folder.</div></div>`;return;}if(viewMode==='grid'){const grouped={};matches.forEach(doc=>{if(!grouped[doc._folderId])grouped[doc._folderId]={name:doc._folderName,docs:[]};grouped[doc._folderId].docs.push(doc);});let html='';Object.values(grouped).forEach(group=>{html+=`<div class="docs-global-folder-group"><div class="docs-global-folder-label"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>${escHtml(group.name)}<span class="folder-doc-count">${group.docs.length}</span></div><div class="docs-global-results-grid">${group.docs.map(doc=>`<div class="doc-card" style="border-color:#B5D4F4;background:var(--blue-light)" title="${escHtml(doc.name)}"><button class="doc-card-del" onclick="deleteDocument('${doc.id}','${doc._folderId}');handleGlobalSearch()">✕</button><div class="doc-card-icon">${fileIcon(doc.type)}</div><div class="doc-card-name">${highlightMatch(doc.name,q)}</div><div class="doc-card-meta">${doc.size} · ${doc.date}</div></div>`).join('')}</div></div>`;});bodyEl.innerHTML=html;}else{let html='<div class="docs-global-flat-list">';matches.forEach(doc=>{html+=`<div class="docs-flat-row" onclick="goToDocFolder('${doc._folderId}')"><div class="docs-flat-row-icon">${fileIcon(doc.type)}</div><div class="docs-flat-row-info"><div class="docs-flat-row-name">${highlightMatch(doc.name,q)}</div><div class="docs-flat-row-meta">${doc.size} · ${doc.date}</div></div><span class="docs-flat-row-folder">📁 ${escHtml(doc._folderName)}</span><button class="docs-flat-row-del" onclick="event.stopPropagation();deleteDocumentGlobal('${doc.id}','${doc._folderId}')"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 1.5l8 8M9.5 1.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>`;});html+='</div>';bodyEl.innerHTML=html;}}
-function clearGlobalSearch(){document.getElementById('docs-global-search').value='';handleGlobalSearch();}
-function goToDocFolder(folderId){clearGlobalSearch();selectFolder(folderId);}
-function deleteDocumentGlobal(docId,folderId){const folder=state.folders.find(f=>f.id===folderId);if(!folder)return;folder.docs=folder.docs.filter(d=>d.id!==docId);renderFolderList();handleGlobalSearch();}
-function startAddFolder(){const list=document.getElementById('folder-list'),inputRow=document.createElement('div');inputRow.className='folder-item';inputRow.style.padding='6px 10px';inputRow.innerHTML=`<svg viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M1 4.5A1.5 1.5 0 012.5 3h3l1.5 1.5H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><input class="folder-name-input" id="new-folder-input" type="text" placeholder="Folder name" maxlength="50">`;list.appendChild(inputRow);const inp=document.getElementById('new-folder-input');inp.focus();inp.addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddFolder(inp.value);if(e.key==='Escape')inputRow.remove();});inp.addEventListener('blur',()=>{setTimeout(()=>{if(document.getElementById('new-folder-input'))inputRow.remove();},150);});}
-function confirmAddFolder(name){name=(name||'').trim();if(!name)return;const id='f'+state.nextId++;state.folders.push({id,name,docs:[]});renderFolderList();selectFolder(id);}
-function promptDeleteFolder(id){const folder=id?state.folders.find(f=>f.id===id):getActiveFolder();if(!folder)return;document.getElementById('modal-del-title').textContent='Delete Folder?';document.getElementById('modal-del-body').innerHTML=`This will permanently delete <strong>${escHtml(folder.name)}</strong> and all its ${folder.docs.length} document(s). This cannot be undone.`;const btn=document.getElementById('modal-del-confirm-btn');btn.textContent='Delete Folder';btn.onclick=()=>{state.folders=state.folders.filter(f=>f.id!==folder.id);if(state.activeFolderId===folder.id)state.activeFolderId=null;closeModal('modal-confirm-delete');renderFolderList();renderDocsView();};openModal('modal-confirm-delete');}
-function handleFileUpload(input){const folder=getActiveFolder();if(!folder||!input.files.length)return;const today=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});Array.from(input.files).forEach(file=>{folder.docs.push({id:'d'+state.nextId++,name:file.name,type:getFileExt(file.name),size:formatBytes(file.size),date:today});});input.value='';renderFolderList();renderDocsView();}
-function deleteDocument(docId,folderId){const folder=state.folders.find(f=>f.id===folderId);if(!folder)return;folder.docs=folder.docs.filter(d=>d.id!==docId);renderFolderList();renderDocsView();}
-document.addEventListener('DOMContentLoaded',()=>{const zone=document.getElementById('upload-drop-zone');if(!zone)return;zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');const folder=getActiveFolder();if(!folder)return;const today=TODAY.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});Array.from(e.dataTransfer.files).forEach(file=>{folder.docs.push({id:'d'+state.nextId++,name:file.name,type:getFileExt(file.name),size:formatBytes(file.size),date:today});});renderDocsView();renderFolderList();});});
 
 // ===== CALENDAR =====
 function getEventKey(y,m,d){return y+'-'+m+'-'+d;}
@@ -641,14 +684,13 @@ const panelConfig={
   licenses:{title:'License Monitor',primary:'+ Add License',form:'add-lic-form'},
   actionplan:{title:'Action Plan',primary:null,form:null},
   calendar:{title:'Calendar',primary:null,form:null},
-  documents:{title:'Documents',primary:null,form:null},
   inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},
   pos:{title:'Point of Sale',primary:null,form:null},
   schedule:{title:'Weekly Schedule',primary:null,form:null},
   admin:{title:'Admin Settings',primary:null,form:null}
 };
 let currentPanel='dashboard';
-function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}if(name==='documents'){clearGlobalSearch();}}
+function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}}
 function handlePrimaryAction(){const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
 function closeForm(id){document.getElementById(id).classList.remove('open');}
 function toggleSwitch(el){const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';el.style.background=isOn?'#d1d5db':'#185FA5';el.querySelector('.tog-t').style.left=isOn?'2px':'18px';}
@@ -717,8 +759,6 @@ initCalendarEvents();
 renderDashboardCal();
 renderFullCal();
 renderLicenses();
-renderFolderList();
-renderDocsView();
 renderInventory();
 updateNotifBadge();
 renderActionPlan();
