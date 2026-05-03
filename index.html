@@ -639,6 +639,25 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
         <!-- KPI Row -->
         <div class="analytics-kpi-row" id="analytics-kpi-row"></div>
 
+             <!-- Overall Bids Won vs Lost -->
+            <div class="analytics-full-card" style="margin-bottom:16px">
+              <div class="analytics-card-header">
+                <div>
+                  <div class="analytics-card-title">Overall Bids Won vs. Lost</div>
+                  <div class="analytics-card-sub" id="bids-wl-sub">Number of contracts</div>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center">
+                  <div style="display:flex;gap:12px">
+                    <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#4CAF50;display:inline-block"></span>Won</span>
+                    <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A;display:inline-block"></span>Lost</span>
+                    <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#EF9F27;display:inline-block"></span>Pending</span>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:16px;position:relative;height:280px">
+                <canvas id="chart-bids-winloss-trend" role="img" aria-label="Overall bids won vs lost chart"></canvas>
+              </div>
+            </div>
         <!-- Category Bar Charts -->
         <div class="analytics-full-card" style="margin-bottom:16px">
           <div class="analytics-card-header">
@@ -925,8 +944,7 @@ const state={
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ===== ANALYTICS =====
-let chartCategoryRevenue=null,chartBidWinloss=null,chartCatTrend=null;
-
+let chartCategoryRevenue=null,chartBidWinloss=null,chartCatTrend=null,chartBidsWLTrend=null;
 function setAnalyticsPeriod(p,btn){
   state.analyticsPeriod=p;
   document.querySelectorAll('.analytics-tab').forEach(t=>t.classList.remove('active'));
@@ -1018,6 +1036,71 @@ function renderCategoryRevenueChart(){
         y:{ticks:{callback:v=>'₱'+v+'K',font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
       }
     }
+  });
+}
+function renderBidsWinLossTrend(){
+  const bids=getFilteredBids();
+  let labels=[];
+  let winData=[],lossData=[],pendingData=[];
+
+  if(state.analyticsPeriod==='monthly'){
+    labels=MONTHS_LIST;
+    const yr=2025;
+    labels.forEach((m,mi)=>{
+      winData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Win'&&d.getMonth()===mi;}).length);
+      lossData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Loss'&&d.getMonth()===mi;}).length);
+      pendingData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Pending'&&d.getMonth()===mi;}).length);
+    });
+    document.getElementById('bids-wl-sub').textContent='Monthly · Number of contracts';
+  } else if(state.analyticsPeriod==='quarterly'){
+    labels=['Q1 2025','Q2 2025','Q3 2025','Q4 2025','Q1 2026'];
+    [[0,1,2],[3,4,5],[6,7,8],[9,10,11],[0,1,2]].forEach((months,qi)=>{
+      const yr=qi<4?2025:2026;
+      winData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Win'&&d.getFullYear()===yr&&months.includes(d.getMonth());}).length);
+      lossData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Loss'&&d.getFullYear()===yr&&months.includes(d.getMonth());}).length);
+      pendingData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Pending'&&d.getFullYear()===yr&&months.includes(d.getMonth());}).length);
+    });
+    document.getElementById('bids-wl-sub').textContent='Quarterly · Number of contracts';
+  } else {
+    labels=['2024','2025','2026'];
+    [2024,2025,2026].forEach(yr=>{
+      winData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Win'&&d.getFullYear()===yr;}).length);
+      lossData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Loss'&&d.getFullYear()===yr;}).length);
+      pendingData.push(bids.filter(b=>{const d=new Date(b.date);return b.result==='Pending'&&d.getFullYear()===yr;}).length);
+    });
+    document.getElementById('bids-wl-sub').textContent='Yearly · Number of contracts';
+  }
+
+  const ctx=document.getElementById('chart-bids-winloss-trend').getContext('2d');
+  if(chartBidsWLTrend)chartBidsWLTrend.destroy();
+  chartBidsWLTrend=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Won',data:winData,backgroundColor:'#4CAF50CC',borderColor:'#4CAF50',borderWidth:1.5,borderRadius:4},
+        {label:'Lost',data:lossData,backgroundColor:'#E24B4ACC',borderColor:'#E24B4A',borderWidth:1.5,borderRadius:4},
+        {label:'Pending',data:pendingData,backgroundColor:'#EF9F27CC',borderColor:'#EF9F27',borderWidth:1.5,borderRadius:4}
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            label:(ctx)=>' '+ctx.dataset.label+': '+ctx.parsed.y+' contract'+(ctx.parsed.y!==1?'s':'')
+          }
+        },
+        datalabels:{display:false}
+      },
+      scales:{
+        x:{ticks:{font:{size:11},autoSkip:false,maxRotation:0},grid:{display:false}},
+        y:{ticks:{stepSize:1,font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
+      }
+    },
+    plugins:typeof ChartDataLabels!=='undefined'?[ChartDataLabels]:[]
   });
 }
 
@@ -1196,6 +1279,7 @@ function renderBidRecordsTable(){
 
 function renderAnalytics(){
   renderAnalyticsKPI();
+  renderBidsWinLossTrend();
   renderCategoryRevenueChart();
   renderBidWinLossChart();
   renderRankingList();
