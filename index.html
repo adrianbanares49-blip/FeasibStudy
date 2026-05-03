@@ -6,6 +6,7 @@
 <title>RESI</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script> src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -419,7 +420,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
     </div>
     <nav>
       <div class="ni active" onclick="showPanel('dashboard')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/></svg><span>Dashboard</span></div>
-      <div class="ni" onclick="showPanel('analytics')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="1" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg><span>Analytics</span></div>
+      <div class="ni" onclick="showPanel('analytics')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="1" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg><span>Analytics</span></div>      
       <div class="ni" onclick="showPanel('licenses')"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Licenses</span><span class="nbadge" id="expiry-badge">2</span></div>
       <div class="ni" onclick="showPanel('actionplan')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 3h12M2 6h8M2 9h10M2 12h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="13" cy="11" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M12.2 11l.6.6 1.2-1.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Action Plan</span></div>
       <div class="ni" onclick="showPanel('calendar')"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Calendar</span></div>
@@ -640,7 +641,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
                 <div class="analytics-card-sub">Contract bid outcomes by category</div>
               </div>
             </div>
-            <div style="padding:16px;position:relative;height:260px">
+            <div style="padding:16px;position:relative;height:290px">
               <canvas id="chart-bid-winloss" role="img" aria-label="Bidding win loss chart">Win loss by category.</canvas>
             </div>
           </div>
@@ -1003,31 +1004,58 @@ function renderCategoryRevenueChart(){
 function renderBidWinLossChart(){
   const bids=getFilteredBids();
   const winData=ANALYTICS_CATEGORIES.map(c=>bids.filter(b=>b.category===c.label&&b.result==='Win').length);
-  const lossData=ANALYTICS_CATEGORIES.map(c=>bids.filter(b=>b.category===c.label&&b.result==='Loss').length);
+  const total=winData.reduce((s,v)=>s+v,0);
   const labels=ANALYTICS_CATEGORIES.map(c=>c.short);
+  const colors=ANALYTICS_CATEGORIES.map(c=>c.color);
 
   const ctx=document.getElementById('chart-bid-winloss').getContext('2d');
   if(chartBidWinloss)chartBidWinloss.destroy();
   chartBidWinloss=new Chart(ctx,{
-    type:'bar',
+    type:'doughnut',
     data:{
-      labels,
-      datasets:[
-        {label:'Wins',data:winData,backgroundColor:'#3B6D11CC',borderColor:'#3B6D11',borderWidth:1.5,borderRadius:3},
-        {label:'Losses',data:lossData,backgroundColor:'#A32D2DCC',borderColor:'#A32D2D',borderWidth:1.5,borderRadius:3}
-      ]
+      labels:ANALYTICS_CATEGORIES.map(c=>{
+        const wins=bids.filter(b=>b.category===c.label&&b.result==='Win').length;
+        const pct=total>0?Math.round(wins/total*100):0;
+        return c.label+' ('+pct+'%)';
+      }),
+      datasets:[{
+        data:winData,
+        backgroundColor:['#4A90D9','#4CAF50','#FFA500','#FF69B4','#E24B4A'],
+        borderColor:'#ffffff',
+        borderWidth:3,
+        hoverOffset:8
+      }]
     },
     options:{
-      responsive:true,maintainAspectRatio:false,
+      responsive:true,
+      maintainAspectRatio:false,
+      cutout:'60%',
       plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{label:(ctx)=>ctx.dataset.label+': '+ctx.parsed.y}}
-      },
-      scales:{
-        x:{ticks:{font:{size:10},autoSkip:false,maxRotation:20},grid:{display:false}},
-        y:{ticks:{stepSize:1,font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
+        legend:{
+          display:true,
+          position:'bottom',
+          labels:{
+            font:{size:11},
+            padding:16,
+            boxWidth:12,
+            boxHeight:12,
+            usePointStyle:true,
+            pointStyle:'circle'
+          }
+        },
+        tooltip:{
+          callbacks:{
+            label:(ctx)=>{
+              const val=ctx.parsed;
+              const pct=total>0?Math.round(val/total*100):0;
+              return ' '+pct+'% — '+val+' win'+(val!==1?'s':'');
+            }
+          }
+        },
+        datalabels:{display:false}
       }
-    }
+    },
+    plugins:[ChartDataLabels]
   });
 }
 
