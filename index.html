@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RESI</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -24,19 +25,19 @@ body{font-family:'Poppins',sans-serif;background:var(--color-background-tertiary
   --r:8px;--rl:12px;
 }
 .app{display:flex;min-height:100vh}
-.sidebar{width:240px;background: #273617;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10;overflow-y:auto}
+.sidebar{width:240px;background:#273617;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10;overflow-y:auto}
 .logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
 .logo-t{font-size:15px;font-weight:500;color:#FFFFFF}
 .logo-s{font-size:11px;color:#FFFFFF;margin-top:2px}
 nav{padding:8px 0;flex:1}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:#FFFFFF ;border-left:2px solid transparent;user-select:none}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:#FFFFFF;border-left:2px solid transparent;user-select:none}
 .ni:hover{background:var(--bg-secondary);color:#528A28}
 .ni.active{background:var(--bg-secondary);color:#528A28;border-left-color:#528A28;font-weight:500}
 .ni svg{width:16px;height:16px;flex-shrink:0}
 .nbadge{margin-left:auto;background:#E24B4A;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
 .sf{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0}
-.sf .nm{font-size:13px;font-weight:500}
-.sf .em{font-size:11px;color:#FFFFFF(--text-tertiary)}
+.sf .nm{font-size:13px;font-weight:500;color:#fff}
+.sf .em{font-size:11px;color:#aaa}
 .main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:var(--bg-primary);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
 .ptitle{font-size:16px;font-weight:500}
@@ -191,7 +192,7 @@ nav{padding:8px 0;flex:1}
 .lic-sum-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .notif-bell-wrap{position:relative;display:inline-flex;align-items:center}
 .notif-bell-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:#273617;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#ffffff;transition:background .15s,color .15s;position:relative}
-.notif-bell-btn:hover{background:#1a2410;color:#000000}
+.notif-bell-btn:hover{background:#1a2410}
 .notif-bell-btn.has-unread{color:#FFFFFF}
 .notif-badge{position:absolute;top:-5px;right:-5px;min-width:16px;height:16px;border-radius:8px;background:#E24B4A;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--bg-primary);display:none}
 .notif-badge.visible{display:flex}
@@ -321,8 +322,6 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 .b-paid{background:var(--green-light);color:var(--green)}
 .b-pend{background:var(--amber-light);color:var(--amber)}
 .b-over{background:var(--red-light);color:var(--red)}
-
-/* ===== AP PROGRESS MONITOR (Dashboard) ===== */
 .ap-monitor-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:20px}
 .ap-monitor-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border)}
 .ap-monitor-title{font-size:13px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:8px}
@@ -353,6 +352,59 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 .amp-dot-notstarted{background:#9ca3af}
 .amp-dot-onhold{background:#ca8a04}
 .amp-dot-overdue{background:#E24B4A}
+
+/* ===== ANALYTICS STYLES ===== */
+.analytics-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.analytics-tabs{display:flex;gap:4px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:3px}
+.analytics-tab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text-secondary);transition:all .15s;border:none;background:transparent;font-family:inherit}
+.analytics-tab.active{background:var(--bg-primary);color:var(--text-primary);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.analytics-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.analytics-kpi{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:16px}
+.analytics-kpi-val{font-size:24px;font-weight:600;line-height:1;margin-bottom:4px}
+.analytics-kpi-lbl{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em}
+.analytics-kpi-sub{font-size:12px;margin-top:6px;font-weight:500}
+.analytics-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.analytics-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.analytics-card-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.analytics-card-title{font-size:13px;font-weight:600;color:var(--text-primary)}
+.analytics-card-sub{font-size:11px;color:var(--text-tertiary);margin-top:2px}
+.analytics-card-body{padding:16px}
+.analytics-full-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
+.cat-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto}
+.cat-tab{padding:10px 16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text-secondary);white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s}
+.cat-tab.active{color:#273617;border-bottom-color:#528A28;font-weight:600}
+.cat-tab:hover{color:var(--text-primary);background:var(--bg-secondary)}
+.bid-table{width:100%;border-collapse:collapse;font-size:13px}
+.bid-table th{text-align:left;padding:9px 14px;font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;background:var(--bg-secondary);border-bottom:1px solid var(--border)}
+.bid-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-primary)}
+.bid-table tr:last-child td{border-bottom:none}
+.bid-table tr:hover td{background:var(--bg-secondary)}
+.bid-win{background:var(--green-light);color:var(--green);font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px}
+.bid-loss{background:var(--red-light);color:var(--red);font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px}
+.bid-pending{background:var(--amber-light);color:var(--amber);font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px}
+.ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ranking-row:last-child{border-bottom:none}
+.ranking-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.rank-1{background:#FFD700;color:#7A5F00}
+.rank-2{background:#C0C0C0;color:#555}
+.rank-3{background:#CD7F32;color:#6B3A1F}
+.rank-other{background:var(--bg-tertiary);color:var(--text-secondary)}
+.ranking-bar-wrap{flex:1;height:8px;background:var(--bg-tertiary);border-radius:4px;overflow:hidden}
+.ranking-bar-fill{height:100%;border-radius:4px;transition:width .5s}
+.bid-cat-group{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:2px}
+.bid-cat-group-header{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg-secondary);cursor:pointer;user-select:none;font-size:12px;font-weight:600}
+.bid-cat-group-header:hover{background:var(--bg-tertiary)}
+.bid-cat-group-header input[type=checkbox]{width:15px;height:15px;cursor:pointer;flex-shrink:0;accent-color:var(--blue)}
+.bid-cat-group-body{padding:4px 8px 6px 32px;display:flex;flex-direction:column;gap:3px}
+.bid-subcat-row{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:12px;color:var(--text-secondary);cursor:pointer}
+.bid-subcat-row input[type=checkbox]{width:13px;height:13px;cursor:pointer;accent-color:var(--blue)}
+.bid-subcat-row:hover{color:var(--text-primary)}
+.bid-cat-chevron{margin-left:auto;font-size:10px;transition:transform .15s;color:var(--text-tertiary)}
+.bid-cat-group.open .bid-cat-chevron{transform:rotate(180deg)}
+.bid-cat-group-body{display:none}
+.bid-cat-group.open .bid-cat-group-body{display:flex}
+.bid-selected-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;min-height:0}
+.bid-sel-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:10px;background:var(--blue-light);color:var(--blue)}
 </style>
 </head>
 <body>
@@ -367,6 +419,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <div class="ni" onclick="showPanel('inventory')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 5l6-3 6 3v6l-6 3-6-3V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 2v12M2 5l6 3 6-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Inventory</span><span class="nbadge" id="inv-alert-badge" style="display:none">0</span></div>
       <div class="ni" onclick="showPanel('pos')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4 1v2M12 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Point of Sale</span></div>
       <div class="ni" onclick="showPanel('schedule')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 7h14M5 3V1M11 3V1M5 10h2M9 10h2M5 13h2M9 13h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Schedule</span></div>
+      <div class="ni" onclick="showPanel('analytics')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="1" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg><span>Analytics</span></div>
       <div class="ni" onclick="showPanel('admin')"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Admin</span></div>
     </nav>
     <div class="sf"><div class="nm">Admin User</div><div class="em">admin@company.com</div></div>
@@ -396,8 +449,6 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <div class="panel active" id="panel-dashboard">
         <div class="notif notif-d"><div class="ndot dot-r"></div><strong>2 licenses expiring within 30 days.</strong>&nbsp; Review in the Licenses tab.</div>
         <div id="dash-inv-alerts"></div>
-
-        <!-- ACTION PLAN PROGRESS MONITOR -->
         <div class="ap-monitor-card" id="dash-ap-monitor">
           <div class="ap-monitor-header">
             <div class="ap-monitor-title">
@@ -418,7 +469,6 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
             <div class="ap-mon-status-row" id="ap-mon-status-row"></div>
           </div>
         </div>
-
         <div class="stats-grid">
           <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
         </div>
@@ -542,6 +592,99 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
         </div>
       </div>
 
+      <!-- ===== ANALYTICS PANEL ===== -->
+      <div class="panel" id="panel-analytics">
+        <div class="analytics-header-row">
+          <div>
+            <div style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:2px">Sales & Bidding Analytics</div>
+            <div style="font-size:12px;color:var(--text-tertiary)">Track performance by product/service category</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="analytics-tabs">
+              <button class="analytics-tab active" onclick="setAnalyticsPeriod('monthly',this)">Monthly</button>
+              <button class="analytics-tab" onclick="setAnalyticsPeriod('quarterly',this)">Quarterly</button>
+              <button class="analytics-tab" onclick="setAnalyticsPeriod('yearly',this)">Yearly</button>
+            </div>
+            <button class="btn btnp btnsm" onclick="openBidModal()">+ Add Bid Record</button>
+          </div>
+        </div>
+
+        <!-- KPI Row -->
+        <div class="analytics-kpi-row" id="analytics-kpi-row"></div>
+
+        <!-- Category Bar Charts -->
+        <div class="analytics-full-card" style="margin-bottom:16px">
+          <div class="analytics-card-header">
+            <div>
+              <div class="analytics-card-title">Revenue by Category</div>
+              <div class="analytics-card-sub">Sales performance across all product/service lines</div>
+            </div>
+          </div>
+          <div style="padding:16px;position:relative;height:280px">
+            <canvas id="chart-category-revenue" role="img" aria-label="Revenue by product category bar chart">Revenue by category breakdown.</canvas>
+          </div>
+        </div>
+
+        <div class="analytics-grid-2">
+          <!-- Bid Win/Loss chart -->
+          <div class="analytics-card">
+            <div class="analytics-card-header">
+              <div>
+                <div class="analytics-card-title">Bidding Win/Loss Rate</div>
+                <div class="analytics-card-sub">Contract bid outcomes by category</div>
+              </div>
+            </div>
+            <div style="padding:16px;position:relative;height:260px">
+              <canvas id="chart-bid-winloss" role="img" aria-label="Bidding win loss chart">Win loss by category.</canvas>
+            </div>
+          </div>
+
+          <!-- Product Ranking -->
+          <div class="analytics-card">
+            <div class="analytics-card-header">
+              <div>
+                <div class="analytics-card-title">Product/Service Ranking</div>
+                <div class="analytics-card-sub" id="ranking-period-label">Highest to lowest revenue</div>
+              </div>
+            </div>
+            <div style="padding:16px" id="ranking-list"></div>
+          </div>
+        </div>
+
+        <!-- Category Detail Tabs -->
+        <div class="analytics-full-card">
+          <div class="analytics-card-header">
+            <div>
+              <div class="analytics-card-title">Category Breakdown</div>
+              <div class="analytics-card-sub">Monthly trend per category</div>
+            </div>
+          </div>
+          <div class="cat-tabs" id="cat-tabs"></div>
+          <div style="padding:16px;position:relative;height:260px">
+            <canvas id="chart-cat-trend" role="img" aria-label="Category trend chart">Category monthly trend.</canvas>
+          </div>
+        </div>
+
+        <!-- Bid Records Table -->
+        <div class="analytics-full-card" style="margin-top:16px">
+          <div class="analytics-card-header">
+            <div>
+              <div class="analytics-card-title">Bid Contract Records</div>
+              <div class="analytics-card-sub">All recorded bids — wins, losses, and pending</div>
+            </div>
+            <button class="btn btnsm" onclick="openBidModal()">+ Add</button>
+          </div>
+          <div style="overflow:auto">
+            <table class="bid-table" id="bid-records-table">
+              <thead><tr>
+                <th>Date</th><th>Client / Project</th><th>Category</th><th>Amount (₱)</th><th>Result</th><th>Notes</th><th style="width:60px"></th>
+              </tr></thead>
+              <tbody id="bid-records-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- Admin -->
       <div class="panel" id="panel-admin">
         <p class="section-title">System Overview</p>
@@ -564,6 +707,40 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 <div class="modal-overlay hidden" id="modal-confirm-delete"><div class="modal" style="width:380px"><div class="modal-title" id="modal-del-title">Remove?</div><p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px" id="modal-del-body">This cannot be undone.</p><div class="modal-footer"><div></div><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-confirm-delete')">Cancel</button><button class="btn btndanger" id="modal-del-confirm-btn">Delete</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-license"><div class="modal"><div class="modal-title">Edit License</div><div class="form-row"><div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div><div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div></div><div class="fg" style="margin-bottom:12px"><label>Category</label><select id="edit-lic-cat"><option value="Core Legal">Core Legal</option><option value="Industry-Specific">Industry-Specific</option><option value="Safety &amp; Training">Safety &amp; Training</option><option value="Other">Other</option></select></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteLicense()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-license')">Cancel</button><button class="btn btnp" onclick="saveLicense()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-inventory"><div class="modal"><div class="modal-title">Edit Inventory Item</div><div class="form-row"><div class="fg"><label>Item Name</label><input type="text" id="edit-inv-name"></div><div class="fg"><label>Status</label><select id="edit-inv-status"><option value="Active">Active</option><option value="Low Stock">Low Stock</option><option value="Out of Stock">Out of Stock</option><option value="Discontinued">Discontinued</option></select></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>No. of Products</label><input type="number" id="edit-inv-qty" min="0"></div><div class="fg"><label>Unit Cost (&#8369;)</label><input type="number" id="edit-inv-cost" min="0" step="0.01"></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>Low Stock Alert at &#8804;</label><input type="number" id="edit-inv-threshold" min="1"></div><div class="fg"></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteInventoryItem()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-inventory')">Cancel</button><button class="btn btnp" onclick="saveInventoryItem()">Save Changes</button></div></div></div></div>
+
+<!-- BID MODAL -->
+<div class="modal-overlay hidden" id="modal-bid">
+  <div class="modal" style="width:520px">
+    <div class="modal-title" id="bid-modal-title">Add Bid Record</div>
+    <div class="form-row">
+      <div class="fg"><label>Date</label><input type="date" id="bid-date"></div>
+      <div class="fg"><label>Result</label>
+        <select id="bid-result">
+          <option value="Win">Win</option>
+          <option value="Loss">Loss</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:12px"><label>Client / Project Name</label><input type="text" id="bid-client" placeholder="e.g. Cabanatuan City WD — Pump Installation"></div>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Category & Products/Services <span style="font-size:11px;color:var(--text-tertiary);font-weight:400">(select one or more)</span></label>
+      <div id="bid-cat-select-wrap" style="border:1px solid var(--border-strong);border-radius:var(--r);background:var(--bg-primary);padding:6px 8px;display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Amount (₱)</label>
+      <input type="number" id="bid-amount" placeholder="0" min="0">
+    </div>
+    <div class="fg" style="margin-bottom:12px"><label>Notes</label><input type="text" id="bid-notes" placeholder="Optional notes…"></div>
+    <div class="modal-footer">
+      <button class="btn btndanger" id="bid-delete-btn" style="display:none" onclick="deleteBidRecord()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn" onclick="closeModal('modal-bid')">Cancel</button>
+        <button class="btn btnp" onclick="saveBidRecord()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="sched-modal-overlay hidden" id="sched-entry-modal">
   <div class="sched-modal">
@@ -624,6 +801,16 @@ const CLIENT_OPTIONS=[
   'Office-VFD','Moncada WD','Metro-Tuguegarao WD','Pontevedra WD'
 ];
 
+const ANALYTICS_CATEGORIES=[
+  {id:'cat1',label:'1.0 Electro-Mechanical',short:'Electro-Mech',color:'#185FA5'},
+  {id:'cat2',label:'2.0 Control & Monitoring',short:'Control & Mon.',color:'#273617'},
+  {id:'cat3',label:'3.0 Water Treatment & Filtration',short:'Water Treatment',color:'#3B6D11'},
+  {id:'cat4',label:'4.0 Power Generation',short:'Power Gen.',color:'#854F0B'},
+  {id:'cat5',label:'5.0 Water Treatment Chemicals',short:'Chemicals',color:'#A32D2D'},
+];
+
+const MONTHS_LIST=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 const state={
   licenses:[
     {id:11,name:"SEC Registration",expiry:'2026-12-31',category:'Core Legal'},
@@ -670,10 +857,369 @@ const state={
     {id:5017,done:true,action:'Requesting for VFD Training',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
   ],
   sales:[],posCart:[],calendarEvents:{},
-  activeFolderId:null,nextId:6000,calYear:2026,calMonth:3,selectedDate:null,editingInvId:null
+  activeFolderId:null,nextId:6000,calYear:2026,calMonth:3,selectedDate:null,editingInvId:null,
+  analyticsPeriod:'monthly',
+  activeCatTab:'cat1',
+  editingBidId:null,
+  bidRecords:[
+    {id:9001,date:'2025-01-15',client:'Cabanatuan City WD — Submersible Pump',category:'1.0 Electro-Mechanical',amount:850000,result:'Win',notes:'Full installation included'},
+    {id:9002,date:'2025-02-20',client:'Roxas WD — VFD System',category:'2.0 Control & Monitoring',amount:1200000,result:'Win',notes:''},
+    {id:9003,date:'2025-02-28',client:'Garcia Hosp — Dosing Pump',category:'1.0 Electro-Mechanical',amount:320000,result:'Loss',notes:'Outbid by competitor'},
+    {id:9004,date:'2025-03-10',client:'Palayan City WD — Solar Install',category:'4.0 Power Generation',amount:2500000,result:'Win',notes:'On-grid system'},
+    {id:9005,date:'2025-03-22',client:'Cauayan City WD — Sand Filter',category:'3.0 Water Treatment & Filtration',amount:780000,result:'Win',notes:''},
+    {id:9006,date:'2025-04-05',client:'Ramos WD — Chlorine Chemicals',category:'5.0 Water Treatment Chemicals',amount:145000,result:'Win',notes:'Quarterly supply'},
+    {id:9007,date:'2025-04-18',client:'Bongabon WD — SCADA',category:'2.0 Control & Monitoring',amount:1800000,result:'Loss',notes:'Specs mismatch'},
+    {id:9008,date:'2025-05-03',client:'Talavera WD — Booster Pump',category:'1.0 Electro-Mechanical',amount:560000,result:'Win',notes:''},
+    {id:9009,date:'2025-05-25',client:'Palayan City WD — PAC Chemicals',category:'5.0 Water Treatment Chemicals',amount:200000,result:'Win',notes:''},
+    {id:9010,date:'2025-06-08',client:'Santa Rosa WD — Wind Turbine',category:'4.0 Power Generation',amount:3200000,result:'Loss',notes:'Budget constraint'},
+    {id:9011,date:'2025-06-20',client:'Concepcion WD — PLC System',category:'2.0 Control & Monitoring',amount:950000,result:'Win',notes:''},
+    {id:9012,date:'2025-07-12',client:'Moncada WD — Submersible Motor',category:'1.0 Electro-Mechanical',amount:420000,result:'Win',notes:''},
+    {id:9013,date:'2025-07-30',client:'Metro Tuguegarao WD — Ion Exchange',category:'3.0 Water Treatment & Filtration',amount:1100000,result:'Win',notes:''},
+    {id:9014,date:'2025-08-14',client:'Goodhands — Dosing Pump Repair',category:'1.0 Electro-Mechanical',amount:180000,result:'Win',notes:''},
+    {id:9015,date:'2025-08-28',client:'Pontevedra WD — HMI Install',category:'2.0 Control & Monitoring',amount:650000,result:'Loss',notes:'Delayed decision'},
+    {id:9016,date:'2025-09-05',client:'Cauayan WD — Diesel GenSet',category:'4.0 Power Generation',amount:1900000,result:'Win',notes:''},
+    {id:9017,date:'2025-09-22',client:'Bongabon WD — Chlorine Supply',category:'5.0 Water Treatment Chemicals',amount:310000,result:'Win',notes:'Annual contract'},
+    {id:9018,date:'2025-10-10',client:'Ramos WD — Sand Filter Media',category:'3.0 Water Treatment & Filtration',amount:430000,result:'Win',notes:''},
+    {id:9019,date:'2025-10-25',client:'Palayan City WD — Solar Off-Grid',category:'4.0 Power Generation',amount:2800000,result:'Pending',notes:'Under evaluation'},
+    {id:9020,date:'2025-11-08',client:'Talavera WD — ATS System',category:'2.0 Control & Monitoring',amount:520000,result:'Win',notes:''},
+    {id:9021,date:'2025-11-20',client:'Concepcion WD — Sequestrant',category:'5.0 Water Treatment Chemicals',amount:280000,result:'Win',notes:''},
+    {id:9022,date:'2025-12-05',client:'Cabanatuan WD — uPVC Pipes',category:'1.0 Electro-Mechanical',amount:390000,result:'Win',notes:''},
+    {id:9023,date:'2025-12-18',client:'Santa Rosa WD — Water Meter DMA',category:'2.0 Control & Monitoring',amount:870000,result:'Loss',notes:''},
+    {id:9024,date:'2026-01-15',client:'Roxas WD — Transfer Pump',category:'1.0 Electro-Mechanical',amount:490000,result:'Win',notes:''},
+    {id:9025,date:'2026-02-10',client:'Garcia Hosp — PAC Supply',category:'5.0 Water Treatment Chemicals',amount:160000,result:'Win',notes:''},
+    {id:9026,date:'2026-02-28',client:'Ramos WD — Solar On-Grid',category:'4.0 Power Generation',amount:1600000,result:'Pending',notes:'Awaiting approval'},
+    {id:9027,date:'2026-03-14',client:'Metro Tuguegarao — SCADA Upgrade',category:'2.0 Control & Monitoring',amount:1350000,result:'Win',notes:''},
+    {id:9028,date:'2026-03-28',client:'Moncada WD — Water Quality Meter',category:'3.0 Water Treatment & Filtration',amount:350000,result:'Win',notes:''},
+    {id:9029,date:'2026-04-08',client:'Palayan City WD — Pump Repair',category:'1.0 Electro-Mechanical',amount:270000,result:'Win',notes:''},
+    {id:9030,date:'2026-04-22',client:'Cauayan WD — Chlorine Granules',category:'5.0 Water Treatment Chemicals',amount:220000,result:'Pending',notes:''},
+  ]
 };
 
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ===== ANALYTICS =====
+let chartCategoryRevenue=null,chartBidWinloss=null,chartCatTrend=null;
+
+function setAnalyticsPeriod(p,btn){
+  state.analyticsPeriod=p;
+  document.querySelectorAll('.analytics-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderAnalytics();
+}
+
+function getFilteredBids(){
+  const now=new Date('2026-04-25');
+  return state.bidRecords.filter(b=>{
+    const d=new Date(b.date);
+    if(state.analyticsPeriod==='monthly'){const m=new Date(now.getFullYear(),now.getMonth()-5,1);return d>=m;}
+    if(state.analyticsPeriod==='quarterly'){const q=new Date(now.getFullYear()-1,now.getMonth(),1);return d>=q;}
+    return d.getFullYear()>=now.getFullYear()-1;
+  });
+}
+
+function getRevenueByCategory(bids){
+  const map={};
+  ANALYTICS_CATEGORIES.forEach(c=>{map[c.label]=0;});
+  bids.filter(b=>b.result==='Win').forEach(b=>{if(map[b.category]!==undefined)map[b.category]+=b.amount;});
+  return map;
+}
+
+function getKPIs(bids){
+  const wins=bids.filter(b=>b.result==='Win');
+  const losses=bids.filter(b=>b.result==='Loss');
+  const pending=bids.filter(b=>b.result==='Pending');
+  const totalRevenue=wins.reduce((s,b)=>s+b.amount,0);
+  const totalBid=bids.filter(b=>b.result!=='Pending').length;
+  const winRate=totalBid>0?Math.round(wins.length/totalBid*100):0;
+  return{totalRevenue,wins:wins.length,losses:losses.length,pending:pending.length,winRate,totalBid};
+}
+
+function renderAnalyticsKPI(){
+  const bids=getFilteredBids();
+  const kpi=getKPIs(bids);
+  const el=document.getElementById('analytics-kpi-row');
+  el.innerHTML=`
+    <div class="analytics-kpi">
+      <div class="analytics-kpi-val" style="color:#273617">₱${(kpi.totalRevenue/1000000).toFixed(2)}M</div>
+      <div class="analytics-kpi-lbl">Total Revenue Won</div>
+      <div class="analytics-kpi-sub c-green">+${kpi.wins} contracts</div>
+    </div>
+    <div class="analytics-kpi">
+      <div class="analytics-kpi-val" style="color:#185FA5">${kpi.winRate}%</div>
+      <div class="analytics-kpi-lbl">Win Rate</div>
+      <div class="analytics-kpi-sub" style="color:var(--text-tertiary)">${kpi.wins}W / ${kpi.losses}L / ${kpi.pending} pending</div>
+    </div>
+    <div class="analytics-kpi">
+      <div class="analytics-kpi-val c-green">${kpi.wins}</div>
+      <div class="analytics-kpi-lbl">Contracts Won</div>
+      <div class="analytics-kpi-sub c-green">bids awarded</div>
+    </div>
+    <div class="analytics-kpi">
+      <div class="analytics-kpi-val c-red">${kpi.losses}</div>
+      <div class="analytics-kpi-lbl">Contracts Lost</div>
+      <div class="analytics-kpi-sub c-red">bids not awarded</div>
+    </div>`;
+}
+
+function renderCategoryRevenueChart(){
+  const bids=getFilteredBids();
+  const revMap=getRevenueByCategory(bids);
+  const labels=ANALYTICS_CATEGORIES.map(c=>c.short);
+  const data=ANALYTICS_CATEGORIES.map(c=>Math.round(revMap[c.label]/1000));
+  const colors=ANALYTICS_CATEGORIES.map(c=>c.color);
+
+  const ctx=document.getElementById('chart-category-revenue').getContext('2d');
+  if(chartCategoryRevenue)chartCategoryRevenue.destroy();
+  chartCategoryRevenue=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'Revenue (₱ thousands)',
+        data,
+        backgroundColor:colors.map(c=>c+'CC'),
+        borderColor:colors,
+        borderWidth:1.5,
+        borderRadius:4
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>'₱'+ctx.parsed.y.toLocaleString()+'K'}}},
+      scales:{
+        x:{ticks:{font:{size:11},autoSkip:false,maxRotation:20},grid:{display:false}},
+        y:{ticks:{callback:v=>'₱'+v+'K',font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
+      }
+    }
+  });
+}
+
+function renderBidWinLossChart(){
+  const bids=getFilteredBids();
+  const winData=ANALYTICS_CATEGORIES.map(c=>bids.filter(b=>b.category===c.label&&b.result==='Win').length);
+  const lossData=ANALYTICS_CATEGORIES.map(c=>bids.filter(b=>b.category===c.label&&b.result==='Loss').length);
+  const labels=ANALYTICS_CATEGORIES.map(c=>c.short);
+
+  const ctx=document.getElementById('chart-bid-winloss').getContext('2d');
+  if(chartBidWinloss)chartBidWinloss.destroy();
+  chartBidWinloss=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Wins',data:winData,backgroundColor:'#3B6D11CC',borderColor:'#3B6D11',borderWidth:1.5,borderRadius:3},
+        {label:'Losses',data:lossData,backgroundColor:'#A32D2DCC',borderColor:'#A32D2D',borderWidth:1.5,borderRadius:3}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:(ctx)=>ctx.dataset.label+': '+ctx.parsed.y}}
+      },
+      scales:{
+        x:{ticks:{font:{size:10},autoSkip:false,maxRotation:20},grid:{display:false}},
+        y:{ticks:{stepSize:1,font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
+      }
+    }
+  });
+}
+
+function renderRankingList(){
+  const bids=getFilteredBids();
+  const revMap=getRevenueByCategory(bids);
+  const sorted=ANALYTICS_CATEGORIES.map(c=>({label:c.label,full:c.label,rev:revMap[c.label],color:c.color})).sort((a,b)=>b.rev-a.rev);
+  const max=sorted[0]?.rev||1;
+  const el=document.getElementById('ranking-list');
+  const rankCls=['rank-1','rank-2','rank-3','rank-other','rank-other'];
+  el.innerHTML=sorted.map((item,i)=>`
+    <div class="ranking-row">
+      <div class="ranking-num ${rankCls[i]||'rank-other'}">${i+1}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--text-primary);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${item.label}</div>
+        <div class="ranking-bar-wrap"><div class="ranking-bar-fill" style="width:${Math.round(item.rev/max*100)}%;background:${item.color}"></div></div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:var(--text-primary);min-width:64px;text-align:right">₱${(item.rev/1000).toFixed(0)}K</div>
+    </div>`).join('');
+}
+
+function renderCatTabs(){
+  const el=document.getElementById('cat-tabs');
+  el.innerHTML=ANALYTICS_CATEGORIES.map(c=>`<div class="cat-tab${state.activeCatTab===c.id?' active':''}" onclick="setCatTab('${c.id}',this)">${c.label}</div>`).join('');
+}
+
+function setCatTab(id){
+  state.activeCatTab=id;
+  renderCatTabs();
+  renderCatTrendChart();
+}
+
+function renderCatTrendChart(){
+  const cat=ANALYTICS_CATEGORIES.find(c=>c.id===state.activeCatTab);
+  if(!cat)return;
+
+  let labels, getData;
+  if(state.analyticsPeriod==='monthly'){
+    labels=MONTHS_LIST.slice(0,4).concat(['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).slice(0,12);
+    const yr=2025;
+    getData=()=>MONTHS_LIST.map((m,mi)=>{
+      const monthBids=state.bidRecords.filter(b=>{
+        const d=new Date(b.date);
+        return b.category===cat.label&&b.result==='Win'&&(d.getFullYear()===yr||(d.getFullYear()===2026&&mi<4))&&d.getMonth()===mi;
+      });
+      return Math.round(monthBids.reduce((s,b)=>s+b.amount,0)/1000);
+    });
+  } else if(state.analyticsPeriod==='quarterly'){
+    labels=['Q1 2025','Q2 2025','Q3 2025','Q4 2025','Q1 2026'];
+    getData=()=>[[0,1,2],[3,4,5],[6,7,8],[9,10,11],[0,1,2]].map((months,qi)=>{
+      const yr=qi<4?2025:2026;
+      const total=state.bidRecords.filter(b=>{
+        const d=new Date(b.date);
+        return b.category===cat.label&&b.result==='Win'&&d.getFullYear()===yr&&months.includes(d.getMonth());
+      }).reduce((s,b)=>s+b.amount,0);
+      return Math.round(total/1000);
+    });
+  } else {
+    labels=['2024','2025','2026'];
+    getData=()=>[2024,2025,2026].map(yr=>{
+      const total=state.bidRecords.filter(b=>{
+        const d=new Date(b.date);
+        return b.category===cat.label&&b.result==='Win'&&d.getFullYear()===yr;
+      }).reduce((s,b)=>s+b.amount,0);
+      return Math.round(total/1000);
+    });
+  }
+
+  const data=getData();
+  const ctx=document.getElementById('chart-cat-trend').getContext('2d');
+  if(chartCatTrend)chartCatTrend.destroy();
+  chartCatTrend=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'Revenue (₱ thousands)',
+        data,
+        backgroundColor:cat.color+'99',
+        borderColor:cat.color,
+        borderWidth:1.5,
+        borderRadius:4
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>'₱'+c.parsed.y.toLocaleString()+'K'}}},
+      scales:{
+        x:{ticks:{font:{size:11},autoSkip:false,maxRotation:30},grid:{display:false}},
+        y:{ticks:{callback:v=>'₱'+v+'K',font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}}
+      }
+    }
+  });
+}
+
+function renderBidRecordsTable(){
+  const body=document.getElementById('bid-records-body');
+  const sorted=[...state.bidRecords].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(!sorted.length){body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px">No bid records yet.</td></tr>`;return;}
+  body.innerHTML=sorted.map(b=>{
+    const resultBadge=b.result==='Win'?`<span class="bid-win">Win</span>`:b.result==='Loss'?`<span class="bid-loss">Loss</span>`:`<span class="bid-pending">Pending</span>`;
+    const d=new Date(b.date);
+    const dateStr=d.toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
+    return `<tr>
+      <td style="color:var(--text-secondary);font-size:12px">${dateStr}</td>
+      <td style="font-weight:500">${escHtml(b.client)}</td>
+      <td>
+        <span style="font-size:11px;background:var(--bg-tertiary);padding:2px 8px;border-radius:8px;color:var(--text-secondary);display:inline-block;margin-bottom:2px">${escHtml(b.category||'')}</span>
+        ${b.subcategory ? `<div style="font-size:10px;color:var(--text-tertiary);margin-top:2px;white-space:normal;line-height:1.4">${escHtml(b.subcategory)}</div>` : ''}
+      </td>
+      <td style="font-weight:600">₱${b.amount.toLocaleString()}</td>
+      <td>${resultBadge}</td>
+      <td style="color:var(--text-secondary);font-size:12px">${escHtml(b.notes)}</td>
+      <td><button class="icon-btn edit-btn" onclick="openEditBid(${b.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAnalytics(){
+  renderAnalyticsKPI();
+  renderCategoryRevenueChart();
+  renderBidWinLossChart();
+  renderRankingList();
+  renderCatTabs();
+  renderCatTrendChart();
+  renderBidRecordsTable();
+}
+
+function openBidModal() {
+  state.editingBidId = null;
+  document.getElementById('bid-modal-title').textContent = 'Add Bid Record';
+  document.getElementById('bid-date').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('bid-client').value = '';
+  document.getElementById('bid-amount').value = '';
+  document.getElementById('bid-result').value = 'Win';
+  document.getElementById('bid-notes').value = '';
+  document.getElementById('bid-delete-btn').style.display = 'none';
+  renderBidCatTree(null);
+  openModal('modal-bid');
+}
+
+function openEditBid(id) {
+  const b = state.bidRecords.find(r => r.id === id);
+  if (!b) return;
+  state.editingBidId = id;
+  document.getElementById('bid-modal-title').textContent = 'Edit Bid Record';
+  document.getElementById('bid-date').value = b.date;
+  document.getElementById('bid-client').value = b.client;
+  document.getElementById('bid-amount').value = b.amount;
+  document.getElementById('bid-result').value = b.result;
+  document.getElementById('bid-notes').value = b.notes;
+  document.getElementById('bid-delete-btn').style.display = '';
+  // b.subcategories is array of {category, subcategory} or fall back to old format
+  const presel = b.subcategories || (b.category ? [{ category: b.category, subcategory: b.subcategory || '' }] : null);
+  renderBidCatTree(presel);
+  openModal('modal-bid');
+}
+
+function saveBidRecord() {
+  const date = document.getElementById('bid-date').value;
+  const client = document.getElementById('bid-client').value.trim();
+  const amount = parseFloat(document.getElementById('bid-amount').value) || 0;
+  const result = document.getElementById('bid-result').value;
+  const notes = document.getElementById('bid-notes').value.trim();
+  if (!client || !date) { alert('Please fill in date and client name.'); return; }
+  if (Object.keys(bidSelections).length === 0) { alert('Please select at least one category.'); return; }
+
+  const categoryStr = getBidCategoryString();
+  const subcategoryStr = getBidSubcategoryString();
+  const subcategories = getBidSelectionsAsArray();
+
+  if (state.editingBidId) {
+    const b = state.bidRecords.find(r => r.id === state.editingBidId);
+    if (b) {
+      b.date = date; b.client = client; b.amount = amount;
+      b.result = result; b.notes = notes;
+      b.category = categoryStr;
+      b.subcategory = subcategoryStr;
+      b.subcategories = subcategories;
+    }
+  } else {
+    state.bidRecords.push({
+      id: state.nextId++, date, client, amount, result, notes,
+      category: categoryStr,
+      subcategory: subcategoryStr,
+      subcategories
+    });
+  }
+  closeModal('modal-bid');
+  renderAnalytics();
+}
+
+function deleteBidRecord(){
+  if(!state.editingBidId)return;
+  state.bidRecords=state.bidRecords.filter(b=>b.id!==state.editingBidId);
+  closeModal('modal-bid');
+  renderAnalytics();
+}
 
 // ===== AP PROGRESS MONITOR =====
 function renderAPMonitor(){
@@ -693,30 +1239,14 @@ function renderAPMonitor(){
   const overdue=ap.filter(a=>a.status==='Overdue'&&!a.done).length;
   const avgPct=Math.round(ap.reduce((s,a)=>s+(a.pct||0),0)/total);
   const barColor=avgPct===100?'#2d9e2d':avgPct>=60?'#185FA5':'#EF9F27';
-
   document.getElementById('ap-mon-top-row').innerHTML=`
-    <div class="ap-mon-stat">
-      <div class="ap-mon-stat-val">${total}</div>
-      <div class="ap-mon-stat-lbl">Total items</div>
-    </div>
-    <div class="ap-mon-stat">
-      <div class="ap-mon-stat-val" style="color:#2d9e2d">${complete}</div>
-      <div class="ap-mon-stat-lbl">Complete</div>
-    </div>
-    <div class="ap-mon-stat">
-      <div class="ap-mon-stat-val" style="color:#166534">${inprog}</div>
-      <div class="ap-mon-stat-lbl">In progress</div>
-    </div>
-    <div class="ap-mon-stat">
-      <div class="ap-mon-stat-val" style="color:${overdue>0?'#A32D2D':notstarted>0?'#4b5563':'#9ca3af'}">${overdue>0?overdue:notstarted}</div>
-      <div class="ap-mon-stat-lbl">${overdue>0?'Overdue':'Not started'}</div>
-    </div>`;
-
+    <div class="ap-mon-stat"><div class="ap-mon-stat-val">${total}</div><div class="ap-mon-stat-lbl">Total items</div></div>
+    <div class="ap-mon-stat"><div class="ap-mon-stat-val" style="color:#2d9e2d">${complete}</div><div class="ap-mon-stat-lbl">Complete</div></div>
+    <div class="ap-mon-stat"><div class="ap-mon-stat-val" style="color:#166534">${inprog}</div><div class="ap-mon-stat-lbl">In progress</div></div>
+    <div class="ap-mon-stat"><div class="ap-mon-stat-val" style="color:${overdue>0?'#A32D2D':notstarted>0?'#4b5563':'#9ca3af'}">${overdue>0?overdue:notstarted}</div><div class="ap-mon-stat-lbl">${overdue>0?'Overdue':'Not started'}</div></div>`;
   const bar=document.getElementById('ap-mon-bar-fill');
-  bar.style.width=avgPct+'%';
-  bar.style.background=barColor;
+  bar.style.width=avgPct+'%';bar.style.background=barColor;
   document.getElementById('ap-mon-pct-label').textContent=avgPct+'%';
-
   const pills=[
     {label:'Complete',count:complete,pillCls:'amp-complete',dotCls:'amp-dot-complete'},
     {label:'In Progress',count:inprog,pillCls:'amp-inprogress',dotCls:'amp-dot-inprogress'},
@@ -724,10 +1254,7 @@ function renderAPMonitor(){
     {label:'On Hold',count:onhold,pillCls:'amp-onhold',dotCls:'amp-dot-onhold'},
     {label:'Overdue',count:overdue,pillCls:'amp-overdue',dotCls:'amp-dot-overdue'},
   ].filter(p=>p.count>0);
-
-  document.getElementById('ap-mon-status-row').innerHTML=pills.map(p=>
-    `<div class="ap-mon-status-pill ${p.pillCls}"><div class="ap-mon-status-dot ${p.dotCls}"></div>${p.count} ${p.label}</div>`
-  ).join('');
+  document.getElementById('ap-mon-status-row').innerHTML=pills.map(p=>`<div class="ap-mon-status-pill ${p.pillCls}"><div class="ap-mon-status-dot ${p.dotCls}"></div>${p.count} ${p.label}</div>`).join('');
 }
 
 // ===== ACTION PLAN =====
@@ -781,7 +1308,7 @@ function addLicense(){const name=document.getElementById('new-lic-name').value.t
 
 // ===== MODALS & PANELS =====
 function openModal(id){document.getElementById(id).classList.remove('hidden');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;state.editingInvId=null;}
+function closeModal(id){document.getElementById(id).classList.add('hidden');editingId=null;state.editingInvId=null;state.editingBidId=null;}
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});});
 const panelConfig={
   dashboard:{title:'Dashboard',primary:null,form:null},
@@ -791,10 +1318,11 @@ const panelConfig={
   inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},
   pos:{title:'Point of Sale',primary:null,form:null},
   schedule:{title:'Weekly Schedule',primary:null,form:null},
+  analytics:{title:'Analytics',primary:null,form:null},
   admin:{title:'Admin Settings',primary:null,form:null}
 };
 let currentPanel='dashboard';
-function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}}
+function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}if(name==='analytics'){setTimeout(renderAnalytics,50);}}
 function handlePrimaryAction(){const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
 function closeForm(id){document.getElementById(id).classList.remove('open');}
 function toggleSwitch(el){const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';el.style.background=isOn?'#d1d5db':'#185FA5';el.querySelector('.tog-t').style.left=isOn?'2px':'18px';}
@@ -857,7 +1385,175 @@ function clearSchedEntry(){if(_schedEditMid&&_schedEditDate)delete schedData[_sc
 function closeSchedModal(){document.getElementById('sched-entry-modal').classList.add('hidden');}
 function openSchedMemberModal(){document.getElementById('sched-new-name').value='';document.getElementById('sched-new-code').value='';document.getElementById('sched-member-modal').classList.remove('hidden');}
 function addSchedMember(){const name=document.getElementById('sched-new-name').value.trim();if(!name)return;const code=document.getElementById('sched-new-code').value.trim().toUpperCase(),newId=Math.max(...schedMembers.map(m=>m.id),0)+1;schedMembers.push({id:newId,name,code});document.getElementById('sched-member-modal').classList.add('hidden');renderSched();}
+const BID_CAT_TREE = [
+  {
+    id: 'cat1', label: '1.0 Electro-Mechanical', color: '#185FA5',
+    subs: [
+      'Submersible Pumps & Motors',
+      'Transfer & Booster Pumps',
+      'Solenoid & Motor Driven Dosing Pumps',
+      'G.I. FRP/GRP Panel Water Tanks',
+      'uPVC Column/Riser Pipes'
+    ]
+  },
+  {
+    id: 'cat2', label: '2.0 Control & Monitoring', color: '#273617',
+    subs: [
+      'Variable Frequency Inverter Drives, VFD',
+      'Programmable Logic Controller, PLC',
+      'GSM Motor Controller',
+      'Human Machine Interface, HMI',
+      'Quarter & Multi Turn Electric Actuators',
+      'Automatic Transfer Switch, ATS',
+      'District Metering Area',
+      'SCADA'
+    ]
+  },
+  {
+    id: 'cat3', label: '3.0 Water Treatment & Filtration', color: '#3B6D11',
+    subs: [
+      'Sand Filter & Filtration System',
+      'Ion Exchange Media Filtration System',
+      'Sand Filter Media Purification System',
+      'Water Quality Analysis Meter'
+    ]
+  },
+  {
+    id: 'cat4', label: '4.0 Power Generation', color: '#854F0B',
+    subs: [
+      'Diesel Power Generating Set',
+      'Off/On Grid Solar Power Generating System',
+      'Vertical Axis Wind Turbine Power Generating System'
+    ]
+  },
+  {
+    id: 'cat5', label: '5.0 Water Treatment Chemicals & Water Disinfectant', color: '#A32D2D',
+    subs: [
+      'Chlorine Dioxide Powder',
+      'Chlorine Granules',
+      'Sequestration Additives',
+      'Poly Aluminum Chloride, PAC'
+    ]
+  }
+];
 
+// Track selected: { catId: Set of subcat strings (empty Set = whole category checked, no subs) }
+let bidSelections = {};
+
+function renderBidCatTree(preselected) {
+  // preselected: array of {category, subcategory} or null
+  bidSelections = {};
+  if (preselected) {
+    preselected.forEach(p => {
+      const cat = BID_CAT_TREE.find(c => c.label === p.category);
+      if (!cat) return;
+      if (!bidSelections[cat.id]) bidSelections[cat.id] = new Set();
+      if (p.subcategory) bidSelections[cat.id].add(p.subcategory);
+    });
+  }
+
+  const wrap = document.getElementById('bid-cat-select-wrap');
+  wrap.innerHTML = BID_CAT_TREE.map(cat => {
+    const selSubs = bidSelections[cat.id] || new Set();
+    const allChecked = selSubs.size === cat.subs.length;
+    const someChecked = selSubs.size > 0 && !allChecked;
+    return `
+      <div class="bid-cat-group${selSubs.size > 0 ? ' open' : ''}" id="bcg-${cat.id}">
+        <div class="bid-cat-group-header" onclick="toggleBidCatGroup('${cat.id}')">
+          <input type="checkbox" id="bcc-${cat.id}"
+            ${allChecked ? 'checked' : ''}
+            ${someChecked ? 'data-indeterminate="true"' : ''}
+            onclick="event.stopPropagation();toggleBidCat('${cat.id}',this)"
+            style="accent-color:${cat.color}">
+          <span style="color:${cat.color}">${cat.label}</span>
+          <span class="bid-cat-chevron">▼</span>
+        </div>
+        <div class="bid-cat-group-body">
+          ${cat.subs.map(sub => `
+            <label class="bid-subcat-row">
+              <input type="checkbox" ${selSubs.has(sub) ? 'checked' : ''}
+                onchange="toggleBidSub('${cat.id}','${sub.replace(/'/g,"\\'")}',this)"
+                style="accent-color:${cat.color}">
+              ${sub}
+            </label>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Apply indeterminate state
+  BID_CAT_TREE.forEach(cat => {
+    const cb = document.getElementById('bcc-' + cat.id);
+    if (cb && cb.dataset.indeterminate === 'true') cb.indeterminate = true;
+  });
+}
+
+function toggleBidCatGroup(catId) {
+  document.getElementById('bcg-' + catId).classList.toggle('open');
+}
+
+function toggleBidCat(catId, cb) {
+  const cat = BID_CAT_TREE.find(c => c.id === catId);
+  if (!cat) return;
+  if (cb.checked) {
+    bidSelections[catId] = new Set(cat.subs);
+  } else {
+    delete bidSelections[catId];
+  }
+  renderBidCatTree(getBidSelectionsAsArray());
+  // Re-open that group
+  setTimeout(() => {
+    const grp = document.getElementById('bcg-' + catId);
+    if (grp && cb.checked) grp.classList.add('open');
+  }, 10);
+}
+
+function toggleBidSub(catId, sub, cb) {
+  if (!bidSelections[catId]) bidSelections[catId] = new Set();
+  if (cb.checked) {
+    bidSelections[catId].add(sub);
+  } else {
+    bidSelections[catId].delete(sub);
+    if (bidSelections[catId].size === 0) delete bidSelections[catId];
+  }
+  // Update parent checkbox state
+  const cat = BID_CAT_TREE.find(c => c.id === catId);
+  const parentCb = document.getElementById('bcc-' + catId);
+  if (parentCb && cat) {
+    const sel = bidSelections[catId] || new Set();
+    parentCb.checked = sel.size === cat.subs.length;
+    parentCb.indeterminate = sel.size > 0 && sel.size < cat.subs.length;
+  }
+}
+
+function getBidSelectionsAsArray() {
+  // Returns [{category, subcategory}]
+  const result = [];
+  Object.entries(bidSelections).forEach(([catId, subs]) => {
+    const cat = BID_CAT_TREE.find(c => c.id === catId);
+    if (!cat) return;
+    if (subs.size === 0) {
+      result.push({ category: cat.label, subcategory: '' });
+    } else {
+      subs.forEach(sub => result.push({ category: cat.label, subcategory: sub }));
+    }
+  });
+  return result;
+}
+
+function getBidCategoryString() {
+  // For backward compat — returns primary category labels joined
+  return Object.keys(bidSelections).map(catId => {
+    return BID_CAT_TREE.find(c => c.id === catId)?.label || '';
+  }).filter(Boolean).join('; ');
+}
+
+function getBidSubcategoryString() {
+  const parts = [];
+  Object.entries(bidSelections).forEach(([catId, subs]) => {
+    subs.forEach(s => parts.push(s));
+  });
+  return parts.join('; ');
+}
 // ===== INIT =====
 initCalendarEvents();
 renderDashboardCal();
