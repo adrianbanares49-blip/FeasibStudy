@@ -469,6 +469,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <div class="ni" onclick="showPanel('inventory')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 5l6-3 6 3v6l-6 3-6-3V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 2v12M2 5l6 3 6-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Inventory</span><span class="nbadge" id="inv-alert-badge" style="display:none">0</span></div>
       <div class="ni" onclick="showPanel('pos')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4 1v2M12 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Point of Sale</span></div>
       <div class="ni" onclick="showPanel('schedule')"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 7h14M5 3V1M11 3V1M5 10h2M9 10h2M5 13h2M9 13h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span>Schedule</span></div>
+      <div class="ni" onclick="showPanel('collections')"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="13" cy="12" r="2.5" stroke="currentColor" stroke-width="1.2"/></svg><span>Collections</span></div>
       <div class="ni" onclick="showPanel('admin')"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Admin</span></div>
     </nav>
     <div class="sf">
@@ -783,6 +784,71 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
           </div>
         </div>
       </div>
+      <!-- Collections -->
+<div class="panel" id="panel-collections">
+
+  <!-- Metric cards -->
+  <div class="inv-stats" id="wd-stats" style="grid-template-columns:repeat(4,1fr)"></div>
+
+  <!-- Search & filter -->
+  <div class="inv-search-bar" style="margin-bottom:16px">
+    <input type="text" id="wd-search" placeholder="Search water district or region…" oninput="renderCollections()">
+    <select id="wd-filter-status" onchange="renderCollections()">
+      <option value="">All Statuses</option>
+      <option value="Paid">Paid</option>
+      <option value="Unpaid">Unpaid</option>
+      <option value="Overdue">Overdue</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="inv-table-wrap">
+    <table class="inv-table" style="table-layout:fixed">
+      <thead><tr>
+        <th style="width:220px">Water District</th>
+        <th style="width:140px">Region</th>
+        <th style="width:130px">Amount Due</th>
+        <th style="width:120px">Due Date</th>
+        <th style="width:100px">Status</th>
+        <th style="width:110px">Collected</th>
+        <th style="width:70px">Actions</th>
+      </tr></thead>
+      <tbody id="wd-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Analytics charts -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+    <div style="background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:600;color:var(--text-primary)">Payment Status Breakdown</div></div>
+      <div style="padding:16px">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--text-secondary)" id="wd-legend"></div>
+        <div style="position:relative;height:180px"><canvas id="wd-donut-chart" role="img" aria-label="WD payment status donut chart"></canvas></div>
+      </div>
+    </div>
+    <div style="background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:600;color:var(--text-primary)">Top Unpaid / Overdue (₱)</div></div>
+      <div style="padding:16px;position:relative;height:210px"><canvas id="wd-bar-chart" role="img" aria-label="Top unpaid water districts bar chart"></canvas></div>
+    </div>
+  </div>
+</div>
+     <!-- Admin -->
+      <div class="panel" id="panel-admin">
+        <p class="section-title">System Overview</p>
+        <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px">
+          <div class="admin-card"><div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">License Status</div><div class="pb-wrap"><div class="pb-fill" id="lic-progress-bar" style="width:0%;background:var(--blue)"></div></div><div style="font-size:12px;color:var(--text-tertiary)" id="lic-progress-label">Loading…</div></div>
+        </div>
+        <p class="section-title">User Management</p>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">DS</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Dolly Soriano</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting and HR Manager</div></div><span class="badge" style="background:var(--blue-light);color:var(--blue)">Super Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">BC</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Beng Cruz</div><div style="font-size:12px;color:var(--text-tertiary)">Logistics Manager</div></div><span class="badge b-paid">Admin</span></div>
+        <div class="user-row"><div class="avatar" style="background:var(--blue-light);color:var(--blue)">JR</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Jennifer Reyes</div><div style="font-size:12px;color:var(--text-tertiary)">Accounting coordinator</div></div><span class="badge b-paid">Admin</span></div>
+        <p class="section-title" style="margin-top:20px">Notification Settings</p>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:13px;font-weight:500">License expiry alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify 30, 14, and 7 days before expiry</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
+        <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Inventory low-stock alerts</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Notify admin when items fall below threshold</div></div><div class="tog" style="background:var(--blue)" onclick="toggleSwitch(this)"><div class="tog-t" style="left:18px"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <!-- Admin -->
       <div class="panel" id="panel-admin">
@@ -807,6 +873,33 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 <div class="modal-overlay hidden" id="modal-license"><div class="modal"><div class="modal-title">Edit License</div><div class="form-row"><div class="fg"><label>License Name</label><input type="text" id="edit-lic-name"></div><div class="fg"><label>Expiry Date</label><input type="date" id="edit-lic-date"></div></div><div class="fg" style="margin-bottom:12px"><label>Category</label><select id="edit-lic-cat"><option value="Core Legal">Core Legal</option><option value="Industry-Specific">Industry-Specific</option><option value="Safety &amp; Training">Safety &amp; Training</option><option value="Other">Other</option></select></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteLicense()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-license')">Cancel</button><button class="btn btnp" onclick="saveLicense()">Save Changes</button></div></div></div></div>
 <div class="modal-overlay hidden" id="modal-inventory"><div class="modal"><div class="modal-title">Edit Inventory Item</div><div class="form-row"><div class="fg"><label>Item Name</label><input type="text" id="edit-inv-name"></div><div class="fg"><label>Status</label><select id="edit-inv-status"><option value="Active">Active</option><option value="Low Stock">Low Stock</option><option value="Out of Stock">Out of Stock</option><option value="Discontinued">Discontinued</option></select></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>No. of Products</label><input type="number" id="edit-inv-qty" min="0"></div><div class="fg"><label>Unit Cost (&#8369;)</label><input type="number" id="edit-inv-cost" min="0" step="0.01"></div></div><div class="form-row" style="margin-bottom:4px"><div class="fg"><label>Low Stock Alert at &#8804;</label><input type="number" id="edit-inv-threshold" min="1"></div><div class="fg"></div></div><div class="modal-footer"><button class="btn btndanger" onclick="deleteInventoryItem()">Delete</button><div class="modal-footer-right"><button class="btn" onclick="closeModal('modal-inventory')">Cancel</button><button class="btn btnp" onclick="saveInventoryItem()">Save Changes</button></div></div></div></div>
 
+<div class="modal-overlay hidden" id="modal-add-wd">
+  <div class="modal">
+    <div class="modal-title">Add Water District</div>
+    <div class="form-row">
+      <div class="fg"><label>Water District Name</label><input type="text" id="new-wd-name" placeholder="e.g. Cabanatuan City WD"></div>
+      <div class="fg"><label>Region</label><input type="text" id="new-wd-region" placeholder="e.g. Region III"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Amount Due (₱)</label><input type="number" id="new-wd-amount" placeholder="0" min="0"></div>
+      <div class="fg"><label>Due Date</label><input type="date" id="new-wd-due"></div>
+    </div>
+    <div class="fg" style="margin-bottom:12px"><label>Status</label>
+      <select id="new-wd-status">
+        <option value="Unpaid">Unpaid</option>
+        <option value="Paid">Paid</option>
+        <option value="Overdue">Overdue</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <div></div>
+      <div class="modal-footer-right">
+        <button class="btn" onclick="closeModal('modal-add-wd')">Cancel</button>
+        <button class="btn btnp" onclick="addWDCollection()">Add Water District</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- BID MODAL -->
 <div class="modal-overlay hidden" id="modal-bid">
   <div class="modal" style="width:520px">
@@ -895,7 +988,7 @@ const MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
 const DAYS_SHORT=['Su','Mo','Tu','We','Th','Fr','Sa'];
 
 const CLIENT_OPTIONS=[
-  'Cabanatuan City WD','Roxas (Isabela) WD','Goodhands','Garcia Hosp','Ramos WD','Talavera WD',
+  'Cabanatuan City WD','Roxas (Isabela) WD','Goodhands','Garcia Hospital','Ramos WD','Talavera WD',
   'Cauayan City WD','Bongabon WD','Palayan City WD','Concepcion WD','Santa Rosa WD',
   'Office-VFD','Moncada WD','Metro-Tuguegarao WD','Pontevedra WD'
 ];
@@ -962,8 +1055,8 @@ const state={
   editingBidId:null,
   bidRecords:[
     {id:9001,date:'2025-01-15',client:'Cabanatuan City WD — Submersible Pump',category:'1.0 Electro-Mechanical',amount:850000,result:'Win',notes:'Full installation included'},
-    {id:9002,date:'2025-02-20',client:'Roxas WD — VFD System',category:'2.0 Control & Monitoring',amount:1200000,result:'Win',notes:''},
-    {id:9003,date:'2025-02-28',client:'Garcia Hosp — Dosing Pump',category:'1.0 Electro-Mechanical',amount:320000,result:'Loss',notes:'Outbid by competitor'},
+    {id:9002,date:'2025-02-20',client:'Roxas (Isabela) WD — VFD System',category:'2.0 Control & Monitoring',amount:1200000,result:'Win',notes:''},
+    {id:9003,date:'2025-02-28',client:'Goodhands — Dosing Pump',category:'1.0 Electro-Mechanical',amount:320000,result:'Loss',notes:'Outbid by competitor'},
     {id:9004,date:'2025-03-10',client:'Palayan City WD — Solar Install',category:'4.0 Power Generation',amount:2500000,result:'Win',notes:'On-grid system'},
     {id:9005,date:'2025-03-22',client:'Cauayan City WD — Sand Filter',category:'3.0 Water Treatment & Filtration',amount:780000,result:'Win',notes:''},
     {id:9006,date:'2025-04-05',client:'Ramos WD — Chlorine Chemicals',category:'5.0 Water Treatment Chemicals',amount:145000,result:'Win',notes:'Quarterly supply'},
@@ -984,7 +1077,7 @@ const state={
     {id:9021,date:'2025-11-20',client:'Concepcion WD — Sequestrant',category:'5.0 Water Treatment Chemicals',amount:280000,result:'Win',notes:''},
     {id:9022,date:'2025-12-05',client:'Cabanatuan WD — uPVC Pipes',category:'1.0 Electro-Mechanical',amount:390000,result:'Win',notes:''},
     {id:9023,date:'2025-12-18',client:'Santa Rosa WD — Water Meter DMA',category:'2.0 Control & Monitoring',amount:870000,result:'Loss',notes:''},
-    {id:9024,date:'2026-01-15',client:'Roxas WD — Transfer Pump',category:'1.0 Electro-Mechanical',amount:490000,result:'Win',notes:''},
+    {id:9024,date:'2026-01-15',client:'Roxas(Isabela) WD — Transfer Pump',category:'1.0 Electro-Mechanical',amount:490000,result:'Win',notes:''},
     {id:9025,date:'2026-02-10',client:'Garcia Hosp — PAC Supply',category:'5.0 Water Treatment Chemicals',amount:160000,result:'Win',notes:''},
     {id:9026,date:'2026-02-28',client:'Ramos WD — Solar On-Grid',category:'4.0 Power Generation',amount:1600000,result:'Pending',notes:'Awaiting approval'},
     {id:9027,date:'2026-03-14',client:'Metro Tuguegarao — SCADA Upgrade',category:'2.0 Control & Monitoring',amount:1350000,result:'Win',notes:''},
@@ -994,6 +1087,156 @@ const state={
   ]
 };
 
+// ===== WD COLLECTIONS =====
+state.wdCollections = [
+  {id:'WD-001',name:'Cabanatuan City WD',region:'Region III',amount:480000,due:'2026-04-15',status:'Paid',collected:100},
+  {id:'WD-002',name:'Roxas(Isabela) WD',region:'Region II',amount:320000,due:'2026-04-20',status:'Paid',collected:100},
+  {id:'WD-003',name:'Goodhands',region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
+  {id:'WD-004',name:'Garcia Hospital',region:'Region III',amount:198000,due:'2026-04-30',status:'Unpaid',collected:0},
+  {id:'WD-005',name:'Ramos WD',region:'Region III',amount:175000,due:'2026-04-25',status:'Paid',collected:100},
+  {id:'WD-006',name:'Talavera WD',region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:30},
+  {id:'WD-007',name:'Cauayan City WD',region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
+  {id:'WD-008',name:'Bongabon WD',region:'Region III',amount:138000,due:'2026-04-28',status:'Paid',collected:100},
+  {id:'WD-009',name:'Palayan City WD',region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
+  {id:'WD-010',name:'Conception WD',region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
+  {id:'WD-011',name:'Santa Rosa WD',region:'Region III',amount:112000,due:'2026-04-22',status:'Paid',collected:100},
+  {id:'WD-012',name:'Moncanda WD',region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
+];
+
+let wdDonutChart=null,wdBarChart=null;
+
+function wdStatusBadgeClass(s){
+  if(s==='Paid')return 'b-paid';
+  if(s==='Overdue')return 'b-over';
+  return 'b-pend';
+}
+
+function renderWDStats(){
+  const el=document.getElementById('wd-stats');
+  const all=state.wdCollections;
+  const paid=all.filter(w=>w.status==='Paid');
+  const unpaid=all.filter(w=>w.status==='Unpaid');
+  const overdue=all.filter(w=>w.status==='Overdue');
+  const totalCollected=paid.reduce((s,w)=>s+w.amount,0);
+  const totalOutstanding=all.filter(w=>w.status!=='Paid').reduce((s,w)=>s+w.amount*(1-(w.collected||0)/100),0);
+  const rate=all.length?Math.round(paid.length/all.length*100):0;
+  el.innerHTML=`
+    <div class="stat-card"><div class="stat-label">Total WDs</div><div class="stat-value">${all.length}</div><div class="stat-sub" style="color:var(--text-tertiary)">Active accounts</div></div>
+    <div class="stat-card"><div class="stat-label">Collection Rate</div><div class="stat-value c-green">${rate}%</div><div class="stat-sub c-green">${paid.length} paid</div></div>
+    <div class="stat-card"><div class="stat-label">Total Collected</div><div class="stat-value" style="font-size:18px">₱${totalCollected.toLocaleString()}</div><div class="stat-sub" style="color:var(--text-tertiary)">${paid.length} districts</div></div>
+    <div class="stat-card"><div class="stat-label">Loss Exposure</div><div class="stat-value c-red" style="font-size:18px">₱${Math.round(totalOutstanding).toLocaleString()}</div><div class="stat-sub c-red">${unpaid.length} unpaid · ${overdue.length} overdue</div></div>`;
+}
+
+function renderWDCharts(){
+  const all=state.wdCollections;
+  const paid=all.filter(w=>w.status==='Paid').length;
+  const unpaid=all.filter(w=>w.status==='Unpaid').length;
+  const overdue=all.filter(w=>w.status==='Overdue').length;
+
+  // Legend
+  document.getElementById('wd-legend').innerHTML=`
+    <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block"></span>Paid ${paid}</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#EF9F27;display:inline-block"></span>Unpaid ${unpaid}</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A;display:inline-block"></span>Overdue ${overdue}</span>`;
+
+  const donutCtx=document.getElementById('wd-donut-chart').getContext('2d');
+  if(wdDonutChart)wdDonutChart.destroy();
+  wdDonutChart=new Chart(donutCtx,{
+    type:'doughnut',
+    data:{labels:['Paid','Unpaid','Overdue'],datasets:[{data:[paid,unpaid,overdue],backgroundColor:['#1D9E75','#EF9F27','#E24B4A'],borderColor:'#fff',borderWidth:3,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>' '+c.label+': '+c.parsed+' WDs'}}}}
+  });
+
+  // Top unpaid/overdue bar
+  const problem=all.filter(w=>w.status!=='Paid').sort((a,b)=>b.amount-a.amount).slice(0,5);
+  const barCtx=document.getElementById('wd-bar-chart').getContext('2d');
+  if(wdBarChart)wdBarChart.destroy();
+  const barH=problem.length*40+80;
+  document.getElementById('wd-bar-chart').parentElement.style.height=barH+'px';
+  wdBarChart=new Chart(barCtx,{
+    type:'bar',
+    data:{
+      labels:problem.map(w=>w.name.replace(' WD','')),
+      datasets:[{label:'Outstanding',data:problem.map(w=>w.amount),backgroundColor:problem.map(w=>w.status==='Overdue'?'#E24B4ACC':'#EF9F27CC'),borderColor:problem.map(w=>w.status==='Overdue'?'#E24B4A':'#EF9F27'),borderWidth:1.5,borderRadius:4}]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>' ₱'+c.parsed.x.toLocaleString()}}},
+      scales:{x:{ticks:{callback:v=>'₱'+(v/1000).toFixed(0)+'K',font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'}},y:{ticks:{font:{size:11}},grid:{display:false}}}
+    }
+  });
+}
+
+function renderCollections(){
+  renderWDStats();
+  const q=(document.getElementById('wd-search').value||'').toLowerCase();
+  const sf=document.getElementById('wd-filter-status').value;
+  const items=state.wdCollections.filter(w=>(!q||w.name.toLowerCase().includes(q)||w.region.toLowerCase().includes(q))&&(!sf||w.status===sf));
+  const body=document.getElementById('wd-body');
+  if(!items.length){body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-tertiary);font-size:13px">No water districts found.</td></tr>`;return;}
+  body.innerHTML=items.map(w=>{
+    const due=new Date(w.due).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
+    const pct=w.collected||0;
+    const fillColor=w.status==='Overdue'?'#E24B4A':w.status==='Paid'?'#1D9E75':'#EF9F27';
+    return `<tr>
+      <td style="font-weight:500">${escHtml(w.name)}<div style="font-size:11px;color:var(--text-tertiary);font-family:monospace">${w.id}</div></td>
+      <td style="color:var(--text-secondary);font-size:12px">${escHtml(w.region)}</td>
+      <td style="font-weight:600">₱${w.amount.toLocaleString()}</td>
+      <td style="color:var(--text-secondary);font-size:12px">${due}</td>
+      <td><span class="badge ${wdStatusBadgeClass(w.status)}">${w.status}</span></td>
+      <td><div style="display:flex;align-items:center;gap:7px">
+        <div style="flex:1;height:5px;background:var(--bg-tertiary);border-radius:10px;overflow:hidden;width:60px">
+          <div style="height:100%;border-radius:10px;background:${fillColor};width:${pct}%"></div>
+        </div>
+        <span style="font-size:12px;color:var(--text-secondary)">${pct}%</span>
+      </div></td>
+      <td><button class="icon-btn edit-btn" onclick="openEditWD('${w.id}')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></td>
+    </tr>`;
+  }).join('');
+  renderWDCharts();
+}
+function openAddWDModal(){
+  document.getElementById('new-wd-name').value='';
+  document.getElementById('new-wd-region').value='';
+  document.getElementById('new-wd-amount').value='';
+  document.getElementById('new-wd-due').value='';
+  document.getElementById('new-wd-status').value='Unpaid';
+  openModal('modal-add-wd');
+}
+function addWDCollection(){
+  const name=document.getElementById('new-wd-name').value.trim();
+  if(!name){alert('Please enter a water district name.');return;}
+  const n=state.nextId++,id='WD-'+String(n).padStart(3,'0');
+  state.wdCollections.push({
+    id,name,
+    region:document.getElementById('new-wd-region').value.trim(),
+    amount:parseFloat(document.getElementById('new-wd-amount').value)||0,
+    due:document.getElementById('new-wd-due').value,
+    status:document.getElementById('new-wd-status').value,
+    collected:document.getElementById('new-wd-status').value==='Paid'?100:0
+  });
+  closeModal('modal-add-wd');  // ← changed from closeForm
+  renderCollections();
+}
+
+function openEditWD(id){
+  const w=state.wdCollections.find(x=>x.id===id);
+  if(!w)return;
+  const newStatus=prompt(`Edit status for ${w.name}\nCurrent: ${w.status}\n\nType: Paid, Unpaid, or Overdue`,w.status);
+  if(!newStatus)return;
+  const s=newStatus.trim();
+  if(!['Paid','Unpaid','Overdue'].includes(s)){alert('Invalid status. Use: Paid, Unpaid, or Overdue');return;}
+  w.status=s;
+  w.collected=s==='Paid'?100:w.collected;
+  renderCollections();
+}
+
+// Hook into showPanel
+const _origShowPanel=showPanel;
+showPanel=function(name){
+  _origShowPanel(name);
+  if(name==='collections')setTimeout(renderCollections,50);
+};
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ===== LOGIN =====
@@ -1539,13 +1782,21 @@ const panelConfig={
   pos:{title:'Point of Sale',primary:null,form:null},
   schedule:{title:'Weekly Schedule',primary:null,form:null},
   analytics:{title:'Analytics',primary:null,form:null},
-  admin:{title:'Admin Settings',primary:null,form:null}
+  admin:{title:'Admin Settings',primary:null,form:null},
+  collections:{title:'WD Collections',primary:'+ Add WD',form:null}
+
 };
 let currentPanel='dashboard';
 function showPanel(name){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');document.querySelectorAll('.ni').forEach(n=>{n.classList.toggle('active',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"));});const cfg=panelConfig[name];document.getElementById('page-title').textContent=cfg.title;const pa=document.getElementById('primary-action');if(cfg.primary){pa.style.display='';pa.textContent=cfg.primary;}else pa.style.display='none';currentPanel=name;document.querySelectorAll('.add-form.open').forEach(f=>f.classList.remove('open'));if(name==='calendar'){renderFullCal();renderCalUpcoming();}if(name==='inventory'){renderInventory();}if(name==='pos'){renderPos();}if(name==='actionplan'){renderActionPlan();}if(name==='schedule'){renderSched();}
 if(name==='analytics'){setTimeout(renderAnalytics,50);}
-if(name==='dashboard'){renderDashAnalytics();}}
-function handlePrimaryAction(){const cfg=panelConfig[currentPanel];if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');}
+if(name==='dashboard'){renderDashAnalytics();}
+if(name==='collections'){setTimeout(renderCollections,50);}
+}
+function handlePrimaryAction(){
+  if(currentPanel==='collections'){openAddWDModal();return;}
+  const cfg=panelConfig[currentPanel];
+  if(cfg&&cfg.form)document.getElementById(cfg.form).classList.toggle('open');
+}
 function closeForm(id){document.getElementById(id).classList.remove('open');}
 function toggleSwitch(el){const isOn=el.style.background==='rgb(24, 95, 165)'||el.style.background==='#185FA5';el.style.background=isOn?'#d1d5db':'#185FA5';el.querySelector('.tog-t').style.left=isOn?'2px':'18px';}
 
@@ -1594,7 +1845,8 @@ sd(8,staticWeek,0,'field','Ramos WD');sd(8,staticWeek,1,'field','Ramos WD');sd(8
 sd(9,staticWeek,0,'field','Ramos WD');sd(9,staticWeek,1,'field','Ramos WD');sd(9,staticWeek,2,'field','Ramos WD');sd(9,staticWeek,3,'field','Ramos WD');sd(9,staticWeek,4,'field','Ramos WD');
 sd(10,staticWeek,0,'office','Office');sd(10,staticWeek,1,'office','Office');sd(10,staticWeek,2,'office','Office');sd(10,staticWeek,3,'office','Office');sd(10,staticWeek,4,'office','Office');
 sd(11,staticWeek,0,'field','Trip to Isabela');sd(11,staticWeek,1,'field','Tumaini WD');sd(11,staticWeek,2,'field','Tumaini WD');sd(11,staticWeek,3,'field','Tumaini WD');sd(11,staticWeek,4,'field','Tumaini WD');
-let schedCurrentMonday=getMonday(new Date());
+
+let schedCurrentMonday=getMonday(staticWeek);
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
 function schedTypeTag(type,note){if(!type||type==='none')return '<span class="sched-tag sched-tag-other">—</span>';const map={office:{cls:'sched-tag-office',label:'🏢 Office'},field:{cls:'sched-tag-field',label:'🔧 WO'},travel:{cls:'sched-tag-travel',label:'🚗 Travel'},wfh:{cls:'sched-tag-wfh',label:'🏠 WFH'},leave:{cls:'sched-tag-leave',label:'🌴 Leave'}};const t=map[type]||{cls:'sched-tag-other',label:type};return '<span class="sched-tag '+t.cls+'">'+t.label+'</span>'+(note?'<div class="sched-entry-note">'+escHtml(note)+'</div>':'');}
@@ -1906,6 +2158,7 @@ setTimeout(()=>{
   console.log('legend el:', document.getElementById('dash-analytics-legend'));
   console.log('bid records:', state.bidRecords.length);
   renderDashAnalytics();
-}, 100);</script>
+}, 100);
+</script>
 </body>
 </html>
