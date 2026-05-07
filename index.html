@@ -561,7 +561,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
   <div class="ap-monitor-header">
     <div class="ap-monitor-title">
       <svg viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="1" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
-      Sales & Bidding Overview
+      Data Visualization 
     </div>
     <div style="display:flex;align-items:center;gap:8px">
   <div style="display:flex;gap:2px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:2px">
@@ -569,7 +569,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
     <button class="analytics-tab" id="dash-period-quarterly" onclick="setDashPeriod('quarterly',this)">Quarterly</button>
     <button class="analytics-tab" id="dash-period-yearly" onclick="setDashPeriod('yearly',this)">Yearly</button>
   </div>
-  <span class="ap-monitor-view-link" onclick="showPanel('analytics')">View full analytics →</span>
+  <span class="ap-monitor-view-link" onclick="showPanel('analytics')">View full visualization →</span>
 </div>
   </div>
   <div class="ap-monitor-body">
@@ -1884,7 +1884,7 @@ const panelConfig={
   calendar:{title:'Calendar',primary:null,form:null},
   inventory:{title:'Inventory',primary:'+ Add Item',form:'add-inv-form'},
   pos:{title:'Point of Sale',primary:null,form:null},
-  schedule:{title:'Weekly Schedule',primary:null,form:null},
+  schedule:{title:'Weekly Schedule',primary:'🖨️ Print Schedule',form:null},
   analytics:{title:'Analytics',primary:null,form:null},
   admin:{title:'Admin Settings',primary:null,form:null},
   collections:{title:'WD Collections',primary:'+ Add WD',form:null},
@@ -1947,6 +1947,7 @@ function renderDashAlerts(){
 function handlePrimaryAction(){
   if(currentPanel==='collections'){openAddWDModal();return;}
   if(currentPanel==='actionplan'){printActionPlan();return;}
+  if(currentPanel==='schedule'){printSchedule();return;}
   if(currentPanel==='documents'){
     const input = document.getElementById('doc-upload-input');
     if(input){
@@ -2851,6 +2852,111 @@ function printActionPlan(){
     <div class="footer">
       <span>Radium Engineering Supplies Inc. (RESI)</span>
       <span>Total: ${state.actionPlan.length} · Done: ${state.actionPlan.filter(a=>a.done).length} · In Progress: ${state.actionPlan.filter(a=>a.status==='In Progress').length}</span>
+    </div>
+  </body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>win.print(),400);
+}
+
+function printSchedule(){
+  const mon = schedCurrentMonday;
+  const fri = new Date(mon); fri.setDate(fri.getDate()+4);
+  const fmt = d => d.toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
+  const weekLabel = fmt(mon)+' – '+fmt(fri);
+
+  // Build date headers
+  const dates = [];
+  for(let i=0;i<5;i++){
+    const d = new Date(mon);
+    d.setDate(d.getDate()+i);
+    dates.push(d);
+  }
+
+  const typeLabel = {
+    office:'🏢 Office', field:'🔧 Field (WO)', travel:'🚗 Travel',
+    wfh:'🏠 WFH', leave:'🌴 Leave', none:'—'
+  };
+  const typeBg = {
+    office:'#EEF2FF', field:'#EAF3DE', travel:'#FAEEDA',
+    wfh:'#FDF4FF', leave:'#FCEBEB', none:'#f3f4f6'
+  };
+  const typeColor = {
+    office:'#3730a3', field:'#3B6D11', travel:'#854F0B',
+    wfh:'#7e22ce', leave:'#A32D2D', none:'#9ca3af'
+  };
+
+  const rows = schedMembers.map((m,idx) => {
+    const cells = dates.map(d => {
+      const key = m.id+'_'+dateKey(d);
+      const entry = schedData[key];
+      const type = entry?.type || 'none';
+      const note = entry?.note || '';
+      const bg = typeBg[type]||'#f3f4f6';
+      const color = typeColor[type]||'#9ca3af';
+      const label = typeLabel[type]||'—';
+      return `<td style="padding:8px 10px;border:1px solid #e5e7eb;background:${bg};vertical-align:top">
+        <div style="font-size:11px;font-weight:600;color:${color}">${label}</div>
+        ${note?`<div style="font-size:10px;color:#6b7280;margin-top:2px">${escHtml(note)}</div>`:''}
+      </td>`;
+    }).join('');
+    const rowBg = idx%2===0?'#fff':'#f9fafb';
+    return `<tr style="background:${rowBg}">
+      <td style="padding:8px 12px;border:1px solid #e5e7eb;background:#f9fafb;white-space:nowrap">
+        <div style="font-size:12px;font-weight:600;color:#111">${escHtml(m.name)}</div>
+        ${m.code?`<div style="font-size:10px;color:#9ca3af">(${escHtml(m.code)})</div>`:''}
+      </td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  const headerCells = dates.map(d => {
+    const isToday = dateKey(d)===dateKey(new Date());
+    return `<th style="padding:10px 12px;font-size:11px;font-weight:700;color:${isToday?'#185FA5':'#fff'};
+      background:${isToday?'#dbeafe':'#273617'};border:1px solid #1a2410;text-align:center;white-space:nowrap">
+      <div style="text-transform:uppercase;letter-spacing:.07em">${SCHED_DAYS[dates.indexOf(d)]}</div>
+      <div style="font-size:14px;font-weight:700;margin-top:2px">${d.getDate()}</div>
+      <div style="font-size:10px;font-weight:400;opacity:.8">${d.toLocaleDateString('en-PH',{month:'short'})}</div>
+    </th>`;
+  }).join('');
+
+  const win = window.open('','_blank','width=1100,height:700');
+  win.document.write(`<!DOCTYPE html><html><head>
+    <title>Weekly Schedule — RESI</title>
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{font-family:Arial,sans-serif;font-size:12px;color:#111;padding:24px}
+      h2{font-size:15px;font-weight:700;margin-bottom:4px}
+      .sub{font-size:11px;color:#666;margin-bottom:16px}
+      table{width:100%;border-collapse:collapse}
+      .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;padding-top:10px;border-top:1px solid #e5e7eb}
+      .legend-item{display:flex;align-items:center;gap:5px;font-size:10px}
+      .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+      .footer{margin-top:10px;font-size:10px;color:#999;display:flex;justify-content:space-between}
+      @media print{body{padding:12px}}
+    </style>
+  </head><body>
+    <h2>Weekly Schedule — RESI</h2>
+    <div class="sub">Week of ${weekLabel} · ${schedMembers.length} team members</div>
+    <table>
+      <thead><tr>
+        <th style="padding:10px 12px;background:#273617;color:#fff;border:1px solid #1a2410;
+          font-size:11px;font-weight:700;text-align:left;width:120px;text-transform:uppercase;letter-spacing:.06em">Member</th>
+        ${headerCells}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="legend">
+      <span style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em">Legend:</span>
+      <div class="legend-item"><div class="legend-dot" style="background:#EEF2FF;border:1px solid #c7d2fe"></div><span style="color:#3730a3">🏢 Office</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#EAF3DE;border:1px solid #bcd99a"></div><span style="color:#3B6D11">🔧 Field (WO)</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FAEEDA;border:1px solid #f5cc85"></div><span style="color:#854F0B">🚗 Travel</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FDF4FF;border:1px solid #e9d5ff"></div><span style="color:#7e22ce">🏠 WFH</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FCEBEB;border:1px solid #F09595"></div><span style="color:#A32D2D">🌴 Leave</span></div>
+    </div>
+    <div class="footer">
+      <span>Radium Engineering Supplies Inc. (RESI)</span>
+      <span>Printed: ${new Date().toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})}</span>
     </div>
   </body></html>`);
   win.document.close();
