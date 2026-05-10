@@ -441,7 +441,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
     <div class="login-logo">
       <img src="logo.jpg" alt="RESI Logo" class="login-logo-img">
       <div>
-        <div class="login-logo-text">RESI</div>
+        <div class="login-logo-text">RESI </div>
         <div class="login-logo-sub">Radium Engineering Supplies Inc.</div>
       </div>
     </div>
@@ -457,7 +457,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <input type="password" id="login-password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="login-btn" onclick="doLogin()">Sign In</button>
-    <div style="text-align:center;font-size:11px;color:var(--text-tertiary);margin-top:16px">RESI Internal Management System</div>
+    <div style="text-align:center;font-size:11px;color:var(--text-tertiary);margin-top:16px">RESI Digital Operations System</div>
   </div>
 </div>
 <div class="app">
@@ -597,9 +597,14 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
             <div class="ap-mon-status-row" id="ap-mon-status-row"></div>
           </div>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
-        </div>
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-label">Licenses Expiring</div><div class="stat-value c-red">2</div><div class="stat-sub c-red">within 30 days</div></div>
+  <div class="stat-card" id="dash-collection-summary">
+    <div class="stat-label">WD Collections</div>
+    <div class="stat-value c-green" id="dash-col-rate">—</div>
+    <div class="stat-sub" id="dash-col-sub" style="color:var(--text-tertiary)">Loading…</div>
+  </div>
+</div>
         <div class="dash-layout">
           <div>
             <p class="dash-section-title">Recent Activity</p>
@@ -1927,6 +1932,7 @@ if (currentUser) {
   if(name==='dashboard'){renderDashAnalytics();renderDashAlerts();}
   if(name==='collections'){setTimeout(renderCollections,50);}
   if(name==='documents'){setTimeout(renderDocuments,50);}
+  if(name==='dashboard'){ renderDashAnalytics(); renderDashAlerts(); renderDashCollectionSummary(); }
 }
 function renderDashAlerts(){
   const el = document.getElementById('dash-lic-alert');
@@ -1944,6 +1950,26 @@ function renderDashAlerts(){
     ? `<div class="notif notif-d"><div class="ndot dot-r"></div><strong>${expiring.length} license${expiring.length!==1?'s':''} expiring within 30 days.</strong>&nbsp; Review in the Licenses tab.</div>`
     : '';
 }
+
+function renderDashCollectionSummary() {
+  const all = state.wdCollections;
+  if (!all || !all.length) return;
+  const paid = all.filter(w => w.status === 'Paid').length;
+  const overdue = all.filter(w => w.status === 'Overdue').length;
+  const rate = Math.round(paid / all.length * 100);
+  const totalCollected = all.filter(w => w.status === 'Paid').reduce((s, w) => s + w.amount, 0);
+
+  const rateEl = document.getElementById('dash-col-rate');
+  const subEl = document.getElementById('dash-col-sub');
+  if (rateEl) {
+    rateEl.textContent = rate + '%';
+    rateEl.className = 'stat-value ' + (rate >= 70 ? 'c-green' : rate >= 40 ? 'c-amber' : 'c-red');
+  }
+  if (subEl) {
+    subEl.innerHTML = `₱${totalCollected.toLocaleString()} collected · <span style="color:var(--red)">${overdue} overdue</span>`;
+  }
+}
+
 function handlePrimaryAction(){
   if(currentPanel==='collections'){openAddWDModal();return;}
   if(currentPanel==='actionplan'){printActionPlan();return;}
@@ -2973,6 +2999,7 @@ updateNotifBadge();
 renderActionPlan();
 renderSched();
 renderAPMonitor();
+renderDashCollectionSummary();
 setTimeout(()=>{
   console.log('stats el:', document.getElementById('dash-analytics-stats'));
   console.log('canvas el:', document.getElementById('dash-donut-chart'));
