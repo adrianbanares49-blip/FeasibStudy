@@ -2235,6 +2235,24 @@ function gatherNotifications(){
     });
   }
 
+    // Only show collections alerts if user has access to collections panel
+  if(allowed === null || allowed.includes('collections')){
+    state.wdCollections.forEach(w => {
+      if(w.status === 'Overdue'){
+        notifs.push({
+          id: 'wd-overdue-' + w.id,
+          group: 'Collections',
+          icon: '💧',
+          iconClass: 'ni-red',
+          severity: 'red',
+          title: w.name + ' payment is overdue',
+          sub: '₱' + w.amount.toLocaleString() + ' due since ' + new Date(w.due).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}),
+          panel: 'collections'
+        });
+      }
+    });
+  }
+
   return notifs;
 }
 function renderNotifDropdown(){const all=gatherNotifications(),unread=all.filter(n=>!notifReadIds.has(n.id)),badge=document.getElementById('notif-badge'),btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}const body=document.getElementById('notif-drop-body');if(!all.length){body.innerHTML=`<div class="notif-drop-empty">🎉 All clear! No active notifications.</div>`;return;}const groups={};all.forEach(n=>{if(!groups[n.group])groups[n.group]=[];groups[n.group].push(n);});let html='';Object.entries(groups).forEach(([grp,items])=>{html+=`<div class="notif-group-label">${grp}</div>`;items.forEach(n=>{const isUnread=!notifReadIds.has(n.id);html+=`<div class="notif-row ${isUnread?'unread':''}" onclick="notifRowClick('${n.id}','${n.panel}')"><div class="notif-row-icon ${n.iconClass}">${n.icon}</div><div class="notif-row-body"><div class="notif-row-title">${escHtml(n.title)}</div><div class="notif-row-sub">${n.sub}</div></div>${isUnread?`<div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0;margin-top:6px"></div>`:''}</div>`;});});body.innerHTML=html;}
