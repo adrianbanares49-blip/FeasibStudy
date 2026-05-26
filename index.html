@@ -873,12 +873,13 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <option value="">All Statuses</option>
       <option value="Paid">Paid</option>
       <option value="Unpaid">Unpaid</option>
+      <option value="Partial">Partial</option>
       <option value="Overdue">Overdue</option>
     </select>
   </div>
 
   <!-- Table -->
-  <div class="inv-table-wrap">
+<div class="inv-table-wrap" style="overflow:visible">
     <table class="inv-table" style="table-layout:fixed">
       <thead><tr>
         <th style="width:220px">Water District</th>
@@ -955,6 +956,35 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       <div class="modal-footer-right">
         <button class="btn" onclick="closeModal('modal-add-wd')">Cancel</button>
         <button class="btn btnp" onclick="addWDCollection()">Add Water District</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay hidden" id="modal-edit-wd">
+  <div class="modal">
+    <div class="modal-title">Edit Water District</div>
+    <div class="form-row">
+      <div class="fg"><label>Water District Name</label><input type="text" id="edit-wd-name"></div>
+      <div class="fg"><label>Region</label><input type="text" id="edit-wd-region"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Amount Due (₱)</label><input type="number" id="edit-wd-amount" min="0"></div>
+      <div class="fg"><label>Due Date</label><input type="date" id="edit-wd-due"></div>
+    </div>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Amount Paid (₱)</label>
+      <input type="number" id="edit-wd-paid" min="0" placeholder="0"
+        oninput="updateEditWDPct()">
+      <div style="margin-top:6px;font-size:12px;color:var(--text-secondary)">
+        Collected: <strong id="edit-wd-pct-preview">0%</strong>
+        <span id="edit-wd-status-preview" style="margin-left:8px;font-size:11px;padding:2px 8px;border-radius:8px;background:var(--amber-light);color:var(--amber)">Unpaid</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btndanger" onclick="deleteWDEntry()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn" onclick="closeModal('modal-edit-wd')">Cancel</button>
+        <button class="btn btnp" onclick="saveWDEdit()">Save Changes</button>
       </div>
     </div>
   </div>
@@ -1168,19 +1198,75 @@ const state={
 
 // ===== WD COLLECTIONS =====
 state.wdCollections = [
-  {id:'WD-001',name:'Cabanatuan City WD',region:'Region III',amount:480000,due:'2026-04-15',status:'Paid',collected:100},
-  {id:'WD-002',name:'Roxas(Isabela) WD',region:'Region II',amount:320000,due:'2026-04-20',status:'Paid',collected:100},
+  {id:'WD-001',name:'Cabanatuan City WD',region:'Region III',amount:480000,due:'2026-05-15',status:'Paid',collected:100},
+  {id:'WD-002',name:'Roxas(Isabela) WD',region:'Region II',amount:320000,due:'2026-05-20',status:'Paid',collected:100},
   {id:'WD-003',name:'Goodhands',region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
-  {id:'WD-004',name:'Garcia Hospital',region:'Region III',amount:198000,due:'2026-04-30',status:'Unpaid',collected:0},
-  {id:'WD-005',name:'Ramos WD',region:'Region III',amount:175000,due:'2026-04-25',status:'Paid',collected:100},
-  {id:'WD-006',name:'Talavera WD',region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:30},
+  {id:'WD-004',name:'Garcia Hospital',region:'Region III',amount:198000,due:'2026-06-30',status:'Unpaid',collected:0},
+  {id:'WD-005',name:'Ramos WD',region:'Region III',amount:175000,due:'2026-08-25',status:'Paid',collected:100},
+  {id:'WD-006',name:'Talavera WD',region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:0},
   {id:'WD-007',name:'Cauayan City WD',region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
-  {id:'WD-008',name:'Bongabon WD',region:'Region III',amount:138000,due:'2026-04-28',status:'Paid',collected:100},
+  {id:'WD-008',name:'Bongabon WD',region:'Region III',amount:138000,due:'2026-06-28',status:'Paid',collected:100},
   {id:'WD-009',name:'Palayan City WD',region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
   {id:'WD-010',name:'Conception WD',region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
-  {id:'WD-011',name:'Santa Rosa WD',region:'Region III',amount:112000,due:'2026-04-22',status:'Paid',collected:100},
+  {id:'WD-011',name:'Santa Rosa WD',region:'Region III',amount:112000,due:'2026-07-22',status:'Paid',collected:100},
   {id:'WD-012',name:'Moncanda WD',region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
 ];
+
+let editingWDId = null;
+
+function openEditWD(id) {
+  const w = state.wdCollections.find(x => x.id === id);
+  if (!w) return;
+  editingWDId = id;
+  document.getElementById('edit-wd-name').value = w.name;
+  document.getElementById('edit-wd-region').value = w.region;
+  document.getElementById('edit-wd-amount').value = w.amount;
+  document.getElementById('edit-wd-due').value = w.due;
+  document.getElementById('edit-wd-paid').value = w.amountPaid || 0;
+  updateEditWDPct();
+  openModal('modal-edit-wd');
+}
+
+function updateEditWDPct() {
+  const amount = parseFloat(document.getElementById('edit-wd-amount').value) || 0;
+  const paid = parseFloat(document.getElementById('edit-wd-paid').value) || 0;
+  const pct = amount > 0 ? Math.min(100, Math.round(paid / amount * 100)) : 0;
+  const status = pct >= 100 ? 'Paid' : paid > 0 ? 'Partial' : new Date(document.getElementById('edit-wd-due').value) < TODAY ? 'Overdue' : 'Unpaid';
+  const statusColors = {
+    Paid: ['var(--green-light)', 'var(--green)'],
+    Partial: ['var(--amber-light)', 'var(--amber)'],
+    Overdue: ['var(--red-light)', 'var(--red)'],
+    Unpaid: ['var(--amber-light)', 'var(--amber)']
+  };
+  document.getElementById('edit-wd-pct-preview').textContent = pct + '%';
+  const sp = document.getElementById('edit-wd-status-preview');
+  sp.textContent = status;
+  sp.style.background = statusColors[status][0];
+  sp.style.color = statusColors[status][1];
+}
+
+function saveWDEdit() {
+  const w = state.wdCollections.find(x => x.id === editingWDId);
+  if (!w) return;
+  const amount = parseFloat(document.getElementById('edit-wd-amount').value) || 0;
+  const paid = parseFloat(document.getElementById('edit-wd-paid').value) || 0;
+  const pct = amount > 0 ? Math.min(100, Math.round(paid / amount * 100)) : 0;
+  w.name = document.getElementById('edit-wd-name').value.trim() || w.name;
+  w.region = document.getElementById('edit-wd-region').value.trim();
+  w.amount = amount;
+  w.due = document.getElementById('edit-wd-due').value;
+  w.amountPaid = paid;
+  w.collected = pct;
+  w.status = pct >= 100 ? 'Paid' : paid > 0 ? 'Partial' : new Date(w.due) < TODAY ? 'Overdue' : 'Unpaid';
+  closeModal('modal-edit-wd');
+  renderCollections();
+}
+
+function deleteWDEntry() {
+  state.wdCollections = state.wdCollections.filter(x => x.id !== editingWDId);
+  closeModal('modal-edit-wd');
+  renderCollections();
+}
 
 let wdDonutChart=null,wdBarChart=null;
 
@@ -1257,6 +1343,8 @@ function renderCollections(){
   const items=state.wdCollections.filter(w=>(!q||w.name.toLowerCase().includes(q)||w.region.toLowerCase().includes(q))&&(!sf||w.status===sf));
   const body=document.getElementById('wd-body');
   if(!items.length){body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-tertiary);font-size:13px">No water districts found.</td></tr>`;return;}
+  // At the top of renderCollections, before body.innerHTML=...
+document.querySelectorAll('[id^="wddd-"]').forEach(d => d.remove());
   body.innerHTML=items.map(w=>{
     const due=new Date(w.due).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
     const pct=w.collected||0;
@@ -1272,10 +1360,19 @@ function renderCollections(){
           <div style="height:100%;border-radius:10px;background:${fillColor};width:${pct}%"></div>
         </div>
         <span style="font-size:12px;color:var(--text-secondary)">${pct}%</span>
-      </div></td>
-      <td><button class="icon-btn edit-btn" onclick="openEditWD('${w.id}')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Edit</button></td>
+      </div>
+<td>
+  <button class="icon-btn edit-btn" onclick="openEditWD('${w.id}')">
+    ✏️ Edit
+  </button>
+</td>
+      </td>
+
     </tr>`;
+    
   }).join('');
+  // After body.innerHTML = items.map(...).join('');
+document.querySelectorAll('[id^="wddd-"]').forEach(d => document.body.appendChild(d));
   renderWDCharts();
 }
 function openAddWDModal(){
@@ -1302,15 +1399,26 @@ function addWDCollection(){
   renderCollections();
 }
 
-function openEditWD(id){
-  const w=state.wdCollections.find(x=>x.id===id);
-  if(!w)return;
-  const newStatus=prompt(`Edit status for ${w.name}\nCurrent: ${w.status}\n\nType: Paid, Unpaid, or Overdue`,w.status);
-  if(!newStatus)return;
-  const s=newStatus.trim();
-  if(!['Paid','Unpaid','Overdue'].includes(s)){alert('Invalid status. Use: Paid, Unpaid, or Overdue');return;}
-  w.status=s;
-  w.collected=s==='Paid'?100:w.collected;
+function toggleWDDropdown(e, id) {
+  e.stopPropagation();
+  document.querySelectorAll('[id^="wddd-"]').forEach(d => d.style.display = 'none');
+  
+  const dd = document.getElementById('wddd-' + id);
+  if (dd.style.display === 'block') { dd.style.display = 'none'; return; }
+  
+  const btn = e.currentTarget;
+  const rect = btn.getBoundingClientRect();
+  dd.style.top = (rect.bottom + 4) + 'px';
+  dd.style.left = rect.left + 'px';
+  dd.style.display = 'block';
+}
+
+function setWDStatus(id, newStatus) {
+  const w = state.wdCollections.find(x => x.id === id);
+  if (!w) return;
+  w.status = newStatus;
+  w.collected = newStatus === 'Paid' ? 100 : 0;
+  document.querySelectorAll('[id^="wddd-"]').forEach(d => d.style.display = 'none');
   renderCollections();
 }
 
@@ -2135,8 +2243,17 @@ function closeNotifDropdown(){document.getElementById('notif-dropdown').classLis
 function notifRowClick(id,panel){notifReadIds.add(id);closeNotifDropdown();showPanel(panel);renderNotifDropdown();}
 function markAllRead(){const all=gatherNotifications();all.forEach(n=>notifReadIds.add(n.id));renderNotifDropdown();}
 function updateNotifBadge(){const all=gatherNotifications(),unread=all.filter(n=>!notifReadIds.has(n.id)),badge=document.getElementById('notif-badge'),btn=document.getElementById('notif-bell-btn');if(unread.length){badge.textContent=unread.length>99?'99+':unread.length;badge.classList.add('visible');btn.classList.add('has-unread');}else{badge.classList.remove('visible');btn.classList.remove('has-unread');}}
-document.addEventListener('click',e=>{const wrap=document.getElementById('notif-bell-wrap');if(wrap&&!wrap.contains(e.target))closeNotifDropdown();});
-
+document.addEventListener('click', e => {
+  // Close notif dropdown
+  const wrap = document.getElementById('notif-bell-wrap');
+  if (wrap && !wrap.contains(e.target)) closeNotifDropdown();
+  
+  // Close WD status dropdowns — only if click is outside any dropdown or its trigger cell
+  const insideWDCell = e.target.closest('td[style*="position:relative"]');
+  if (!insideWDCell) {
+    document.querySelectorAll('[id^="wddd-"]').forEach(d => d.style.display = 'none');
+  }
+});
 // ===== WEEKLY SCHEDULE =====
 const SCHED_DAYS=['MON','TUE','WED','THU','FRI'];
 const schedMembers=[
@@ -2988,6 +3105,13 @@ function printSchedule(){
   win.focus();
   setTimeout(()=>win.print(),400);
 }
+function wdStatusBadgeClass(s){
+  if(s==='Paid') return 'b-paid';
+  if(s==='Overdue') return 'b-over';
+  if(s==='Partial') return 'b-pend';
+  return 'b-pend';
+}
+
 
 // ===== INIT =====
 initCalendarEvents();
