@@ -3163,7 +3163,7 @@ function wdStatusBadgeClass(s){
 
 function sendOverdueEmail(wd) {
   if (!wd.email) return; // skip if no email on file
-  emailjs.send('service_h77nsbm', 'template_hzim7f6', {
+  emailjs.send('service_h77nsbm', 'template_veqd9pv', {
     wd_name:   wd.name,
     amount:    wd.amount.toLocaleString(),
     due_date:  new Date(wd.due).toLocaleDateString('en-PH', {month:'long', day:'numeric', year:'numeric'}),
