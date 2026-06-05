@@ -1277,19 +1277,17 @@ function saveWDEdit(saveOnly = true) {
   w.status = pct >= 100 ? 'Paid' : paid > 0 ? 'Partial' : new Date(w.due) < TODAY ? 'Overdue' : 'Unpaid';
   w.email = document.getElementById('edit-wd-email').value.trim();
 
-  // Auto-send when saving and status resolved to Overdue
-  if (w.status === 'Overdue' && w.email) {
-    sendOverdueEmail(w);
+if (!saveOnly) {
+  // Manual "Send Reminder" — send regardless of status
+  if (!w.email) {
+    alert('No email on file for ' + w.name + '. Add one to send reminders.');
+    closeModal('modal-edit-wd');
+    renderCollections();
+    return;
   }
-
-  // Manual "Send Reminder" button — send regardless of auto-trigger
-  if (!saveOnly) {
-    if (!w.email) {
-      alert('No email address on file for ' + w.name + '. Add one to send reminders.');
-      return;
-    }
-    sendOverdueEmail(w);
-  }
+  sendOverdueEmail(w);
+  alert('Reminder sent to ' + w.email);
+}
 
   closeModal('modal-edit-wd');
   renderCollections();
