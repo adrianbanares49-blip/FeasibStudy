@@ -10,6 +10,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('ssGcKO6Mts2s-n_lO');</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',sans-serif;background:var(--color-background-tertiary,#f3f4f6);color:var(--color-text-primary,#111)}
@@ -28,6 +30,7 @@ body{font-family:'Poppins',sans-serif;background:var(--color-background-tertiary
   --red:#A32D2D;--red-light:#FCEBEB;
   --r:8px;--rl:12px;
 }
+
 
 .doc-age-tab{padding:5px 12px;border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text-secondary);transition:all .15s;border:none;background:transparent;font-family:inherit;white-space:nowrap}
 .doc-age-tab.active{background:var(--bg-primary);color:var(--text-primary);box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -162,7 +165,7 @@ nav{padding:8px 0;flex:1}
 .cal-add-event button{padding:7px;border-radius:var(--r);border:none;background:var(--blue);color:#fff;font-size:12px;cursor:pointer;font-family:inherit}
 .cal-add-event button:hover{background:var(--blue-dark)}
 .no-date-selected{text-align:center;padding:20px;color:var(--text-tertiary);font-size:12px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-overlay.hidden{display:none}
 .modal{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--rl);padding:20px;width:480px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
 .modal-title{font-size:15px;font-weight:500;color:var(--text-primary);margin-bottom:16px}
@@ -363,6 +366,8 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 .amp-dot-onhold{background:#ca8a04}
 .amp-dot-overdue{background:#E24B4A}
 
+
+
 /* ===== ANALYTICS STYLES ===== */
 .analytics-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .analytics-tabs{display:flex;gap:4px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--r);padding:3px}
@@ -432,6 +437,7 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 .login-btn:hover{background:#3a4e22}
 .login-error{background:var(--red-light);color:var(--red);border:1px solid #F09595;border-radius:var(--r);padding:9px 12px;font-size:12px;margin-bottom:14px;display:none}
 .login-error.visible{display:block}
+
 
 </style>
 </head>
@@ -951,19 +957,24 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
         <option value="Overdue">Overdue</option>
       </select>
     </div>
-    <div class="modal-footer">
-      <div></div>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-add-wd')">Cancel</button>
-        <button class="btn btnp" onclick="addWDCollection()">Add Water District</button>
-      </div>
-    </div>
+<div class="modal-footer">
+  <button class="btn btndanger" onclick="deleteWDEntry()" style="min-width:90px;white-space:nowrap;height:38px">Delete</button>
+  <div class="modal-footer-right">
+    <button class="btn" onclick="closeModal('modal-edit-wd')" style="min-width:90px;white-space:nowrap;height:38px">Cancel</button>
+    <button class="btn" onclick="saveWDEdit(false)"
+      style="min-width:130px;white-space:nowrap;height:38px;background:var(--amber-light);border-color:#FAC775;color:var(--amber)">
+      💌 Send Reminder
+    </button>
+    <button class="btn btnp" onclick="saveWDEdit()" style="min-width:120px;white-space:nowrap;height:38px">Save Changes</button>
+  </div>
+</div>
+</div>
   </div>
 </div>
 <div class="modal-overlay hidden" id="modal-edit-wd">
-  <div class="modal">
-    <div class="modal-title">Edit Water District</div>
-    <div class="form-row">
+<div class="modal" style="width:520px;max-width:90vw;padding:16px 20px;margin:0 auto">
+  <div class="modal-title">Edit Water District</div>
+    <div class="form-row" style="margin-bottom:8px">
       <div class="fg"><label>Water District Name</label><input type="text" id="edit-wd-name"></div>
       <div class="fg"><label>Region</label><input type="text" id="edit-wd-region"></div>
     </div>
@@ -973,18 +984,22 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
     </div>
     <div class="fg" style="margin-bottom:12px">
       <label>Amount Paid (₱)</label>
-      <input type="number" id="edit-wd-paid" min="0" placeholder="0"
-        oninput="updateEditWDPct()">
+      <input type="number" id="edit-wd-paid" min="0" placeholder="0" oninput="updateEditWDPct()">
       <div style="margin-top:6px;font-size:12px;color:var(--text-secondary)">
         Collected: <strong id="edit-wd-pct-preview">0%</strong>
         <span id="edit-wd-status-preview" style="margin-left:8px;font-size:11px;padding:2px 8px;border-radius:8px;background:var(--amber-light);color:var(--amber)">Unpaid</span>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btndanger" onclick="deleteWDEntry()">Delete</button>
-      <div class="modal-footer-right">
-        <button class="btn" onclick="closeModal('modal-edit-wd')">Cancel</button>
-        <button class="btn btnp" onclick="saveWDEdit()">Save Changes</button>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Email Address</label>
+      <input type="email" id="edit-wd-email" placeholder="billing@example.com">
+    </div>
+<div class="modal-footer" style="flex-wrap:nowrap;align-items:center;gap:10px">
+  <div class="modal-footer-right" style="flex-wrap:nowrap">
+      <button class="btn btndanger" onclick="deleteWDEntry()" style="white-space:nowrap;height:36px">Delete</button>
+        <button class="btn" onclick="closeModal('modal-edit-wd')" style="white-space:nowrap;height:36px">Cancel</button>
+        <button class="btn" onclick="saveWDEdit(false)" style="white-space:nowrap;height:36px;background:var(--amber-light);border-color:#FAC775;color:var(--amber)">💌 Send Reminder</button>
+        <button class="btn btnp" onclick="saveWDEdit()" style="white-space:nowrap;height:36px">Save Changes</button>
       </div>
     </div>
   </div>
@@ -1198,18 +1213,18 @@ const state={
 
 // ===== WD COLLECTIONS =====
 state.wdCollections = [
-  {id:'WD-001',name:'Cabanatuan City WD',region:'Region III',amount:480000,due:'2026-05-15',status:'Paid',collected:100},
-  {id:'WD-002',name:'Roxas(Isabela) WD',region:'Region II',amount:320000,due:'2026-05-20',status:'Paid',collected:100},
-  {id:'WD-003',name:'Goodhands',region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
-  {id:'WD-004',name:'Garcia Hospital',region:'Region III',amount:198000,due:'2026-06-30',status:'Unpaid',collected:0},
-  {id:'WD-005',name:'Ramos WD',region:'Region III',amount:175000,due:'2026-08-25',status:'Paid',collected:100},
-  {id:'WD-006',name:'Talavera WD',region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:0},
-  {id:'WD-007',name:'Cauayan City WD',region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
-  {id:'WD-008',name:'Bongabon WD',region:'Region III',amount:138000,due:'2026-06-28',status:'Paid',collected:100},
-  {id:'WD-009',name:'Palayan City WD',region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
-  {id:'WD-010',name:'Conception WD',region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
-  {id:'WD-011',name:'Santa Rosa WD',region:'Region III',amount:112000,due:'2026-07-22',status:'Paid',collected:100},
-  {id:'WD-012',name:'Moncanda WD',region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
+  {id:'WD-001',name:'Cabanatuan City WD', email:'ccWD@example.com', region:'Region III',amount:480000,due:'2026-05-15',status:'Paid',collected:100},
+  {id:'WD-002',name:'Roxas(Isabela) WD', email:'roxWD@example.com', region:'Region II',amount:320000,due:'2026-05-20',status:'Paid',collected:100},
+  {id:'WD-003',name:'Goodhands',email:'ghsWD@example.com', region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
+  {id:'WD-004',name:'Garcia Hospital',email:'ghWD@example.com', region:'Region III',amount:198000,due:'2026-06-30',status:'Unpaid',collected:0},
+  {id:'WD-005',name:'Ramos WD',email:'ramosWD@example.com', region:'Region III',amount:175000,due:'2026-08-25',status:'Paid',collected:100},
+  {id:'WD-006',name:'Talavera WD',email:'talWD@example.com', region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:0},
+  {id:'WD-007',name:'Cauayan City WD',email:'cauayanWD@example.com', region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
+  {id:'WD-008',name:'Bongabon WD',email:'bongWD@example.com', region:'Region III',amount:138000,due:'2026-06-28',status:'Paid',collected:100},
+  {id:'WD-009',name:'Palayan City WD',email:'pcWD@example.com', region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
+  {id:'WD-010',name:'Conception WD',email:'conWD@example.com', region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
+  {id:'WD-011',name:'Santa Rosa WD',email:'srWD@example.com', region:'Region III',amount:112000,due:'2026-07-22',status:'Paid',collected:100},
+  {id:'WD-012',name:'Moncanda WD',email:'monWD@example.com', region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
 ];
 
 let editingWDId = null;
@@ -1223,6 +1238,8 @@ function openEditWD(id) {
   document.getElementById('edit-wd-amount').value = w.amount;
   document.getElementById('edit-wd-due').value = w.due;
   document.getElementById('edit-wd-paid').value = w.amountPaid || 0;
+  document.getElementById('edit-wd-email').value = w.email || '';
+
   updateEditWDPct();
   openModal('modal-edit-wd');
 }
@@ -1245,7 +1262,7 @@ function updateEditWDPct() {
   sp.style.color = statusColors[status][1];
 }
 
-function saveWDEdit() {
+function saveWDEdit(saveOnly = true) {
   const w = state.wdCollections.find(x => x.id === editingWDId);
   if (!w) return;
   const amount = parseFloat(document.getElementById('edit-wd-amount').value) || 0;
@@ -1258,6 +1275,22 @@ function saveWDEdit() {
   w.amountPaid = paid;
   w.collected = pct;
   w.status = pct >= 100 ? 'Paid' : paid > 0 ? 'Partial' : new Date(w.due) < TODAY ? 'Overdue' : 'Unpaid';
+  w.email = document.getElementById('edit-wd-email').value.trim();
+
+  // Auto-send when saving and status resolved to Overdue
+  if (w.status === 'Overdue' && w.email) {
+    sendOverdueEmail(w);
+  }
+
+  // Manual "Send Reminder" button — send regardless of auto-trigger
+  if (!saveOnly) {
+    if (!w.email) {
+      alert('No email address on file for ' + w.name + '. Add one to send reminders.');
+      return;
+    }
+    sendOverdueEmail(w);
+  }
+
   closeModal('modal-edit-wd');
   renderCollections();
 }
@@ -3128,6 +3161,20 @@ function wdStatusBadgeClass(s){
   if(s==='Overdue') return 'b-over';
   if(s==='Partial') return 'b-pend';
   return 'b-pend';
+}
+
+function sendOverdueEmail(wd) {
+  if (!wd.email) return; // skip if no email on file
+  emailjs.send('service_h77nsbm', 'template_hzim7f6', {
+    wd_name:   wd.name,
+    amount:    wd.amount.toLocaleString(),
+    due_date:  new Date(wd.due).toLocaleDateString('en-PH', {month:'long', day:'numeric', year:'numeric'}),
+    to_email:  wd.email,
+  }).then(() => {
+    console.log('Overdue notice sent to ' + wd.name);
+  }).catch(err => {
+    console.error('EmailJS error:', err);
+  });
 }
 
 
