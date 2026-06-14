@@ -1104,7 +1104,8 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
 </div>
 
 <script>
-const TODAY=new Date('2026-04-25');
+const TODAY = new Date();
+TODAY.setHours(0, 0, 0, 0);
 let currentUser = null;
 let editingId=null;
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1130,9 +1131,9 @@ const MONTHS_LIST=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','
 const state={
   licenses:[
     {id:11,name:"SEC Registration",expiry:'2026-12-31',category:'Core Legal'},
-    {id:12,name:"Mayor's Permit / Business Permit",expiry:'2026-05-09',category:'Core Legal'},
-    {id:13,name:'Tax Declaration Certificate',expiry:'2026-05-11',category:'Core Legal'},
-    {id:14,name:'Fire Safety Inspection Certificate (FSIC)',expiry:'2026-07-15',category:'Core Legal'},
+    {id:12,name:"Mayor's Permit / Business Permit",expiry:'2026-06-30',category:'Core Legal'},
+    {id:13,name:'Tax Declaration Certificate',expiry:'2026-07-11',category:'Core Legal'},
+    {id:14,name:'Fire Safety Inspection Certificate (FSIC)',expiry:'2026-06-30',category:'Core Legal'},
     {id:15,name:'DOLE Registration / Compliance',expiry:'2026-09-30',category:'Core Legal'},
     {id:16,name:'Barangay Clearance',expiry:'2026-06-30',category:'Core Legal'},
     {id:17,name:'Social Security System (SSS) Employer Registration',expiry:'2026-12-31',category:'Core Legal'},
@@ -1140,12 +1141,12 @@ const state={
     {id:19,name:'Pag-IBIG Employer Registration',expiry:'2026-12-31',category:'Core Legal'},
     {id:20,name:'PhilGEPS Registration',expiry:'2026-08-15',category:'Industry-Specific'},
     {id:21,name:'Philippine Contractors Accreditation Board (PCAB) License',expiry:'2026-11-30',category:'Industry-Specific'},
-    {id:22,name:'Sanitation Permit / Health Certificate',expiry:'2026-06-15',category:'Industry-Specific'},
+    {id:22,name:'Sanitation Permit / Health Certificate',expiry:'2026-06-16',category:'Industry-Specific'},
     {id:23,name:'DENR Environmental Compliance Certificate (ECC)',expiry:'2027-03-31',category:'Industry-Specific'},
     {id:24,name:'Chemical Handling Permits',expiry:'2026-10-31',category:'Industry-Specific'},
     {id:25,name:'Water Permit',expiry:'2027-01-15',category:'Industry-Specific'},
     {id:26,name:'Occupational Safety Certification',expiry:'2026-08-01',category:'Safety & Training'},
-    {id:27,name:'Sanitation Permit / Health Certificate (Safety)',expiry:'2026-06-15',category:'Safety & Training'},
+    {id:27,name:'Sanitation Permit / Health Certificate (Safety)',expiry:'2026-07-30',category:'Safety & Training'},
   ],
   inventory:[
     {id:'INV-001',name:'Chlorine Dioxide Powder',status:'Active',qty:50,cost:300,lowThreshold:10},
@@ -1154,23 +1155,23 @@ const state={
     {id:'INV-004',name:'Poly Aluminum Chloride (PAC)',status:'Active',qty:15,cost:2500,lowThreshold:5}
   ],
   actionPlan:[
-    {id:5001,done:false,action:'Delivery of 15 Pail Seaquest',assignedTo:'Cabanatuan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:''},
-    {id:5002,done:false,action:'Testing of 15 Hp KNB Pump & Rotex Motor',assignedTo:'Roxas (Isabela) WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'To prepare next week'},
-    {id:5003,done:true,action:'Demo New Colorimeter',assignedTo:'Office-VFD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
-    {id:5004,done:false,action:'Defective Dosing Pump, Request for Assessment for the New Project',assignedTo:'Garcia Hosp',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'To sched next week'},
-    {id:5005,done:false,action:'Installation of Solar',assignedTo:'Ramos WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:50,notes:'On going'},
-    {id:5006,done:false,action:'Assy. Sand Separator',assignedTo:'Talavera WD',dateAssigned:'2026-04-25',dateDue:'',status:'On Hold',pct:0,notes:'Waiting'},
-    {id:5007,done:false,action:"Delivery Pump and Motor 10 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:40,notes:'On going'},
-    {id:5008,done:false,action:"Delivery Pump and Motor 15 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:40,notes:'On going'},
-    {id:5009,done:false,action:'San Lazaro Project',assignedTo:'Bongabon WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:60,notes:'On going'},
-    {id:5010,done:false,action:'Delivery of GenSet Accessories',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'In Progress',pct:30,notes:'On going'},
-    {id:5011,done:false,action:'Re-wiring of Booster Control - Office PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
-    {id:5012,done:false,action:'Additional Repair of Genset for Manacnac PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'On Hold',pct:0,notes:'Waiting for Quotation Approval'},
-    {id:5013,done:false,action:'Installation 30 Hp Sub. Pump & Motor at Singalat PS',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
-    {id:5014,done:true,action:'For Replacement Backwash Controller and Air Filter of GenSet - Cordero PS Filtration',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
-    {id:5015,done:true,action:'Installation-Cordero Dam-Water Treatment - Busted Hose',assignedTo:'Palayan City WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Finished'},
-    {id:5016,done:true,action:'Service SCADA',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
-    {id:5017,done:true,action:'Requesting for VFD Training',assignedTo:'Concepcion WD',dateAssigned:'2026-04-25',dateDue:'',status:'Complete',pct:100,notes:'Done'},
+    {id:5001,done:false,action:'Delivery of 15 Pail Seaquest',assignedTo:'Cabanatuan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Not Started',pct:0,notes:''},
+    {id:5002,done:false,action:'Testing of 15 Hp KNB Pump & Rotex Motor',assignedTo:'Roxas (Isabela) WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Not Started',pct:0,notes:'To prepare next week'},
+    {id:5003,done:true,action:'Demo New Colorimeter',assignedTo:'Office-VFD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5004,done:false,action:'Defective Dosing Pump, Request for Assessment for the New Project',assignedTo:'Garcia Hosp',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Not Started',pct:0,notes:'To sched next week'},
+    {id:5005,done:false,action:'Installation of Solar',assignedTo:'Ramos WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'In Progress',pct:50,notes:'On going'},
+    {id:5006,done:false,action:'Assy. Sand Separator',assignedTo:'Talavera WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'On Hold',pct:0,notes:'Waiting'},
+    {id:5007,done:false,action:"Delivery Pump and Motor 10 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'In Progress',pct:40,notes:'On going'},
+    {id:5008,done:false,action:"Delivery Pump and Motor 15 Hp 3 Phase, 6'",assignedTo:'Cauayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'In Progress',pct:40,notes:'On going'},
+    {id:5009,done:false,action:'San Lazaro Project',assignedTo:'Bongabon WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'In Progress',pct:60,notes:'On going'},
+    {id:5010,done:false,action:'Delivery of GenSet Accessories',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'In Progress',pct:30,notes:'On going'},
+    {id:5011,done:false,action:'Re-wiring of Booster Control - Office PS',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
+    {id:5012,done:false,action:'Additional Repair of Genset for Manacnac PS',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'On Hold',pct:0,notes:'Waiting for Quotation Approval'},
+    {id:5013,done:false,action:'Installation 30 Hp Sub. Pump & Motor at Singalat PS',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Not Started',pct:0,notes:'Not yet started'},
+    {id:5014,done:true,action:'For Replacement Backwash Controller and Air Filter of GenSet - Cordero PS Filtration',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5015,done:true,action:'Installation-Cordero Dam-Water Treatment - Busted Hose',assignedTo:'Palayan City WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Complete',pct:100,notes:'Finished'},
+    {id:5016,done:true,action:'Service SCADA',assignedTo:'Concepcion WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Complete',pct:100,notes:'Done'},
+    {id:5017,done:true,action:'Requesting for VFD Training',assignedTo:'Concepcion WD',dateAssigned:new Date().toISOString().slice(0,10), dateDue:'',status:'Complete',pct:100,notes:'Done'},
   ],
   sales:[],posCart:[],calendarEvents:{},
   activeFolderId:null,nextId:6000,calYear:2026,calMonth:3,selectedDate:null,editingInvId:null,
@@ -2316,7 +2317,8 @@ function getMonday(d){const dt=new Date(d);const day=dt.getDay();const diff=dt.g
 function dateKey(d){return d.toISOString().slice(0,10);}
 function weekDateKey(mon,dayIdx){const d=new Date(mon);d.setDate(d.getDate()+dayIdx);return dateKey(d);}
 function sd(mid,mon,di,type,note){schedData[mid+'_'+weekDateKey(mon,di)]={type,note};}
-const staticWeek=new Date(2026,3,27);
+const staticWeek=getMonday(new Date());
+
 sd(1,staticWeek,0,'office','Office');sd(1,staticWeek,1,'office','Office');sd(1,staticWeek,2,'office','Office');sd(1,staticWeek,3,'office','Office');sd(1,staticWeek,4,'office','Office');
 sd(2,staticWeek,0,'field','Trip to Isabela');sd(2,staticWeek,1,'field','Trip to Isabela');sd(2,staticWeek,2,'field','Trip to Isabela');sd(2,staticWeek,3,'field','Trip to Isabela');sd(2,staticWeek,4,'field','Trip to Isabela');
 sd(3,staticWeek,0,'field','Ramos WD');sd(3,staticWeek,1,'field','Ramos WD');sd(3,staticWeek,2,'field','Ramos WD');sd(3,staticWeek,3,'field','Ramos WD');sd(3,staticWeek,4,'field','Ramos WD');
@@ -2329,7 +2331,8 @@ sd(9,staticWeek,0,'field','Ramos WD');sd(9,staticWeek,1,'field','Ramos WD');sd(9
 sd(10,staticWeek,0,'office','Office');sd(10,staticWeek,1,'office','Office');sd(10,staticWeek,2,'office','Office');sd(10,staticWeek,3,'office','Office');sd(10,staticWeek,4,'office','Office');
 sd(11,staticWeek,0,'field','Trip to Isabela');sd(11,staticWeek,1,'field','Tumaini WD');sd(11,staticWeek,2,'field','Tumaini WD');sd(11,staticWeek,3,'field','Tumaini WD');sd(11,staticWeek,4,'field','Tumaini WD');
 
-let schedCurrentMonday=getMonday(staticWeek);
+let schedCurrentMonday=staticWeek;
+
 function schedNav(dir){schedCurrentMonday=new Date(schedCurrentMonday);schedCurrentMonday.setDate(schedCurrentMonday.getDate()+dir*7);renderSched();}
 function schedGoToday(){schedCurrentMonday=getMonday(new Date());renderSched();}
 function schedTypeTag(type,note){if(!type||type==='none')return '<span class="sched-tag sched-tag-other">—</span>';const map={office:{cls:'sched-tag-office',label:'🏢 Office'},field:{cls:'sched-tag-field',label:'🔧 WO'},travel:{cls:'sched-tag-travel',label:'🚗 Travel'},wfh:{cls:'sched-tag-wfh',label:'🏠 WFH'},leave:{cls:'sched-tag-leave',label:'🌴 Leave'}};const t=map[type]||{cls:'sched-tag-other',label:type};return '<span class="sched-tag '+t.cls+'">'+t.label+'</span>'+(note?'<div class="sched-entry-note">'+escHtml(note)+'</div>':'');}
