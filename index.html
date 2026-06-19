@@ -958,14 +958,10 @@ tr.ap-row-done .ap-action-textarea{text-decoration:line-through;color:var(--text
       </select>
     </div>
 <div class="modal-footer">
-  <button class="btn btndanger" onclick="deleteWDEntry()" style="min-width:90px;white-space:nowrap;height:38px">Delete</button>
+  <div></div>
   <div class="modal-footer-right">
-    <button class="btn" onclick="closeModal('modal-edit-wd')" style="min-width:90px;white-space:nowrap;height:38px">Cancel</button>
-    <button class="btn" onclick="saveWDEdit(false)"
-      style="min-width:130px;white-space:nowrap;height:38px;background:var(--amber-light);border-color:#FAC775;color:var(--amber)">
-      💌 Send Reminder
-    </button>
-    <button class="btn btnp" onclick="saveWDEdit()" style="min-width:120px;white-space:nowrap;height:38px">Save Changes</button>
+    <button class="btn" onclick="closeModal('modal-add-wd')">Cancel</button>
+    <button class="btn btnp" onclick="addWDCollection()">Add Water District</button>
   </div>
 </div>
 </div>
@@ -1214,18 +1210,18 @@ const state={
 
 // ===== WD COLLECTIONS =====
 state.wdCollections = [
-  {id:'WD-001',name:'Cabanatuan City WD', email:'samalano17@gmail.com', region:'Region III',amount:480000,due:'2026-05-15',status:'Paid',collected:100},
-  {id:'WD-002',name:'Roxas(Isabela) WD', email:'samalano17@gmail.com', region:'Region II',amount:320000,due:'2026-05-20',status:'Paid',collected:100},
-  {id:'WD-003',name:'Goodhands',email:'samalano17@gmail.com', region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
-  {id:'WD-004',name:'Garcia Hospital',email:'samalano17@gmail.com', region:'Region III',amount:198000,due:'2026-06-30',status:'Unpaid',collected:0},
-  {id:'WD-005',name:'Ramos WD',email:'samalano17@gmail.com', region:'Region III',amount:175000,due:'2026-08-25',status:'Paid',collected:100},
-  {id:'WD-006',name:'Talavera WD',email:'samalano17@gmail.com', region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:0},
-  {id:'WD-007',name:'Cauayan City WD',email:'samalano17@gmail.com', region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
-  {id:'WD-008',name:'Bongabon WD',email:'samalano17@gmail.com', region:'Region III',amount:138000,due:'2026-06-28',status:'Paid',collected:100},
-  {id:'WD-009',name:'Palayan City WD',email:'samalano17@gmail.com', region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
-  {id:'WD-010',name:'Conception WD',email:'samalano17@gmail.com', region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
-  {id:'WD-011',name:'Santa Rosa WD',email:'samalano17@gmail.com', region:'Region III',amount:112000,due:'2026-07-22',status:'Paid',collected:100},
-  {id:'WD-012',name:'Moncanda WD',email:'samalano17@gmail.com', region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
+  {id:'WD-001',name:'Cabanatuan City WD', email:'lrs.bendicio@gmail.com', region:'Region III',amount:480000,due:'2026-05-15',status:'Paid',collected:100},
+  {id:'WD-002',name:'Roxas(Isabela) WD', email:'lrs.bendicio@gmail.com', region:'Region II',amount:320000,due:'2026-05-20',status:'Paid',collected:100},
+  {id:'WD-003',name:'Goodhands',email:'lrs.bendicio@gmail.com', region:'Region III',amount:215000,due:'2026-04-10',status:'Overdue',collected:0},
+  {id:'WD-004',name:'Garcia Hospital',email:'lrs.bendicio@gmail.com', region:'Region III',amount:198000,due:'2026-06-30',status:'Unpaid',collected:0},
+  {id:'WD-005',name:'Ramos WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:175000,due:'2026-08-25',status:'Paid',collected:100},
+  {id:'WD-006',name:'Talavera WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:162000,due:'2026-04-08',status:'Overdue',collected:0},
+  {id:'WD-007',name:'Cauayan City WD',email:'lrs.bendicio@gmail.com', region:'Region II',amount:143000,due:'2026-05-05',status:'Unpaid',collected:0},
+  {id:'WD-008',name:'Bongabon WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:138000,due:'2026-06-28',status:'Paid',collected:100},
+  {id:'WD-009',name:'Palayan City WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:126000,due:'2026-04-12',status:'Overdue',collected:0},
+  {id:'WD-010',name:'Conception WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:118000,due:'2026-05-01',status:'Unpaid',collected:0},
+  {id:'WD-011',name:'Santa Rosa WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:112000,due:'2026-07-22',status:'Paid',collected:100},
+  {id:'WD-012',name:'Moncanda WD',email:'lrs.bendicio@gmail.com', region:'Region III',amount:105000,due:'2026-04-18',status:'Paid',collected:100},
 ];
 
 let editingWDId = null;
